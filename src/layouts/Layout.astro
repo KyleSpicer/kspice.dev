@@ -1,0 +1,134 @@
+---
+interface Props {
+	title?: string;
+	description?: string;
+}
+
+const {
+	title = 'kspice.dev',
+	description = 'Programming, woodworking, and more.',
+} = Astro.props;
+
+const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
+
+const nav = [
+	{ href: '/', label: 'Home' },
+	{ href: '/programming', label: 'Programming' },
+	{ href: '/woodworking', label: 'Woodworking' },
+	{ href: '/resume', label: 'Resume' },
+] as const;
+---
+
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width" />
+		<meta name="description" content={description} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title === 'kspice.dev' ? title : `${title} · kspice.dev`}</title>
+	</head>
+	<body>
+		<header class="site-header">
+			<a class="brand" href="/">kspice.dev</a>
+			<nav class="nav" aria-label="Main">
+				<ul>
+					{
+						nav.map(({ href, label }) => {
+							const active =
+								href === '/'
+									? pathname === '/'
+									: pathname === href || pathname.startsWith(href + '/');
+							return (
+								<li>
+									<a
+										href={href}
+										class:list={['nav-link', { active }]}
+										aria-current={active ? 'page' : undefined}
+									>
+										{label}
+									</a>
+								</li>
+							);
+						})
+					}
+				</ul>
+			</nav>
+		</header>
+		<slot />
+	</body>
+</html>
+
+<style>
+	html,
+	body {
+		margin: 0;
+		width: 100%;
+		min-height: 100%;
+	}
+
+	body {
+		font-family:
+			system-ui,
+			-apple-system,
+			'Segoe UI',
+			Roboto,
+			'Helvetica Neue',
+			Arial,
+			sans-serif;
+		line-height: 1.5;
+		color: #1a1a1a;
+		background: #fafafa;
+	}
+
+	.site-header {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		justify-content: space-between;
+		gap: 1rem;
+		padding: 1rem 1.5rem;
+		border-bottom: 1px solid #e8e8e8;
+		background: #fff;
+	}
+
+	.brand {
+		font-weight: 700;
+		color: inherit;
+		text-decoration: none;
+		letter-spacing: -0.02em;
+	}
+
+	.brand:hover {
+		color: #333;
+	}
+
+	.nav ul {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem 1rem;
+		list-style: none;
+		margin: 0;
+		padding: 0;
+	}
+
+	.nav-link {
+		color: #444;
+		text-decoration: none;
+		font-size: 0.9375rem;
+		padding: 0.25rem 0;
+		border-bottom: 2px solid transparent;
+	}
+
+	.nav-link:hover {
+		color: #111;
+	}
+
+	.nav-link.active {
+		color: #111;
+		font-weight: 600;
+		border-bottom-color: #1a1a1a;
+	}
+</style>

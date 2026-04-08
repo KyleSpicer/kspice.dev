@@ -1,0 +1,63 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="Resume"
+	description="Resume and professional background — kspice.dev."
+>
+	<main class="main">
+		<h1>Resume</h1>
+		<p class="lede">
+			Replace this placeholder with your experience, skills, and education—or link to a PDF in{' '}
+			<code class="inline-code">public/</code>.
+		</p>
+		<section class="section" aria-labelledby="placeholder-heading">
+			<h2 id="placeholder-heading">Summary</h2>
+			<p>
+				Add your summary here. You can use multiple sections (Experience, Education, Skills) as
+				plain HTML or markdown via a content file later.
+			</p>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.main {
+		max-width: 42rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 3rem;
+	}
+
+	h1 {
+		font-size: 1.75rem;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		margin: 0 0 0.75rem;
+	}
+
+	.lede {
+		margin: 0 0 2rem;
+		color: #444;
+		font-size: 1.0625rem;
+	}
+
+	.inline-code {
+		font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+		font-size: 0.9em;
+		background: #eee;
+		padding: 0.15em 0.4em;
+		border-radius: 4px;
+	}
+
+	.section h2 {
+		font-size: 1rem;
+		font-weight: 600;
+		margin: 0 0 0.5rem;
+	}
+
+	.section p {
+		margin: 0;
+		color: #555;
+	}
+</style>

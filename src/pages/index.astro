@@ -1,0 +1,95 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+	title="kspice.dev"
+	description="Projects, tutorials, and notes on programming and woodworking."
+>
+	<main class="main">
+		<h1>Welcome</h1>
+		<p class="lede">
+			A personal site for programming work, woodworking, and a résumé—all in one place.
+		</p>
+		<ul class="cards">
+			<li>
+				<a class="card" href="/programming">
+					<h2>Programming</h2>
+					<p>Tutorials, projects, and dev notes.</p>
+				</a>
+			</li>
+			<li>
+				<a class="card" href="/woodworking">
+					<h2>Woodworking</h2>
+					<p>Builds, techniques, and video links.</p>
+				</a>
+			</li>
+			<li>
+				<a class="card" href="/resume">
+					<h2>Resume</h2>
+					<p>Experience and background.</p>
+				</a>
+			</li>
+		</ul>
+	</main>
+</Layout>
+
+<style>
+	.main {
+		max-width: 42rem;
+		margin: 0 auto;
+		padding: 2rem 1.5rem 3rem;
+	}
+
+	h1 {
+		font-size: 1.75rem;
+		font-weight: 700;
+		letter-spacing: -0.03em;
+		margin: 0 0 0.75rem;
+	}
+
+	.lede {
+		margin: 0 0 2rem;
+		color: #444;
+		font-size: 1.0625rem;
+	}
+
+	.cards {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	.card {
+		display: block;
+		padding: 1.25rem 1.5rem;
+		background: #fff;
+		border: 1px solid #e8e8e8;
+		border-radius: 10px;
+		text-decoration: none;
+		color: inherit;
+		transition:
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
+	}
+
+	.card:hover {
+		border-color: #ccc;
+		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+	}
+
+	.card h2 {
+		margin: 0 0 0.35rem;
+		font-size: 1.125rem;
+		font-weight: 600;
+	}
+
+	.card p {
+		margin: 0;
+		font-size: 0.9375rem;
+		color: #555;
+	}
+</style>
