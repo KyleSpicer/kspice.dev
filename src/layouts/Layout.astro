@@ -14,6 +14,12 @@ const {
 
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
+function navIsActive(href: string): boolean {
+	if (href === '/#contact') return false;
+	if (href === '/') return pathname === '/';
+	return pathname === href || pathname.startsWith(href + '/');
+}
+
 const nav = [
 	{ href: '/', label: 'Home' },
 	{ href: '/programming', label: 'Programming Tutorials' },
@@ -84,12 +90,7 @@ const nav = [
 				<ul>
 					{
 						nav.map(({ href, label }) => {
-							const active =
-								href === '/#contact'
-									? false
-									: href === '/'
-										? pathname === '/'
-										: pathname === href || pathname.startsWith(href + '/');
+							const active = navIsActive(href);
 							return (
 								<li>
 									<a
@@ -110,127 +111,79 @@ const nav = [
 		<SocialFooter />
 		<script is:inline>
 			(function () {
-				var k = 'kspice-theme';
-				var btn = document.getElementById('theme-toggle');
-				if (!btn) return;
-
-				function labelFor(theme) {
-					return theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
-				}
-
-				function syncUi(theme) {
-					btn.setAttribute('aria-label', labelFor(theme));
-					btn.classList.toggle('theme-toggle--dark', theme === 'dark');
-					btn.classList.toggle('theme-toggle--light', theme === 'light');
-				}
-
-				syncUi(document.documentElement.getAttribute('data-theme') || 'dark');
-
-				btn.addEventListener('click', function () {
-					var cur = document.documentElement.getAttribute('data-theme') || 'dark';
-					var next = cur === 'dark' ? 'light' : 'dark';
-					document.documentElement.setAttribute('data-theme', next);
-					localStorage.setItem(k, next);
-					syncUi(next);
-				});
-			})();
-		</script>
-		<script is:inline>
-			(function () {
-				var mq = window.matchMedia('(min-width: 52rem)');
-
-				function els() {
-					return {
-						header: document.querySelector('.site-header'),
-						toggle: document.getElementById('menu-toggle'),
-						backdrop: document.getElementById('nav-backdrop'),
-						nav: document.getElementById('site-nav'),
-					};
-				}
-
-				function isDesktop() {
-					return mq.matches;
-				}
-
-				function isOpen(h) {
-					return h && h.classList.contains('is-menu-open');
-				}
-
-				function syncNavAria() {
-					var e = els();
-					if (!e.header || !e.nav) return;
-					if (isDesktop() || isOpen(e.header)) e.nav.removeAttribute('aria-hidden');
-					else e.nav.setAttribute('aria-hidden', 'true');
-				}
-
-				function closeMenu(returnFocus) {
-					var e = els();
-					if (!e.header || !e.toggle || !e.nav) return;
-					var wasOpen = isOpen(e.header);
-					e.header.classList.remove('is-menu-open');
-					e.toggle.setAttribute('aria-expanded', 'false');
-					e.toggle.setAttribute('aria-label', 'Open menu');
-					document.body.style.overflow = '';
-					syncNavAria();
-					if (returnFocus && wasOpen) e.toggle.focus();
-				}
-
-				function openMenu() {
-					var e = els();
-					if (!e.header || !e.toggle || !e.nav) return;
-					e.header.classList.add('is-menu-open');
-					e.toggle.setAttribute('aria-expanded', 'true');
-					e.toggle.setAttribute('aria-label', 'Close menu');
-					document.body.style.overflow = 'hidden';
-					syncNavAria();
-					var first = e.nav.querySelector('a');
-					if (first) {
-						window.requestAnimationFrame(function () {
-							first.focus();
-						});
+				var themeKey = 'kspice-theme';
+				var themeBtn = document.getElementById('theme-toggle');
+				if (themeBtn) {
+					function themeLabel(t) {
+						return t === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
 					}
-				}
-
-				function onToggleClick() {
-					var e = els();
-					if (!e.header || !e.toggle || !e.nav || isDesktop()) return;
-					if (isOpen(e.header)) closeMenu(true);
-					else openMenu();
-				}
-
-				function bindNavLinks() {
-					var e = els();
-					if (!e.nav) return;
-					e.nav.querySelectorAll('a').forEach(function (link) {
-						link.addEventListener('click', function () {
-							if (!isDesktop()) closeMenu(false);
-						});
+					function syncTheme(t) {
+						themeBtn.setAttribute('aria-label', themeLabel(t));
+						themeBtn.classList.toggle('theme-toggle--dark', t === 'dark');
+						themeBtn.classList.toggle('theme-toggle--light', t === 'light');
+					}
+					syncTheme(document.documentElement.getAttribute('data-theme') || 'dark');
+					themeBtn.addEventListener('click', function () {
+						var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+						var next = cur === 'dark' ? 'light' : 'dark';
+						document.documentElement.setAttribute('data-theme', next);
+						localStorage.setItem(themeKey, next);
+						syncTheme(next);
 					});
 				}
 
-				var e0 = els();
-				if (!e0.header || !e0.toggle || !e0.nav) return;
+				var mq = window.matchMedia('(min-width: 52rem)');
+				var header = document.querySelector('.site-header');
+				var menuBtn = document.getElementById('menu-toggle');
+				var backdrop = document.getElementById('nav-backdrop');
+				var mainNav = document.getElementById('site-nav');
+				if (!header || !menuBtn || !mainNav) return;
 
-				e0.toggle.addEventListener('click', onToggleClick);
-				if (e0.backdrop) e0.backdrop.addEventListener('click', function () {
-					closeMenu(true);
+				function desktop() {
+					return mq.matches;
+				}
+				function menuOpen() {
+					return header.classList.contains('is-menu-open');
+				}
+				function syncAria() {
+					if (desktop() || menuOpen()) mainNav.removeAttribute('aria-hidden');
+					else mainNav.setAttribute('aria-hidden', 'true');
+				}
+				function closeMenu(refocus) {
+					var was = menuOpen();
+					header.classList.remove('is-menu-open');
+					menuBtn.setAttribute('aria-expanded', 'false');
+					menuBtn.setAttribute('aria-label', 'Open menu');
+					document.body.style.overflow = '';
+					syncAria();
+					if (refocus && was) menuBtn.focus();
+				}
+				function openMenu() {
+					header.classList.add('is-menu-open');
+					menuBtn.setAttribute('aria-expanded', 'true');
+					menuBtn.setAttribute('aria-label', 'Close menu');
+					document.body.style.overflow = 'hidden';
+					syncAria();
+					var first = mainNav.querySelector('a');
+					if (first) requestAnimationFrame(function () { first.focus(); });
+				}
+
+				menuBtn.addEventListener('click', function () {
+					if (desktop()) return;
+					menuOpen() ? closeMenu(true) : openMenu();
 				});
-
-				bindNavLinks();
-
+				if (backdrop) backdrop.addEventListener('click', function () { closeMenu(true); });
+				mainNav.addEventListener('click', function (ev) {
+					if (!desktop() && ev.target.closest('a')) closeMenu(false);
+				});
 				document.addEventListener('keydown', function (ev) {
-					if (ev.key === 'Escape' && !isDesktop()) {
-						var e = els();
-						if (e.header && isOpen(e.header)) closeMenu(true);
-					}
+					if (ev.key === 'Escape' && !desktop() && menuOpen()) closeMenu(true);
 				});
-
 				mq.addEventListener('change', function () {
 					closeMenu(false);
-					syncNavAria();
+					syncAria();
 				});
-
-				syncNavAria();
+				syncAria();
 			})();
 		</script>
 	</body>
@@ -276,27 +229,7 @@ const nav = [
 		gap: 0.45rem;
 	}
 
-	.theme-toggle {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		width: 2.75rem;
-		height: 2.75rem;
-		padding: 0;
-		border: 2px solid var(--border);
-		border-radius: 10px;
-		background: var(--bg);
-		color: var(--ink);
-		cursor: pointer;
-		font-size: 1.125rem;
-		line-height: 1;
-		flex-shrink: 0;
-		transition:
-			border-color 0.15s ease,
-			background-color 0.15s ease,
-			color 0.15s ease;
-	}
-
+	.theme-toggle,
 	.menu-toggle {
 		display: inline-flex;
 		align-items: center;
@@ -310,19 +243,29 @@ const nav = [
 		color: var(--ink);
 		cursor: pointer;
 		flex-shrink: 0;
-		-webkit-tap-highlight-color: transparent;
-		touch-action: manipulation;
 		transition:
 			border-color 0.15s ease,
 			background-color 0.15s ease,
 			color 0.15s ease;
 	}
 
+	.theme-toggle {
+		font-size: 1.125rem;
+		line-height: 1;
+	}
+
+	.menu-toggle {
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+	}
+
+	.theme-toggle:hover,
 	.menu-toggle:hover {
 		border-color: var(--teal);
 		color: var(--teal-dark);
 	}
 
+	.theme-toggle:focus-visible,
 	.menu-toggle:focus-visible {
 		outline: 2px solid var(--purple);
 		outline-offset: 2px;
@@ -446,16 +389,6 @@ const nav = [
 		color: var(--purple-dark);
 		border-color: var(--purple);
 		background: color-mix(in srgb, var(--purple) 10%, var(--bg));
-	}
-
-	.theme-toggle:hover {
-		border-color: var(--teal);
-		color: var(--teal-dark);
-	}
-
-	.theme-toggle:focus-visible {
-		outline: 2px solid var(--purple);
-		outline-offset: 2px;
 	}
 
 	.theme-toggle__icon {
