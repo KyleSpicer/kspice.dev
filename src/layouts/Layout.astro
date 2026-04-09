@@ -1,4 +1,7 @@
 ---
+import '../styles/global.css';
+import SocialFooter from '../components/SocialFooter.astro';
+
 interface Props {
 	title?: string;
 	description?: string;
@@ -13,9 +16,11 @@ const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 const nav = [
 	{ href: '/', label: 'Home' },
-	{ href: '/programming', label: 'Programming' },
+	{ href: '/programming', label: 'Programming Tutorials' },
+	{ href: '/projects', label: 'Documented Projects' },
 	{ href: '/woodworking', label: 'Woodworking' },
 	{ href: '/resume', label: 'Resume' },
+	{ href: '/#contact', label: 'Contact' },
 ] as const;
 ---
 
@@ -24,65 +29,94 @@ const nav = [
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width" />
+		<meta name="color-scheme" content="dark light" />
 		<meta name="description" content={description} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title === 'kspice.dev' ? title : `${title} · kspice.dev`}</title>
+		<script is:inline>
+			(function () {
+				var k = 'kspice-theme';
+				var t = localStorage.getItem(k);
+				if (t !== 'light' && t !== 'dark') t = 'dark';
+				document.documentElement.setAttribute('data-theme', t);
+			})();
+		</script>
 	</head>
 	<body>
 		<header class="site-header">
 			<a class="brand" href="/">kspice.dev</a>
-			<nav class="nav" aria-label="Main">
-				<ul>
-					{
-						nav.map(({ href, label }) => {
-							const active =
-								href === '/'
-									? pathname === '/'
-									: pathname === href || pathname.startsWith(href + '/');
-							return (
-								<li>
-									<a
-										href={href}
-										class:list={['nav-link', { active }]}
-										aria-current={active ? 'page' : undefined}
-									>
-										{label}
-									</a>
-								</li>
-							);
-						})
-					}
-				</ul>
-			</nav>
+			<div class="header-end">
+				<nav class="nav" aria-label="Main">
+					<ul>
+						{
+							nav.map(({ href, label }) => {
+								const active =
+									href === '/#contact'
+										? false
+										: href === '/'
+											? pathname === '/'
+											: pathname === href || pathname.startsWith(href + '/');
+								return (
+									<li>
+										<a
+											href={href}
+											class:list={['nav-link', { active }]}
+											aria-current={active ? 'page' : undefined}
+										>
+											{label}
+										</a>
+									</li>
+								);
+							})
+						}
+					</ul>
+				</nav>
+				<button
+					type="button"
+					class="theme-toggle theme-toggle--dark"
+					id="theme-toggle"
+					aria-label="Switch to light mode"
+				>
+					<span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+					<span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
+				</button>
+			</div>
 		</header>
 		<slot />
+		<SocialFooter />
+		<script is:inline>
+			(function () {
+				var k = 'kspice-theme';
+				var btn = document.getElementById('theme-toggle');
+				if (!btn) return;
+
+				function labelFor(theme) {
+					return theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode';
+				}
+
+				function syncUi(theme) {
+					btn.setAttribute('aria-label', labelFor(theme));
+					btn.classList.toggle('theme-toggle--dark', theme === 'dark');
+					btn.classList.toggle('theme-toggle--light', theme === 'light');
+				}
+
+				syncUi(document.documentElement.getAttribute('data-theme') || 'dark');
+
+				btn.addEventListener('click', function () {
+					var cur = document.documentElement.getAttribute('data-theme') || 'dark';
+					var next = cur === 'dark' ? 'light' : 'dark';
+					document.documentElement.setAttribute('data-theme', next);
+					localStorage.setItem(k, next);
+					syncUi(next);
+				});
+			})();
+		</script>
 	</body>
 </html>
 
 <style>
-	html,
-	body {
-		margin: 0;
-		width: 100%;
-		min-height: 100%;
-	}
-
-	body {
-		font-family:
-			system-ui,
-			-apple-system,
-			'Segoe UI',
-			Roboto,
-			'Helvetica Neue',
-			Arial,
-			sans-serif;
-		line-height: 1.5;
-		color: #1a1a1a;
-		background: #fafafa;
-	}
-
 	.site-header {
 		display: flex;
 		flex-wrap: wrap;
@@ -90,19 +124,29 @@ const nav = [
 		justify-content: space-between;
 		gap: 1rem;
 		padding: 1rem 1.5rem;
-		border-bottom: 1px solid #e8e8e8;
-		background: #fff;
+		border-bottom: 2px solid var(--border);
+		background: var(--bg-elevated);
+		transition:
+			background-color 0.2s ease,
+			border-color 0.2s ease;
+	}
+
+	.header-end {
+		display: flex;
+		flex-wrap: wrap;
+		align-items: center;
+		gap: 0.75rem 1.25rem;
 	}
 
 	.brand {
 		font-weight: 700;
-		color: inherit;
+		color: var(--ink);
 		text-decoration: none;
 		letter-spacing: -0.02em;
 	}
 
 	.brand:hover {
-		color: #333;
+		color: var(--teal-dark);
 	}
 
 	.nav ul {
@@ -115,20 +159,69 @@ const nav = [
 	}
 
 	.nav-link {
-		color: #444;
+		color: var(--muted);
 		text-decoration: none;
 		font-size: 0.9375rem;
 		padding: 0.25rem 0;
 		border-bottom: 2px solid transparent;
+		transition:
+			color 0.15s ease,
+			border-color 0.15s ease;
 	}
 
 	.nav-link:hover {
-		color: #111;
+		color: var(--teal-dark);
+		border-bottom-color: var(--teal-soft);
 	}
 
 	.nav-link.active {
-		color: #111;
+		color: var(--purple-dark);
 		font-weight: 600;
-		border-bottom-color: #1a1a1a;
+		border-bottom-color: var(--purple);
 	}
+
+	.theme-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		padding: 0;
+		border: 2px solid var(--border);
+		border-radius: 10px;
+		background: var(--bg);
+		color: var(--ink);
+		cursor: pointer;
+		font-size: 1.125rem;
+		line-height: 1;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.theme-toggle:hover {
+		border-color: var(--teal);
+		color: var(--teal-dark);
+	}
+
+	.theme-toggle:focus-visible {
+		outline: 2px solid var(--purple);
+		outline-offset: 2px;
+	}
+
+	.theme-toggle__icon {
+		display: none;
+	}
+
+	/* Dark theme → sun icon (action: go to light) */
+	.theme-toggle--dark .theme-toggle__icon--sun {
+		display: block;
+	}
+
+	/* Light theme → moon icon (action: go to dark) */
+	.theme-toggle--light .theme-toggle__icon--moon {
+		display: block;
+	}
+
 </style>

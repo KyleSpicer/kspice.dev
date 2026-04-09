@@ -1,0 +1,42 @@
+/* Shared layout for inner pages (programming, projects, woodworking, resume). */
+.main {
+	max-width: 42rem;
+	margin: 0 auto;
+	padding: 2rem 1.5rem 3rem;
+}
+
+.main h1 {
+	font-size: 1.75rem;
+	font-weight: 700;
+	letter-spacing: -0.03em;
+	margin: 0 0 0.75rem;
+	color: var(--purple-dark);
+}
+
+.main .lede {
+	margin: 0 0 2rem;
+	color: var(--muted);
+	font-size: 1.0625rem;
+}
+
+.main .inline-code {
+	font-family: ui-monospace, 'Cascadia Code', 'Source Code Pro', Menlo, monospace;
+	font-size: 0.9em;
+	background: var(--purple-soft);
+	color: var(--ink);
+	padding: 0.15em 0.4em;
+	border-radius: 4px;
+	border: 1px solid var(--border);
+}
+
+.main .section h2 {
+	font-size: 1rem;
+	font-weight: 600;
+	margin: 0 0 0.5rem;
+	color: var(--teal-dark);
+}
+
+.main .section p {
+	margin: 0;
+	color: var(--muted);
+}

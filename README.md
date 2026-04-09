@@ -1,46 +1,46 @@
-# Astro Starter Kit: Basics
+# kspice.dev
 
-```sh
-npm create astro@latest -- --template basics
+Static site for [kspice.dev](https://kspice.dev), built with [Astro](https://astro.build/).
+
+## Requirements
+
+- [Node.js](https://nodejs.org/) **22.12+** (see `package.json` → `engines`)
+
+## Run locally
+
+```bash
+npm install
+npm run dev
 ```
 
-> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+Open the URL shown in the terminal (Astro’s default is `http://localhost:4321`). Edit files under `src/`; the dev server reloads on save.
 
-## 🚀 Project Structure
+## Test a production build locally
 
-Inside of your Astro project, you'll see the following folders and files:
-
-```text
-/
-├── public/
-│   └── favicon.svg
-├── src
-│   ├── assets
-│   │   └── astro.svg
-│   ├── components
-│   │   └── Welcome.astro
-│   ├── layouts
-│   │   └── Layout.astro
-│   └── pages
-│       └── index.astro
-└── package.json
+```bash
+npm run build
+npm run preview
 ```
 
-To learn more about the folder structure of an Astro project, refer to [our guide on project structure](https://docs.astro.build/en/basics/project-structure/).
+`build` writes static files to `dist/`. `preview` serves that folder so you can check the site before deploying.
 
-## 🧞 Commands
+## Deploy via GitHub (live site)
 
-All commands are run from the root of the project, from a terminal:
+1. This repo uses **GitHub Actions** (`.github/workflows/deploy.yml`) to build and deploy to **GitHub Pages**.
+2. In the GitHub repo: **Settings → Pages**, set **Source** to **GitHub Actions** (not “Deploy from a branch”).
+3. Push commits to the **`main`** branch. Each push runs the workflow: install dependencies → `astro build` → upload `dist/` → publish to Pages.
+4. After a successful run, the site updates at your Pages URL (for a custom domain like `kspice.dev`, DNS stays pointed at GitHub as you already configured).
 
-| Command                   | Action                                           |
-| :------------------------ | :----------------------------------------------- |
-| `npm install`             | Installs dependencies                            |
-| `npm run dev`             | Starts local dev server at `localhost:4321`      |
-| `npm run build`           | Build your production site to `./dist/`          |
-| `npm run preview`         | Preview your build locally, before deploying     |
-| `npm run astro ...`       | Run CLI commands like `astro add`, `astro check` |
-| `npm run astro -- --help` | Get help using the Astro CLI                     |
+You can also run the workflow manually: **Actions → Deploy Astro site to Pages → Run workflow**.
 
-## 👀 Want to learn more?
+## Project layout
 
-Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).
+| Path | Role |
+|------|------|
+| `src/pages/` | Routes (`.astro` files) |
+| `src/layouts/Layout.astro` | Shell, nav, theme toggle, footer |
+| `src/components/` | Reusable pieces (e.g. contact footer) |
+| `src/styles/global.css` | Theme tokens and base styles |
+| `src/styles/page-main.css` | Shared styles for inner pages |
+| `public/` | Static assets (favicon, etc.) |
+| `astro.config.mjs` | `site` URL for canonical links |

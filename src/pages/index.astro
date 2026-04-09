@@ -4,18 +4,25 @@ import Layout from '../layouts/Layout.astro';
 
 <Layout
 	title="kspice.dev"
-	description="Projects, tutorials, and notes on programming and woodworking."
+	description="Kyle Spicer’s site: programming tutorials, project documentation, woodworking, and more."
 >
 	<main class="main">
 		<h1>Welcome</h1>
 		<p class="lede">
-			A personal site for programming work, woodworking, and a résumé—all in one place.
+			Kyle Spicer’s site for recording programming tutorials, documenting projects,
+			displaying woodworking projects, and more.
 		</p>
 		<ul class="cards">
 			<li>
 				<a class="card" href="/programming">
-					<h2>Programming</h2>
-					<p>Tutorials, projects, and dev notes.</p>
+					<h2>Programming Tutorials</h2>
+					<p>Lessons, walkthroughs, and teaching notes.</p>
+				</a>
+			</li>
+			<li>
+				<a class="card" href="/projects">
+					<h2>Documented Projects</h2>
+					<p>Write-ups and documentation for things you have built.</p>
 				</a>
 			</li>
 			<li>
@@ -46,11 +53,12 @@ import Layout from '../layouts/Layout.astro';
 		font-weight: 700;
 		letter-spacing: -0.03em;
 		margin: 0 0 0.75rem;
+		color: var(--ink);
 	}
 
 	.lede {
 		margin: 0 0 2rem;
-		color: #444;
+		color: var(--muted);
 		font-size: 1.0625rem;
 	}
 
@@ -66,30 +74,32 @@ import Layout from '../layouts/Layout.astro';
 	.card {
 		display: block;
 		padding: 1.25rem 1.5rem;
-		background: #fff;
-		border: 1px solid #e8e8e8;
+		background: var(--bg-elevated);
+		border: 2px solid var(--border);
 		border-radius: 10px;
 		text-decoration: none;
-		color: inherit;
+		color: var(--ink);
 		transition:
 			border-color 0.15s ease,
-			box-shadow 0.15s ease;
+			box-shadow 0.15s ease,
+			background-color 0.2s ease;
 	}
 
 	.card:hover {
-		border-color: #ccc;
-		box-shadow: 0 4px 14px rgba(0, 0, 0, 0.06);
+		border-color: var(--teal);
+		box-shadow: 0 4px 20px color-mix(in srgb, var(--purple) 12%, transparent);
 	}
 
 	.card h2 {
 		margin: 0 0 0.35rem;
 		font-size: 1.125rem;
 		font-weight: 600;
+		color: var(--purple-dark);
 	}
 
 	.card p {
 		margin: 0;
 		font-size: 0.9375rem;
-		color: #555;
+		color: var(--muted);
 	}
 </style>

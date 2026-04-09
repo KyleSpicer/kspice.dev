@@ -2,5 +2,5 @@
 import { defineConfig } from 'astro/config';
 
 export default defineConfig({
-    site: 'https://kspice.dev',
-  });
+	site: 'https://kspice.dev',
+});
