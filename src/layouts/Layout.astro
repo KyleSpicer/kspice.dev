@@ -47,7 +47,40 @@ const nav = [
 	<body>
 		<header class="site-header">
 			<a class="brand" href="/">kspice.dev</a>
-			<nav class="nav" aria-label="Main">
+			<div class="header-tools">
+				<button
+					type="button"
+					class="theme-toggle theme-toggle--dark"
+					id="theme-toggle"
+					aria-label="Switch to light mode"
+				>
+					<span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
+					<span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
+				</button>
+				<button
+					type="button"
+					class="menu-toggle"
+					id="menu-toggle"
+					aria-expanded="false"
+					aria-controls="site-nav"
+					aria-label="Open menu"
+				>
+					<span class="menu-toggle__bars" aria-hidden="true">
+						<span class="menu-toggle__bar"></span>
+						<span class="menu-toggle__bar"></span>
+						<span class="menu-toggle__bar"></span>
+					</span>
+				</button>
+			</div>
+			<button
+				type="button"
+				class="nav-backdrop"
+				id="nav-backdrop"
+				tabindex="-1"
+				aria-hidden="true"
+			>
+			</button>
+			<nav class="nav" id="site-nav" aria-label="Main">
 				<ul>
 					{
 						nav.map(({ href, label }) => {
@@ -72,15 +105,6 @@ const nav = [
 					}
 				</ul>
 			</nav>
-			<button
-				type="button"
-				class="theme-toggle theme-toggle--dark"
-				id="theme-toggle"
-				aria-label="Switch to light mode"
-			>
-				<span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true">☀</span>
-				<span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true">☾</span>
-			</button>
 		</header>
 		<slot />
 		<SocialFooter />
@@ -111,27 +135,122 @@ const nav = [
 				});
 			})();
 		</script>
+		<script is:inline>
+			(function () {
+				var mq = window.matchMedia('(min-width: 52rem)');
+
+				function els() {
+					return {
+						header: document.querySelector('.site-header'),
+						toggle: document.getElementById('menu-toggle'),
+						backdrop: document.getElementById('nav-backdrop'),
+						nav: document.getElementById('site-nav'),
+					};
+				}
+
+				function isDesktop() {
+					return mq.matches;
+				}
+
+				function isOpen(h) {
+					return h && h.classList.contains('is-menu-open');
+				}
+
+				function syncNavAria() {
+					var e = els();
+					if (!e.header || !e.nav) return;
+					if (isDesktop() || isOpen(e.header)) e.nav.removeAttribute('aria-hidden');
+					else e.nav.setAttribute('aria-hidden', 'true');
+				}
+
+				function closeMenu(returnFocus) {
+					var e = els();
+					if (!e.header || !e.toggle || !e.nav) return;
+					var wasOpen = isOpen(e.header);
+					e.header.classList.remove('is-menu-open');
+					e.toggle.setAttribute('aria-expanded', 'false');
+					e.toggle.setAttribute('aria-label', 'Open menu');
+					document.body.style.overflow = '';
+					syncNavAria();
+					if (returnFocus && wasOpen) e.toggle.focus();
+				}
+
+				function openMenu() {
+					var e = els();
+					if (!e.header || !e.toggle || !e.nav) return;
+					e.header.classList.add('is-menu-open');
+					e.toggle.setAttribute('aria-expanded', 'true');
+					e.toggle.setAttribute('aria-label', 'Close menu');
+					document.body.style.overflow = 'hidden';
+					syncNavAria();
+					var first = e.nav.querySelector('a');
+					if (first) {
+						window.requestAnimationFrame(function () {
+							first.focus();
+						});
+					}
+				}
+
+				function onToggleClick() {
+					var e = els();
+					if (!e.header || !e.toggle || !e.nav || isDesktop()) return;
+					if (isOpen(e.header)) closeMenu(true);
+					else openMenu();
+				}
+
+				function bindNavLinks() {
+					var e = els();
+					if (!e.nav) return;
+					e.nav.querySelectorAll('a').forEach(function (link) {
+						link.addEventListener('click', function () {
+							if (!isDesktop()) closeMenu(false);
+						});
+					});
+				}
+
+				var e0 = els();
+				if (!e0.header || !e0.toggle || !e0.nav) return;
+
+				e0.toggle.addEventListener('click', onToggleClick);
+				if (e0.backdrop) e0.backdrop.addEventListener('click', function () {
+					closeMenu(true);
+				});
+
+				bindNavLinks();
+
+				document.addEventListener('keydown', function (ev) {
+					if (ev.key === 'Escape' && !isDesktop()) {
+						var e = els();
+						if (e.header && isOpen(e.header)) closeMenu(true);
+					}
+				});
+
+				mq.addEventListener('change', function () {
+					closeMenu(false);
+					syncNavAria();
+				});
+
+				syncNavAria();
+			})();
+		</script>
 	</body>
 </html>
 
 <style>
 	.site-header {
+		position: relative;
+		z-index: 50;
 		display: grid;
 		align-items: center;
 		column-gap: 1rem;
-		row-gap: 0.65rem;
 		padding: 0.75rem max(1rem, env(safe-area-inset-right)) 0.75rem max(1rem, env(safe-area-inset-left));
 		border-bottom: 2px solid var(--border);
 		background: var(--bg-elevated);
+		grid-template-columns: minmax(0, 1fr) auto;
+		grid-template-rows: auto;
 		transition:
 			background-color 0.2s ease,
 			border-color 0.2s ease;
-	}
-
-	/* Narrow: title row + full-width scrollable nav */
-	.site-header {
-		grid-template-columns: minmax(0, 1fr) auto;
-		grid-template-rows: auto auto;
 	}
 
 	.brand {
@@ -148,11 +267,16 @@ const nav = [
 		color: var(--teal-dark);
 	}
 
-	.theme-toggle {
+	.header-tools {
 		grid-column: 2;
 		grid-row: 1;
+		display: flex;
+		align-items: center;
 		justify-self: end;
-		align-self: center;
+		gap: 0.45rem;
+	}
+
+	.theme-toggle {
 		display: inline-flex;
 		align-items: center;
 		justify-content: center;
@@ -173,46 +297,138 @@ const nav = [
 			color 0.15s ease;
 	}
 
+	.menu-toggle {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.75rem;
+		height: 2.75rem;
+		padding: 0;
+		border: 2px solid var(--border);
+		border-radius: 10px;
+		background: var(--bg);
+		color: var(--ink);
+		cursor: pointer;
+		flex-shrink: 0;
+		-webkit-tap-highlight-color: transparent;
+		touch-action: manipulation;
+		transition:
+			border-color 0.15s ease,
+			background-color 0.15s ease,
+			color 0.15s ease;
+	}
+
+	.menu-toggle:hover {
+		border-color: var(--teal);
+		color: var(--teal-dark);
+	}
+
+	.menu-toggle:focus-visible {
+		outline: 2px solid var(--purple);
+		outline-offset: 2px;
+	}
+
+	.menu-toggle__bars {
+		display: flex;
+		flex-direction: column;
+		gap: 5px;
+		width: 1.125rem;
+	}
+
+	.menu-toggle__bar {
+		display: block;
+		height: 2px;
+		width: 100%;
+		background: currentColor;
+		border-radius: 1px;
+		transition:
+			transform 0.2s ease,
+			opacity 0.2s ease;
+		transform-origin: center;
+	}
+
+	.site-header.is-menu-open .menu-toggle__bar:nth-child(1) {
+		transform: translateY(7px) rotate(45deg);
+	}
+
+	.site-header.is-menu-open .menu-toggle__bar:nth-child(2) {
+		opacity: 0;
+		transform: scaleX(0);
+	}
+
+	.site-header.is-menu-open .menu-toggle__bar:nth-child(3) {
+		transform: translateY(-7px) rotate(-45deg);
+	}
+
+	.nav-backdrop {
+		position: fixed;
+		inset: 0;
+		z-index: 1000;
+		margin: 0;
+		padding: 0;
+		border: none;
+		background: color-mix(in srgb, var(--ink) 45%, transparent);
+		cursor: pointer;
+		opacity: 0;
+		visibility: hidden;
+		pointer-events: none;
+		transition:
+			opacity 0.2s ease,
+			visibility 0.2s ease;
+	}
+
+	.site-header.is-menu-open .nav-backdrop {
+		opacity: 1;
+		visibility: visible;
+		pointer-events: auto;
+	}
+
 	.nav {
-		grid-column: 1 / -1;
-		grid-row: 2;
-		min-width: 0;
-		padding: 0.35rem 0 0.15rem;
-		border-top: 1px solid var(--border);
+		position: fixed;
+		top: 0;
+		right: 0;
+		bottom: 0;
+		z-index: 1001;
+		width: min(19.5rem, 90vw);
+		margin: 0;
+		padding: max(4.65rem, calc(0.75rem + env(safe-area-inset-top))) max(1rem, env(safe-area-inset-right)) 1.5rem
+			max(1.25rem, env(safe-area-inset-left));
+		background: var(--bg-elevated);
+		border-left: 1px solid var(--border);
+		box-shadow: -16px 0 48px color-mix(in srgb, var(--ink) 14%, transparent);
+		overflow-y: auto;
+		-webkit-overflow-scrolling: touch;
+		transform: translateX(100%);
+		visibility: hidden;
+		transition:
+			transform 0.25s ease,
+			visibility 0.25s ease;
+	}
+
+	.site-header.is-menu-open .nav {
+		transform: translateX(0);
+		visibility: visible;
 	}
 
 	.nav ul {
 		display: flex;
-		flex-wrap: nowrap;
-		gap: 0.4rem;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 0.35rem;
 		list-style: none;
 		margin: 0;
-		padding: 0.15rem 0 0.35rem;
-		overflow-x: auto;
-		overscroll-behavior-x: contain;
-		-webkit-overflow-scrolling: touch;
-		scrollbar-width: none;
-		touch-action: pan-x;
-	}
-
-	.nav ul::-webkit-scrollbar {
-		display: none;
-	}
-
-	.nav li {
-		flex-shrink: 0;
+		padding: 0;
 	}
 
 	.nav-link {
 		display: block;
 		color: var(--muted);
 		text-decoration: none;
-		font-size: 0.8125rem;
+		font-size: 0.9375rem;
 		font-weight: 600;
-		line-height: 1.2;
-		white-space: nowrap;
-		padding: 0.45rem 0.7rem;
-		border-radius: 8px;
+		line-height: 1.25;
+		padding: 0.75rem 0.85rem;
+		border-radius: 10px;
 		border: 1px solid var(--border);
 		background: var(--bg);
 		transition:
@@ -254,12 +470,18 @@ const nav = [
 		display: block;
 	}
 
+	@media (prefers-reduced-motion: reduce) {
+		.nav,
+		.nav-backdrop,
+		.menu-toggle__bar {
+			transition: none !important;
+		}
+	}
+
 	@media (min-width: 52rem) {
 		.site-header {
 			grid-template-columns: auto minmax(0, 1fr) auto;
-			grid-template-rows: auto;
 			padding: 1rem max(1.5rem, env(safe-area-inset-right)) 1rem max(1.5rem, env(safe-area-inset-left));
-			row-gap: 0;
 		}
 
 		.brand {
@@ -267,22 +489,38 @@ const nav = [
 			grid-row: 1;
 		}
 
+		.header-tools {
+			display: contents;
+		}
+
+		.menu-toggle {
+			display: none !important;
+		}
+
+		.nav-backdrop {
+			display: none !important;
+		}
+
 		.nav {
+			position: static;
 			grid-column: 2;
 			grid-row: 1;
+			width: auto;
+			height: auto;
 			justify-self: end;
-			margin: 0;
 			padding: 0;
-			border-top: none;
+			border: none;
+			box-shadow: none;
+			overflow: visible;
+			transform: none;
+			visibility: visible;
 		}
 
 		.nav ul {
+			flex-direction: row;
 			flex-wrap: wrap;
 			justify-content: flex-end;
-			overflow: visible;
-			padding: 0;
 			gap: 0.2rem 1.1rem;
-			touch-action: auto;
 		}
 
 		.nav-link {
@@ -308,6 +546,7 @@ const nav = [
 		.theme-toggle {
 			grid-column: 3;
 			grid-row: 1;
+			justify-self: end;
 			width: 2.5rem;
 			height: 2.5rem;
 		}
