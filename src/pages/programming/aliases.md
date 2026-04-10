@@ -214,8 +214,7 @@ C:\Users\user\Desktop>
 1. Create a new aliases.bat or aliases.cmd file
 
 ```cmd
-
-# create the file
+# create the aliases file
 notepad aliases.cmd
 ```
 
