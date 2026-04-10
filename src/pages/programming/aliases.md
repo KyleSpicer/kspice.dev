@@ -28,6 +28,8 @@ How to create and use aliases in the following shell environments: bash, PowerSh
     1. [Aliases in PowerShell](#aliases-in-powershell)
     1. [Example Adding and Using PowerShell Aliases](#example-adding-and-using-powershell-aliases)
 1. [Command Prompt](#command-prompt)
+    1. [About Command Prompt](#about-command-prompt)
+    1. [Create an Aliases .bat or .cmd file](#creating-an-aliases-bat-or-cmd-file)
 1. [References](#references)
 
 # Overview
