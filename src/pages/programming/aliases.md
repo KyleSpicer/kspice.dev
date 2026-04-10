@@ -157,7 +157,7 @@ C:\Users\user> Set-ExecutionPolicy RemoteSigned
 
 # validate execution policy change
 C:\Users\user> Get-ExecutionPolicy
-Restricted
+RemoteSigned
 ```
 
 ## Source the $PROFILE
@@ -185,10 +185,10 @@ function d { Set-Location "$HOME$\Desktop"}
 # open current user profile script
 notepad $PROFILE
 
-# add change current directory to Desktop function (alias)
+# add PowerShell function (alias)
 function d { Set-Location "$HOME$\Desktop }
 
-# source the updated profile script or open a new PowerShell
+# save and source updated profile script or open a new PowerShell
 . $PROFILE
 
 # use your new alias
