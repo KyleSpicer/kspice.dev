@@ -27,7 +27,6 @@ How to create and use aliases in the following shell environments: bash, PowerSh
     1. [Source the $PROFILE](#source-the-profile)
     1. [Aliases in PowerShell](#aliases-in-powershell)
     1. [Example Adding and Using PowerShell Aliases](#example-adding-and-using-powershell-aliases)
-
 1. [Command Prompt](#command-prompt)
 1. [References](#references)
 
@@ -198,12 +197,52 @@ C:\Users\user\Desktop>
 
 # Command Prompt
 
+**Please Note: ** Examples use Command Prompt `version Microsoft Windows [Version 10.0.26200.8037]`
+
+## About Command Prompt
+
+- Classic **Command Prompt** (`cmd.exe`) does not have Bash-style `alias` commands or a single “profile” file like PowerShell’s `$PROFILE`. 
+- The usual approach is **`DOSKEY` macros**: short names that expand to a command line. They behave a lot like aliases.
+- Macros exist **only for that `cmd` window** unless you load them again.
+- We will create an `aliases.bat` or `aliases.cmd` file, populate it with aliases, then make it persist by adding an `AutoRun` entry into the `HKCU\Software\Microsoft\Command Processor` registry key.
+- Newer versions of windows command prompt use both `.bat` and `.cmd` file.
+
+## Creating an Aliases .bat or .cmd file
+
+1. Create a new aliases.bat or aliases.cmd file
+
+```cmd
+
+# create the file
+notepad aliases.cmd
+```
+
+2. Add a simple alias and save the file
+
+```cmd
+# add a few aliases
+@echo off
+doskey d=cd "%USERPROFILE%\Desktop"
+```
+
+3. Set AutoRun for Command Prompt Registry Key
+
+```cmd
+C:\Users\user> reg add "HKCU\Software\Microsoft\Command Processor" /v AutoRun /t REG_SZ /d "C:\aliases.cmd" /f
+The operation completed successfully.
+```
+
+4. Verify Functionality
+
+- Each new command prompt session should persist with your new aliases.
+
 # References
 
 1. [Bash Introduction - W3Schools](https://www.w3schools.com/bash/bash_intro.php)
 1. [Bash Aliases - W3Schools](https://www.w3schools.com/bash/bash_alias.php)
 1. [PowerShell Profiles - MSDN](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.6)
 1. [Customizing PowerShell Environment - MSDN](#https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/creating-profiles?view=powershell-7.6)
+1. [Doskey Reference - MSDN](#https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/doskey)
 
 <!-- Put image files in `public/images/tutorials/aliases/` (served from the site root). Reference them in Markdown like this: -->
 
