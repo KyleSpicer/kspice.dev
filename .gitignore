@@ -7,6 +7,9 @@ dist/
 # dependencies
 node_modules/
 
+# never install packages inside src/pages (accidental nested node_modules)
+src/pages/node_modules/
+
 # logs
 npm-debug.log*
 yarn-debug.log*

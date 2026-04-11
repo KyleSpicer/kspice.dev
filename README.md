@@ -24,6 +24,14 @@ npm run preview
 
 `build` writes static files to `dist/`. `preview` serves that folder so you can check the site before deploying.
 
+## Resume PDF (`public/resume.pdf`)
+
+```bash
+npm run resume:pdf
+```
+
+Requires **[wkhtmltopdf](https://wkhtmltopdf.org/downloads.html)** on your `PATH`, or set **`WKHTMLTOPDF_PATH`** to the `wkhtmltopdf` binary. The script renders `src/pages/resume.md` with **Source Sans 3**, **Source Serif 4**, and **Source Code Pro** (loaded from Google Fonts).
+
 ## Deploy via GitHub (live site)
 
 1. This repo uses **GitHub Actions** (`.github/workflows/deploy.yml`) to build and deploy to **GitHub Pages**.
