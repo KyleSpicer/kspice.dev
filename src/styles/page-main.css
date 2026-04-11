@@ -34,7 +34,7 @@
 }
 
 .main .section h2 {
-	font-size: 1rem;
+	font-size: 1.25rem;
 	font-weight: 600;
 	margin: 0 0 0.5rem;
 	color: var(--teal-dark);
@@ -43,6 +43,7 @@
 .main .section p {
 	margin: 0;
 	color: var(--muted);
+	font-size: 1.0625rem;
 }
 
 .main .section a:not(.card) {
@@ -93,6 +94,6 @@
 
 .main a.card p {
 	margin: 0;
-	font-size: 0.9375rem;
+	font-size: 1.0625rem;
 	color: var(--muted);
 }
