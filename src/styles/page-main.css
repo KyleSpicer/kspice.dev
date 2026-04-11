@@ -41,12 +41,54 @@
 	color: var(--muted);
 }
 
-.main .section a {
+.main .section a:not(.card) {
 	color: var(--teal-dark);
 	text-decoration: underline;
 	text-underline-offset: 2px;
 }
 
-.main .section a:hover {
+.main .section a:not(.card):hover {
 	color: var(--purple-dark);
+}
+
+/* Tutorial / index card grid (matches home page blocks) */
+.main ul.cards {
+	list-style: none;
+	margin: 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	gap: 1rem;
+}
+
+.main a.card {
+	display: block;
+	padding: 1.25rem 1.5rem;
+	background: var(--bg-elevated);
+	border: 2px solid var(--border);
+	border-radius: 10px;
+	text-decoration: none;
+	color: var(--ink);
+	transition:
+		border-color 0.15s ease,
+		box-shadow 0.15s ease,
+		background-color 0.2s ease;
+}
+
+.main a.card:hover {
+	border-color: var(--teal);
+	box-shadow: 0 4px 20px color-mix(in srgb, var(--purple) 12%, transparent);
+}
+
+.main a.card :is(h2, h3) {
+	margin: 0 0 0.35rem;
+	font-size: 1.125rem;
+	font-weight: 600;
+	color: var(--purple-dark);
+}
+
+.main a.card p {
+	margin: 0;
+	font-size: 0.9375rem;
+	color: var(--muted);
 }
