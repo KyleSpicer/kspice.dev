@@ -1,0 +1,46 @@
+---
+import Layout from '../layouts/Layout.astro';
+import '../styles/page-main.css';
+
+const powerShellBookUrl =
+	'https://www.amazon.com/Learn-PowerShell-Month-Lunches-Windows/dp/1617296961?pd_rd_w=rS3g2&content-id=amzn1.sym.781fe6e1-9487-4a74-b81e-5a879e5ec273%3Aamzn1.symc.c3d5766d-b606-46b8-ab07-1d9d1da0638a&pf_rd_p=781fe6e1-9487-4a74-b81e-5a879e5ec273&pf_rd_r=8DJRAWBCNR5ERJY352JM&pd_rd_wg=aFJVh&pd_rd_r=1d41870c-7cdf-4ea1-aec2-7d2c4d1c60b8&pd_rd_i=1617296961&linkCode=ll2&tag=kspicedev1-20&linkId=8c4d5fd16d2c9de55504016e46e53474&language=en_US&ref_=as_li_ss_tl';
+---
+
+<Layout
+	title="Product Recommendations"
+	description="Books, tools, and gadgets — recommendations and affiliate links on kspice.dev."
+>
+	<main class="main">
+		<h1>Product Recommendations</h1>
+		<p class="lede">
+			A running list of books, tools, and gadgets I have used and recommend.
+		</p>
+		<section class="section" aria-labelledby="books-heading">
+			<h2 id="books-heading">Books</h2>
+			<ul class="cards">
+				<li>
+					<a
+						class="card"
+						href={powerShellBookUrl}
+						target="_blank"
+						rel="noopener noreferrer sponsored"
+					>
+						<h3>Learn PowerShell in a Month of Lunches, 4th ed.</h3>
+						<p>
+							A practical, lesson-style intro to PowerShell on Windows — great if you want to get
+							comfortable at the shell quickly.
+						</p>
+					</a>
+				</li>
+			</ul>
+		</section>
+		<section class="section" aria-labelledby="tools-heading">
+			<h2 id="tools-heading">Tools &amp; gear</h2>
+			<p>More picks coming soon...</p>
+		</section>
+		<section class="section" aria-labelledby="gadgets-heading">
+			<h2 id="gadgets-heading">Gadgets</h2>
+			<p>More picks coming soon...</p>
+		</section>
+	</main>
+</Layout>
