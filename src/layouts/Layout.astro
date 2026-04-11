@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
 import SocialFooter from '../components/SocialFooter.astro';
+import { sitePath } from '../utils/sitePath';
 
 interface Props {
 	title?: string;
@@ -15,19 +16,20 @@ const {
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
 
 function navIsActive(href: string): boolean {
-	if (href === '/#contact') return false;
-	if (href === '/') return pathname === '/';
-	return pathname === href || pathname.startsWith(href + '/');
+	if (href.includes('#contact')) return false;
+	const h = href.replace(/\/$/, '') || '/';
+	if (pathname === h) return true;
+	return pathname.startsWith(h + '/');
 }
 
 const nav = [
-	{ href: '/', label: 'Home' },
-	{ href: '/programming', label: 'Programming Tutorials' },
-	{ href: '/recommendations', label: 'Product Recommendations' },
-	{ href: '/projects', label: 'Documented Projects' },
-	{ href: '/woodworking', label: 'Woodworking' },
-	{ href: '/resume', label: 'Resume' },
-	{ href: '/#contact', label: 'Contact' },
+	{ href: sitePath('/'), label: 'Home' },
+	{ href: sitePath('/programming'), label: 'Programming Tutorials' },
+	{ href: sitePath('/recommendations'), label: 'Product Recommendations' },
+	{ href: sitePath('/projects'), label: 'Documented Projects' },
+	{ href: sitePath('/woodworking'), label: 'Woodworking' },
+	{ href: sitePath('/resume'), label: 'Resume' },
+	{ href: `${sitePath('/')}#contact`, label: 'Contact' },
 ] as const;
 ---
 
@@ -38,8 +40,8 @@ const nav = [
 		<meta name="viewport" content="width=device-width, viewport-fit=cover" />
 		<meta name="color-scheme" content="dark light" />
 		<meta name="description" content={description} />
-		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-		<link rel="icon" href="/favicon.ico" />
+		<link rel="icon" type="image/svg+xml" href={sitePath('/favicon.svg')} />
+		<link rel="icon" href={sitePath('/favicon.ico')} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title === 'kspice.dev' ? title : `${title} · kspice.dev`}</title>
 		<script is:inline>
@@ -53,7 +55,7 @@ const nav = [
 	</head>
 	<body>
 		<header class="site-header">
-			<a class="brand" href="/">kspice.dev</a>
+			<a class="brand" href={sitePath('/')}>kspice.dev</a>
 			<div class="header-tools">
 				<button
 					type="button"

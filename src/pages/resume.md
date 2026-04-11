@@ -6,7 +6,7 @@ description: Resume and professional background - kspice.dev.
 
 # Resume
 
-**Chief Warrant Officer (170D)** and **technical section lead** transitioning toward civilian roles in **software engineering**, **security-focused development**, **cyber operations and analysis**, **red-team-adjacent / offensive security engineering**, and **technical program management**. [Download PDF](/resume.pdf)
+**Chief Warrant Officer (170D)** and **technical section lead** transitioning toward civilian roles in **software engineering**, **security-focused development**, **cyber operations and analysis**, **red-team-adjacent / offensive security engineering**, and **technical program management**. [Download PDF](../resume.pdf)
 
 ## Summary
 

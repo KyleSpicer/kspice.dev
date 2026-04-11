@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import '../styles/page-main.css';
+import { sitePath } from '../utils/sitePath';
 ---
 
 <Layout
@@ -18,7 +19,7 @@ import '../styles/page-main.css';
 			<h2 id="tutorials-heading">Tutorials</h2>
 			<ul class="cards">
 				<li>
-					<a class="card" href="/programming/aliases">
+					<a class="card" href={sitePath('/programming/aliases')}>
 						<h3>Aliases</h3>
 						<p>
 							How to create and use aliases in bash, PowerShell, and Windows Command Prompt.

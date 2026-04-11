@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import '../styles/page-main.css';
+import { sitePath } from '../utils/sitePath';
 ---
 
 <Layout
@@ -15,31 +16,31 @@ import '../styles/page-main.css';
 		</p>
 		<ul class="cards">
 			<li>
-				<a class="card" href="/programming">
+				<a class="card" href={sitePath('/programming')}>
 					<h2>Programming Tutorials</h2>
 					<p>Lessons, walkthroughs, and teaching notes.</p>
 				</a>
 			</li>
 			<li>
-				<a class="card" href="/projects">
+				<a class="card" href={sitePath('/projects')}>
 					<h2>Documented Projects</h2>
 					<p>Write-ups and documentation for things you have built.</p>
 				</a>
 			</li>
 			<li>
-				<a class="card" href="/woodworking">
+				<a class="card" href={sitePath('/woodworking')}>
 					<h2>Woodworking</h2>
 					<p>Builds, techniques, and video links.</p>
 				</a>
 			</li>
 			<li>
-				<a class="card" href="/resume">
+				<a class="card" href={sitePath('/resume')}>
 					<h2>Resume</h2>
 					<p>Experience and background.</p>
 				</a>
 			</li>
 			<li>
-				<a class="card" href="/recommendations">
+				<a class="card" href={sitePath('/recommendations')}>
 					<h2>Product Recommendations</h2>
 					<p>Books, tools, gadgets, and affiliate picks.</p>
 				</a>
