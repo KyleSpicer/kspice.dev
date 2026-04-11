@@ -8,10 +8,14 @@
   "scripts": {
     "dev": "astro dev",
     "build": "astro build",
+    "resume:pdf": "node scripts/generate-resume-pdf.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },
   "dependencies": {
     "astro": "^6.1.5"
+  },
+  "devDependencies": {
+    "marked": "^18.0.0"
   }
 }

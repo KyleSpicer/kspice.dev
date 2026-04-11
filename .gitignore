@@ -22,3 +22,9 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# local PDF/image scratch renders (e.g. PyMuPDF page exports)
+.tmp_*/
+
+# temp HTML used only for resume PDF generation
+public/.resume-print.html
