@@ -2,35 +2,32 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/page-main.css';
 import { sitePath } from '../utils/sitePath';
+
+/** Home hero: blue/teal tile mark (`public/images/logo/`). */
+const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
 ---
 
 <Layout
 	title="kspice.dev"
-	description="Kyle Spicer’s site: programming tutorials, project documentation, woodworking, and more."
 >
 	<main class="main">
-		<h1>Welcome</h1>
-		<p class="lede">
-			Kyle Spicer’s site for recording programming tutorials, documenting projects,
-			displaying woodworking projects, and more.
-		</p>
+		<h1 class="welcome-stack">
+			<span class="welcome-line">Welcome to</span>
+			<img
+				class="home-hero-logo"
+				src={heroLogoSrc}
+				alt="kspice.dev"
+				width="1000"
+				height="1000"
+				loading="eager"
+				decoding="async"
+			/>
+		</h1>
 		<ul class="cards">
 			<li>
 				<a class="card" href={sitePath('/programming')}>
 					<h2>Programming Tutorials</h2>
 					<p>Lessons, walkthroughs, and teaching notes.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/projects')}>
-					<h2>Documented Projects</h2>
-					<p>Write-ups and documentation for things you have built.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/woodworking')}>
-					<h2>Woodworking</h2>
-					<p>Builds, techniques, and video links.</p>
 				</a>
 			</li>
 			<li>
@@ -48,3 +45,27 @@ import { sitePath } from '../utils/sitePath';
 		</ul>
 	</main>
 </Layout>
+
+<style>
+	.welcome-stack {
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		text-align: center;
+		gap: 1rem;
+		margin: 0 0 2.25rem;
+	}
+
+	.welcome-line {
+		display: block;
+		width: 100%;
+	}
+
+	.home-hero-logo {
+		width: min(26rem, 100%);
+		height: auto;
+		display: block;
+		border: none;
+		border-radius: 12px;
+	}
+</style>
