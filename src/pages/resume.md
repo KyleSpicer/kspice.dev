@@ -10,11 +10,9 @@ description: Resume and professional background - kspice.dev.
 
 ## Summary
 
-Targeting **software engineering**, **application and systems security**, **cyber and threat analysis**, **red teaming and adversary-focused tool development**, and **Agile program leadership** (delivery, roadmaps, stakeholder coordination). Since 2022 has engineered and validated **tactical cyberspace capabilities** for **U.S. Cyber Command** and joint customers as a **cyber capability developer** and **Windows persistence** technical lead: **security-focused programming**, **Windows / OS internals**, **network exploitation**, **reverse engineering**, **code review**, and **developer training**, with a record of **leading critical projects** and improving release quality.
+Chief Warrant Officer (170D) and Windows Persistence section lead with the U.S. Army’s cyber capability development enterprise. Since 2022 has engineered, reviewed, and validated tactical cyberspace capabilities for U.S. Cyber Command and joint forces—grounded in security-focused software engineering, Windows/OS internals, network exploitation, and reverse engineering—while leading critical projects, lifting teammates through technical training, and tightening release quality. Transitioning to civilian roles in software engineering, application and systems security, cyber and threat analysis, adversary-focused tool development, and Agile technical program leadership.
 
-**Education:** **B.S. Computer Science** (Software Engineering concentration, **3.96 GPA**); **M.S. Computer Science** (AI), _in progress_, **Georgia Tech OMSCS**. **Credentials:** **Certified Advanced Cyber Programmer** (Windows CNO); **Advanced Certified ScrumMaster** and **Certified ScrumMaster**; military **Senior** and **Basic Cyberspace Capability Developer** qualifications (Windows persistence). **Languages and tooling** include **C**, **Python**, **Bash**, **PowerShell**, **GitLab CI/CD**, automated testing, and disciplined release practices.
-
-Earlier service adds **cross-functional leadership** (SOF civil affairs, maritime engineering, tactical communications, **INFOSEC** compliance) and **mentorship** at scale; comfortable operating under **high-stakes deadlines** and translating mission needs into **measurable technical outcomes**.
+Earlier service adds cross-functional leadership (SOF Civil Affairs, maritime engineering, tactical communications, INFOSEC compliance) and mentorship at scale; comfortable operating under high-stakes deadlines and translating mission needs into measurable technical outcomes.
 
 ## Experience
 
