@@ -25,9 +25,13 @@ function navIsActive(href: string): boolean {
 /** Header brand mark (`public/images/logo/`). Logo-04 PNG matches the transparent wordmark style. */
 const brandLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-04.png');
 
+/** Tab / bookmark icon (square mark, same family as home hero). */
+const faviconSvgSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.svg');
+const faviconPngSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
+
 const nav = [
 	{ href: sitePath('/'), label: 'Home' },
-	{ href: sitePath('/programming'), label: 'Programming Tutorials' },
+	{ href: sitePath('/programming'), label: 'Programming' },
 	{ href: sitePath('/recommendations'), label: 'Product Recommendations' },
 	{ href: sitePath('/resume'), label: 'Resume' },
 	{ href: `${sitePath('/')}#contact`, label: 'Contact' },
@@ -41,8 +45,9 @@ const nav = [
 		<meta name="viewport" content="width=device-width, viewport-fit=cover" />
 		<meta name="color-scheme" content="dark light" />
 		<meta name="description" content={description} />
-		<link rel="icon" type="image/svg+xml" href={sitePath('/favicon.svg')} />
-		<link rel="icon" href={sitePath('/favicon.ico')} />
+		<link rel="icon" type="image/svg+xml" href={faviconSvgSrc} />
+		<link rel="icon" type="image/png" sizes="32x32" href={faviconPngSrc} />
+		<link rel="apple-touch-icon" href={faviconPngSrc} />
 		<meta name="generator" content={Astro.generator} />
 		<title>{title === 'kspice.dev' ? title : `${title} · kspice.dev`}</title>
 		<script is:inline>

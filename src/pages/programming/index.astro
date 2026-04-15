@@ -1,0 +1,43 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/page-main.css';
+import { sitePath } from '../../utils/sitePath';
+---
+
+<Layout
+	title="Programming"
+	description="Programming tutorials, developer references, and lessons on kspice.dev."
+>
+	<main class="main">
+		<h1>Programming</h1>
+		<p class="lede">
+			Tutorials and reference material I maintain for myself and other developers.
+		</p>
+		<section class="section" aria-labelledby="sections-heading">
+			<h2 id="sections-heading">Contents</h2>
+			<ul class="cards">
+				<li>
+					<a class="card" href={sitePath('/programming/tutorials')}>
+						<h3>Tutorials</h3>
+						<p>Step-by-step lessons and notes.</p>
+					</a>
+				</li>
+				<li>
+					<a class="card" href={sitePath('/programming/references')}>
+						<h3>References</h3>
+						<p>Curated links and files worth bookmarking for day-to-day development.</p>
+					</a>
+				</li>
+			</ul>
+		</section>
+		<section class="section" aria-labelledby="contribute-heading">
+			<h2 id="contribute-heading">Contribute</h2>
+			<p>
+				If you’d like to contribute to this, please{' '}
+				<a href="mailto:kyledspicer@gmail.com">email me</a>
+				{' '}
+				and we can get it added!
+			</p>
+		</section>
+	</main>
+</Layout>

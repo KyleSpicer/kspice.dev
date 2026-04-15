@@ -10,7 +10,7 @@ description: Resume and professional background - kspice.dev.
 
 ## Summary
 
-Chief Warrant Officer (170D) and Windows Persistence section lead with the U.S. Army’s cyber capability development enterprise. Since 2022 has engineered, reviewed, and validated tactical cyberspace capabilities for U.S. Cyber Command and joint forces—grounded in security-focused software engineering, Windows/OS internals, network exploitation, and reverse engineering—while leading critical projects, lifting teammates through technical training, and tightening release quality. Transitioning to civilian roles in software engineering, application and systems security, cyber and threat analysis, adversary-focused tool development, and Agile technical program leadership.
+Chief Warrant Officer (170D) and Windows Persistence section lead with the U.S. Army’s cyber capability development enterprise. Since 2022 has engineered, reviewed, and validated tactical cyberspace capabilities for U.S. Cyber Command and joint forces, grounded in security-focused software engineering, Windows/OS internals, network exploitation, and reverse engineering, while leading critical projects, lifting teammates through technical training, and tightening release quality. Transitioning to civilian roles in software engineering, application and systems security, cyber and threat analysis, adversary-focused tool development, and Agile technical program leadership.
 
 Earlier service adds cross-functional leadership (SOF Civil Affairs, maritime engineering, tactical communications, INFOSEC compliance) and mentorship at scale; comfortable operating under high-stakes deadlines and translating mission needs into measurable technical outcomes.
 

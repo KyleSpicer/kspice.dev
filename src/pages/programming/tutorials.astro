@@ -1,0 +1,31 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/page-main.css';
+import { sitePath } from '../../utils/sitePath';
+---
+
+<Layout
+	title="Tutorials"
+	description="Programming tutorials and lessons on kspice.dev."
+>
+	<main class="main">
+		<h1>Tutorials</h1>
+		<p class="lede">
+			Too often, developers research and create unique solutions that go undocumented and forgotten.
+			The purpose of this section is to document and archive tutorials for future reference.
+		</p>
+		<section class="section" aria-labelledby="tutorials-list-heading">
+			<h2 id="tutorials-list-heading">All tutorials</h2>
+			<ul class="cards">
+				<li>
+					<a class="card" href={sitePath('/programming/aliases')}>
+						<h3>Aliases</h3>
+						<p>
+							How to create and use aliases in bash, PowerShell, and Windows Command Prompt.
+						</p>
+					</a>
+				</li>
+			</ul>
+		</section>
+	</main>
+</Layout>

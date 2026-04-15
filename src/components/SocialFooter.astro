@@ -190,7 +190,7 @@ const entries: SocialEntry[] = [
 					setStatus('');
 				}, 2000);
 			} catch {
-				const errMsg = 'Could not copy — try selecting the username';
+				const errMsg = 'Could not copy; try selecting the username';
 				btn.setAttribute('aria-label', errMsg);
 				setStatus('Copy failed');
 				window.setTimeout(() => {

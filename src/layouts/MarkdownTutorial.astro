@@ -14,7 +14,7 @@ const { frontmatter } = Astro.props;
 
 <Layout
 	title={frontmatter.title}
-	description={frontmatter.description ?? `${frontmatter.title} — kspice.dev`}
+	description={frontmatter.description ?? `${frontmatter.title} · kspice.dev`}
 >
 	<main class="main tutorial-md">
 		<slot />
