@@ -10,9 +10,10 @@ description: Resume and professional background - kspice.dev.
 
 ## Summary
 
-Chief Warrant Officer (170D) and Windows Persistence section lead with the U.S. Army’s cyber capability development enterprise. Since 2022 has engineered, reviewed, and validated tactical cyberspace capabilities for U.S. Cyber Command and joint forces, grounded in security-focused software engineering, Windows/OS internals, network exploitation, and reverse engineering, while leading critical projects, lifting teammates through technical training, and tightening release quality. Transitioning to civilian roles in software engineering, application and systems security, cyber and threat analysis, adversary-focused tool development, and Agile technical program leadership.
+Chief Warrant Officer (170D) and Windows Persistence Section Lead within the U.S. Army cyber capability development enterprise. Since 2022, designed and validated tactical cyberspace capabilities for U.S. Cyber Command and joint forces, focused on Windows internals, reverse engineering, and security-focused software engineering. Leads development efforts, improves release quality, and mentors engineers through structured technical training and code review.
 
-Earlier service adds cross-functional leadership (SOF Civil Affairs, maritime engineering, tactical communications, INFOSEC compliance) and mentorship at scale; comfortable operating under high-stakes deadlines and translating mission needs into measurable technical outcomes.
+Earlier service spans SOF Civil Affairs, maritime engineering, and tactical communications, with operational experience translating mission requirements into technical and mission outcomes. **Active TS/SCI clearance.**
+
 
 ## Experience
 
@@ -20,7 +21,12 @@ Earlier service adds cross-functional leadership (SOF Civil Affairs, maritime en
 
 _Cyber Solutions Development - Georgia (**CSD-G**), **780th MI BDE**, Fort Gordon, GA_
 
-- Current role
+- Lead Windows endpoint capability development team supporting USCYBERCOM mission requirements and cyber operations support functions
+- Direct design, implementation, and validation of Windows-based security tooling and system-level capability development
+- Oversee mission software lifecycle including development, testing, integration, and release validation for operational use cases
+- Coordinate cross-functional engineering efforts across multiple cyber capability development branches and mission stakeholders
+- Mentor junior Cyber Capabilities Developers (CCDs) in Windows internals, debugging, reverse engineering, and secure development practices
+
 
 ### Cyber Capabilities Developer (170D) - U.S. Army - _February 2022 – March 2025_
 
