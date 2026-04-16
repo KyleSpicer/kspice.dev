@@ -6,7 +6,7 @@ description: Resume and professional background - kspice.dev.
 
 # Resume
 
-[Download PDF](../resume.pdf)
+[Download PDF](../downloads/resume.pdf)
 
 ## Summary
 
@@ -23,9 +23,9 @@ _Cyber Solutions Development - Georgia (**CSD-G**), **780th MI BDE**, Fort Gordo
 
 - Lead Windows endpoint capability development team supporting USCYBERCOM mission requirements and cyber operations support functions
 - Direct design, implementation, and validation of Windows-based security tooling and system-level capability development
-- Oversee mission software lifecycle including development, testing, integration, and release validation for operational use cases
-- Coordinate cross-functional engineering efforts across multiple cyber capability development branches and mission stakeholders
-- Mentor junior Cyber Capabilities Developers (CCDs) in Windows internals, debugging, reverse engineering, and secure development practices
+- Oversaw mission software lifecycle including development, testing, integration, and release validation for operational use cases
+- Coordinated cross-functional engineering efforts across multiple cyber capability development branches and mission stakeholders
+- Mentored junior Cyber Capabilities Developers (CCDs) in Windows internals, debugging, reverse engineering, and secure development practices
 
 
 ### Cyber Capabilities Developer (170D) - U.S. Army - _February 2022 – March 2025_

@@ -1,5 +1,5 @@
 /**
- * Renders src/pages/resume.md to public/resume.pdf using wkhtmltopdf.
+ * Renders src/pages/resume.md to public/downloads/resume.pdf using wkhtmltopdf.
  *
  * Install: https://wkhtmltopdf.org/downloads.html (Windows: installer adds to PATH,
  * or set WKHTMLTOPDF_PATH to the full path of wkhtmltopdf.exe).
@@ -15,7 +15,7 @@ import { marked } from 'marked';
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const root = path.join(__dirname, '..');
 const mdPath = path.join(root, 'src', 'pages', 'resume.md');
-const outPdf = path.resolve(root, 'public', 'resume.pdf');
+const outPdf = path.resolve(root, 'public', 'downloads', 'resume.pdf');
 const tmpHtml = path.resolve(root, 'public', '.resume-print.html');
 
 const fontsHref =

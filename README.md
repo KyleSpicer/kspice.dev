@@ -24,7 +24,7 @@ npm run preview
 
 `build` writes static files to `dist/`. `preview` serves that folder so you can check the site before deploying.
 
-## Resume PDF (`public/resume.pdf`)
+## Resume PDF (`public/downloads/resume.pdf`)
 
 ```bash
 npm run resume:pdf
