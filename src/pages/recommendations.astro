@@ -2,45 +2,168 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/page-main.css';
 
-const powerShellBookUrl =
-	'https://www.amazon.com/Learn-PowerShell-Month-Lunches-Windows/dp/1617296961?pd_rd_w=rS3g2&content-id=amzn1.sym.781fe6e1-9487-4a74-b81e-5a879e5ec273%3Aamzn1.symc.c3d5766d-b606-46b8-ab07-1d9d1da0638a&pf_rd_p=781fe6e1-9487-4a74-b81e-5a879e5ec273&pf_rd_r=8DJRAWBCNR5ERJY352JM&pd_rd_wg=aFJVh&pd_rd_r=1d41870c-7cdf-4ea1-aec2-7d2c4d1c60b8&pd_rd_i=1617296961&linkCode=ll2&tag=kspicedev1-20&linkId=8c4d5fd16d2c9de55504016e46e53474&language=en_US&ref_=as_li_ss_tl';
+const bookCategories = [
+	{
+		name: 'Assembly',
+		books: [
+			{
+				title: 'Assembly Language x64 for Beginners',
+				href: 'https://www.amazon.com/Assembly-x64-easy-steps-Modern/dp/1840789522?crid=2EARA5FHSKAA3&dib=eyJ2IjoiMSJ9.7g1TnhNTde2kUO3kd6uaBBPAUK5m6u5OG_qk2byYHhilWSS1VO864EYzRQZ7u04XSWDXca_ykZmQ8iW5IONOS9ynnFjDp3nMbQkXJ_FShvDACWn5nN8eHOJo1tW4spO5wFdbtuJkf-H9Wq9V8YgQTakizjMsd2ERmyXeBBdM39HbqRdmguvgqFiyBcmE4obYJFXa-9_dvO8CCD_iYGhrr0heHn2SHljLmpKFZUUGxyw.SaNYC_AUqmHXxEbHyb_Hn6UI5SO-9LeZZUUYUhXIa7o&dib_tag=se&keywords=assembly+book&qid=1776438297&sprefix=assembly+boo%2Caps%2C175&sr=8-5&linkCode=ll2&tag=kspicedev1-20&linkId=f63b8b594fdff5599d928a09bdda45b5&language=en_US&ref_=as_li_ss_tl',
+				description: 'A hands-on intro to x64 assembly and low-level thinking.',
+			},
+		],
+	},
+	{
+		name: 'Windows',
+		books: [
+			{
+				title: 'Windows 10 System Programming, Part 1',
+				href: 'https://www.amazon.com/Windows-10-System-Programming-Part/dp/B086Y6M7LH?crid=V5ISO9CY3ND0&dib=eyJ2IjoiMSJ9.LwxiifCmM9xdFa0OnwQviBV6XnJJYOFjY6huhnMMBjrfBFsFGw3DIxUwyUA-3gyHkJtiB9spvKNmWrR15-fEe7lxy-6qjSUpTGbmMoLawgAudwF0_zf65fRKFnv6__rm28zv1qKLCmv-h0XvuRdxItEXOLbDDvx-2vanzun5Z8qwneeVP_ql1oq9JolRu6tAMhh1ho-JGZ1ccNl_uI2SXsUe7-ugcoEwVAZ1hU9MD-g.6vp0CAPQFMsEFTBYdDahnKVFgE5bHtLaWKhktpoVo8Y&dib_tag=se&keywords=windows+10+system+programming&qid=1776438372&sprefix=windows+10+system+programmin%2Caps%2C170&sr=8-1&linkCode=ll2&tag=kspicedev1-20&linkId=d0dcd3379bdb613b0edf02cc3706b07a&language=en_US&ref_=as_li_ss_tl',
+				description: 'Core Windows internals and APIs for systems-focused developers.',
+			},
+			{
+				title: 'Windows 10 System Programming, Part 2',
+				href: 'https://www.amazon.com/Windows-10-System-Programming-Part/dp/B09JJJ7QZ4?crid=V5ISO9CY3ND0&dib=eyJ2IjoiMSJ9.LwxiifCmM9xdFa0OnwQviBV6XnJJYOFjY6huhnMMBjrfBFsFGw3DIxUwyUA-3gyHkJtiB9spvKNmWrR15-fEe7lxy-6qjSUpTGbmMoLawgAudwF0_zf65fRKFnv6__rm28zv1qKLCmv-h0XvuRdxItEXOLbDDvx-2vanzun5Z8qwneeVP_ql1oq9JolRu6tAMhh1ho-JGZ1ccNl_uI2SXsUe7-ugcoEwVAZ1hU9MD-g.6vp0CAPQFMsEFTBYdDahnKVFgE5bHtLaWKhktpoVo8Y&dib_tag=se&keywords=windows+10+system+programming&qid=1776438372&sprefix=windows+10+system+programmin%2Caps%2C170&sr=8-2&linkCode=ll2&tag=kspicedev1-20&linkId=931ba95a67756b2fd7e5564e3798f427&language=en_US&ref_=as_li_ss_tl',
+				description: 'A deeper continuation into practical Windows system programming.',
+			},
+		],
+	},
+	{
+		name: 'PowerShell and Windows Automation',
+		books: [
+			{
+				title: 'Windows PowerShell in Action',
+				href: 'https://www.amazon.com/Windows-PowerShell-Action-Bruce-Payette/dp/1633430294?crid=3LG55AOWGB4ZP&dib=eyJ2IjoiMSJ9.6eGV9fHaQQvsLdniZ3pY51PKwwslep6mOl3j8BoAykopz-HlKueRNFpSBWiulEwJfgDmlD1KBAppojwxiby-DL9-2g6IH1bDWfJ7QSNX0HfhxysTfAo81ewiBzbPLTtzbYy7TGgfuqcUeK2ntOGJNuO8QD658zGsUHTni24CCZYz-JkpKXIfVgaWhwmesAnCtrKVk3TyNED9tkCjO6Q1_dbV5U633ib4VgOkwlUKQSo.XTNt7CxgDv4UWjS0aqR-pr85pfC5ebK3DH7ZEX62ozg&dib_tag=se&keywords=powershell+book&qid=1776438422&sprefix=powershell+boo%2Caps%2C190&sr=8-18&linkCode=ll2&tag=kspicedev1-20&linkId=6516ec67fb1c8aeaae647473eab2618c&language=en_US&ref_=as_li_ss_tl',
+				description: 'A practical deep dive into PowerShell language and automation patterns.',
+			},
+		],
+	},
+	{
+		name: 'Data Structures and Algorithms',
+		books: [
+			{
+				title: 'Data Structures and Algorithms Made Easy',
+				href: 'https://www.amazon.com/Data-Structures-Algorithms-Made-Easy/dp/819324527X?crid=3G6Z3AJB7UJ0A&dib=eyJ2IjoiMSJ9.x7MlzJLMd_l2qcIWtR71ZLl1jlGkUTcU1WSxfokhQ-4Qw2xX_wgyCFntQT1ON443gBCkAbXhOdOfX-ocbftyzA3itveXuwje7k0q_hlLKJXtJYoNDiHBmxrhQwkZjzYal88Mb6G4hQNbv4THokRNtg1x1z9hXV7CoOyCxAo7ugWfNm67wSDVzp_enol9nFg_EMDtgLNeCrZRa7_lT2046biTCKzoyJPWSaEMFjjhMnQ.sk7qaVf2LwRMS3TVRTWzjY_t1XO0n61Bm6msn5XcMpA&dib_tag=se&keywords=data+structures+book&qid=1776438466&sprefix=data+structures+boo%2Caps%2C177&sr=8-15&linkCode=ll2&tag=kspicedev1-20&linkId=a8fb03d4159a7f1ffc8c0372eb23586c&language=en_US&ref_=as_li_ss_tl',
+				description: 'Interview-friendly coverage of core data structures and algorithms.',
+			},
+		],
+	},
+	{
+		name: 'C and Network Programming',
+		books: [
+			{
+				title: 'The C Programming Language (2nd Edition)',
+				href: 'https://www.amazon.com/Programming-Language-2nd-Brian-Kernighan/dp/0131103628?crid=30KQKOQH5WOZ9&dib=eyJ2IjoiMSJ9.4hObTV2D6kJUZ-PRxF5mHdPVce09bn27WlIXMOP6HsBPIf_L-DhSKSaYO0F7hpjl0lspC8Tzvmvvm3kev3VUQYITJadnbFBpRTs4HFpsyq0fmlwnnzB-K69glDweiM8ccdHvDql2HHsS0faOKZhKdxDuwk1X2o5CC3kiBSvLhLTFKUr29L5Ba7JagnSv4Ujx_qmE7nVfacMu4guqsbTyRVsTi1_SK57rPtN5rC0Eblg.7pa6AkUrZU7YjCRTQknfwjp450PNfXTYEcxRRu__O5o&dib_tag=se&keywords=tcp+ip+c+programming+book&qid=1776438517&sprefix=tcp+ip+c+programming+book%2Caps%2C130&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&linkCode=ll2&tag=kspicedev1-20&linkId=d550d04fec96ae20f84a460059128e09&language=en_US&ref_=as_li_ss_tl',
+				description: 'The classic reference for learning C clearly and correctly.',
+			},
+			{
+				title: 'TCP/IP Sockets in C',
+				href: 'https://www.amazon.com/TCP-IP-Sockets-Practical-Programmers/dp/0123745403?crid=30KQKOQH5WOZ9&dib=eyJ2IjoiMSJ9.4hObTV2D6kJUZ-PRxF5mHdPVce09bn27WlIXMOP6HsBPIf_L-DhSKSaYO0F7hpjl0lspC8Tzvmvvm3kev3VUQYITJadnbFBpRTs4HFpsyq0fmlwnnzB-K69glDweiM8ccdHvDql2HHsS0faOKZhKdxDuwk1X2o5CC3kiBSvLhLTFKUr29L5Ba7JagnSv4Ujx_qmE7nVfacMu4guqsbTyRVsTi1_SK57rPtN5rC0Eblg.7pa6AkUrZU7YjCRTQknfwjp450PNfXTYEcxRRu__O5o&dib_tag=se&keywords=tcp+ip+c+programming+book&qid=1776438517&sprefix=tcp+ip+c+programming+book%2Caps%2C130&sr=8-3&linkCode=ll2&tag=kspicedev1-20&linkId=e7bddebb700a7d55fb107af40a084f1a&language=en_US&ref_=as_li_ss_tl',
+				description: 'A practical guide to building networked software with sockets.',
+			},
+		],
+	},
+	{
+		name: 'Python',
+		books: [
+			{
+				title: 'Python Crash Course',
+				href: 'https://www.amazon.com/Python-Crash-Course-Eric-Matthes/dp/1718502702?crid=3K5MB5KZQL2YL&dib=eyJ2IjoiMSJ9.9DPDANSKw-dHhR1PHoWNFJQev4qMzbWdKftTL8Mt_Ps0M7f4PkFM0UoYA1QGwv-aMjuxiOgGHnZhIWmmMeAbuPfMWwXTU-CDuN71QRZFroZ-xLHReZzTa5pm5nh0_CeLNxKKg5Zzhdk_SmhOVUjbSjEDBdutF_hCLiDzlaSBpLpSSPQh3sYUh4bsaGyuHR8AyCfgYyp3Eah9APDKzndmV-jEomK2MCLdrRpwRUah0fmMbQh2kXuFCPDlaiCr_qXLBdoipc_mA1QM-BmrLn1qMcg4gGoFGLYEyzDOSrkoO_I.XctlWsJf2mr2x3XC8669HYg2CgkmUkkRaggewiXpOhI&dib_tag=se&keywords=python+programming+book&qid=1776438564&sprefix=python+programming+boo%2Caps%2C183&sr=8-1-spons&sp_csd=d2lkZ2V0TmFtZT1zcF9hdGY&psc=1&linkCode=ll2&tag=kspicedev1-20&linkId=79ba79dcdfc00efa23b42744f2e7392e&language=en_US&ref_=as_li_ss_tl',
+				description: 'A beginner-friendly, project-based path into Python.',
+			},
+			{
+				title: 'Effective Python',
+				href: 'https://www.amazon.com/Effective-Python-Specific-Software-Development/dp/0138172188?crid=3K5MB5KZQL2YL&dib=eyJ2IjoiMSJ9.9DPDANSKw-dHhR1PHoWNFJQev4qMzbWdKftTL8Mt_Ps0M7f4PkFM0UoYA1QGwv-aMjuxiOgGHnZhIWmmMeAbuOjr-ndTjiz5eW8iismJs_YfIZ8tq2zec3Jc5TsaO3ksUIvtLAHXT0dL7D5uAHAJXTEDBdutF_hCLiDzlaSBpLpSSPQh3sYUh4bsaGyuHR8A-kpISnhJpiDx_rtcta6U9fmuQhRDAd30YoltNbBW9lSmELluMtidjGH6-ZyJmQuRO9_ldYkrsQB-fzn250Mg_8oh9ZKaDUS1hWEnsY8adkI.lkANb4NQ121O36cjgmeM0xk7vWReqyCprZwpUbOKayo&dib_tag=se&keywords=python+programming+book&qid=1776438622&sprefix=python+programming+boo%2Caps%2C183&sr=8-60&linkCode=ll2&tag=kspicedev1-20&linkId=1fe57bd0dc8ac9a28c90e8c24c87a3d4&language=en_US&ref_=as_li_ss_tl',
+				description: 'Actionable best practices for writing better Python in production.',
+			},
+		],
+	},
+	{
+		name: 'Security and Cryptography',
+		books: [
+			{
+				title: 'Serious Cryptography (2nd Edition)',
+				href: 'https://www.amazon.com/Serious-Cryptography-2nd-Introduction-Encryption/dp/1718503849?crid=1NDSWQLQITBB4&dib=eyJ2IjoiMSJ9.EodsjLuegKsdb9UJnaPwTMy_2BT_z9qHQQRyqj27uf9A8258GTw6YtOjFbbyVE3pdgcJ3HxzRQ0n1dU_OSIg38Xg3keXksFROf9ilHlI8Svq7cJzZel_YM7bl209e1D4jT3gXzkoq2qUMWRosbq1IJ4n1EODtx3B5IMPtatdRrkbVwCH11EigeqVDsmADl2yqpBMtjhLlkHAVQuQ0EJFUUnm04MMmi5CNIbAymG0U-IeY4WY4d4GnGHrb2cuF4m2M7eQMG7wZ11dG27Ftq_PbFGRGdoMg6Bg_XJSk5ARfrc.eO51QxMIj78NF-2fi4bkSK50CqGoByIHVJx3yE0jXbU&dib_tag=se&keywords=cryptography+book&qid=1776438669&sprefix=cryptography+boo%2Caps%2C192&sr=8-7&linkCode=ll2&tag=kspicedev1-20&linkId=2ea84daea150dcb24c51e2f443bf77fe&language=en_US&ref_=as_li_ss_tl',
+				description: 'A modern and practical introduction to real-world cryptography.',
+			},
+		],
+	},
+	{
+		name: 'Linux and UNIX System Programming',
+		books: [
+			{
+				title: 'The Linux Programming Interface',
+				href: 'https://www.amazon.com/gp/aw/d/1593272200?_encoding=UTF8&pd_rd_plhdr=t&aaxitk=1487ec575f8e988cf69bc0a0d022210c&hsa_cr_id=6664932590601&qid=1776438761&sr=1-1-9e67e56a-6f64-441f-a281-df67fc737124&pd_rd_w=DzART&content-id=amzn1.sym.2fb72bc8-96ef-420d-b08f-c04b69f36507%3Aamzn1.sym.2fb72bc8-96ef-420d-b08f-c04b69f36507&pf_rd_p=2fb72bc8-96ef-420d-b08f-c04b69f36507&pf_rd_r=KC3AYVK2ABPQV9WF9EWG&pd_rd_wg=FDpPz&pd_rd_r=b8c7a368-aa9a-4b1f-8eb4-0f4206bd7048&linkCode=ll2&tag=kspicedev1-20&linkId=50d8980d3a6efb21d171b34ee7f6ed73&language=en_US&ref_=as_li_ss_tl',
+				description: 'A comprehensive deep dive into Linux and UNIX system calls, APIs, and process internals.',
+			},
+		],
+	},
+];
+
+const toAnchorId = (text) =>
+	text
+		.toLowerCase()
+		.replace(/[^a-z0-9\s-]/g, '')
+		.trim()
+		.replace(/\s+/g, '-');
 ---
 
 <Layout
-	title="Product Recommendations"
-	description="Books, tools, and gadgets: recommendations and affiliate links on kspice.dev."
+	title="Book Recommendations"
+	description="Book recommendations and affiliate links on kspice.dev."
 >
-	<main class="main">
-		<h1>Product Recommendations</h1>
-		<p class="lede">
-			A running list of books, tools, and gadgets I have used and recommend.
-		</p>
-		<section class="section" aria-labelledby="books-heading">
-			<h2 id="books-heading">Books</h2>
-			<ul class="cards">
-				<li>
-					<a
-						class="card"
-						href={powerShellBookUrl}
-						target="_blank"
-						rel="noopener noreferrer sponsored"
-					>
-						<h3>Learn PowerShell in a Month of Lunches, 4th ed.</h3>
-						<p>
-							A practical, lesson-style intro to PowerShell on Windows. Great if you want to get
-							comfortable at the shell quickly.
-						</p>
-					</a>
-				</li>
+	<main class="main recommendations">
+		<h1>Book Recommendations</h1>
+		<p class="lede">A running list of books I have used and recommend.</p>
+		<section class="section" aria-labelledby="toc-heading">
+			<h2 id="toc-heading">Table of contents</h2>
+			<ul>
+				{bookCategories.map((category) => (
+					<li>
+						<a href={`#${toAnchorId(category.name)}`}>{category.name}</a>
+					</li>
+				))}
 			</ul>
 		</section>
-		<section class="section" aria-labelledby="tools-heading">
-			<h2 id="tools-heading">Tools &amp; gear</h2>
-			<p>More picks coming soon...</p>
-		</section>
-		<section class="section" aria-labelledby="gadgets-heading">
-			<h2 id="gadgets-heading">Gadgets</h2>
-			<p>More picks coming soon...</p>
+		<section class="section" aria-labelledby="books-heading">
+			<h2 id="books-heading">Books</h2>
+			{bookCategories.map((category) => (
+				<section class="section" id={toAnchorId(category.name)}>
+					<h3>
+						<a href={`#${toAnchorId(category.name)}`}>{category.name}</a>
+					</h3>
+					<ul class="cards">
+						{category.books.map((book) => (
+							<li>
+								<a class="card" href={book.href} target="_blank" rel="noopener noreferrer sponsored">
+									<h4>{book.title}</h4>
+									<p>{book.description}</p>
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			))}
 		</section>
 	</main>
 </Layout>
+
+<style>
+	.recommendations ul.cards {
+		gap: 0.65rem;
+	}
+
+	.recommendations a.card {
+		padding: 0.85rem 1rem;
+		border-radius: 8px;
+	}
+
+	.recommendations a.card h4 {
+		margin: 0 0 0.2rem;
+		font-size: 1rem;
+	}
+
+	.recommendations a.card p {
+		font-size: 0.95rem;
+	}
+</style>
