@@ -5,9 +5,6 @@
  *   public/images/woodworking/<slug>/<filename>
  * Reference them here as:
  *   /images/woodworking/<slug>/<filename>
- *
- * The two projects below use placeholder PNGs (copies of the site logo) so the grid works
- * until you overwrite those files with real photos (same names) or change `src` paths.
  */
 export interface WoodworkingImage {
 	src: string;
@@ -26,6 +23,30 @@ export interface WoodworkingProject {
 }
 
 export const woodworkingProjects: WoodworkingProject[] = [
+	{
+		slug: 'flag-alabama',
+		title: 'Alabama flag piece',
+		description:
+			'Wooden Alabama flag accent—shown from the front and sides. Adjust the copy and captions in this file anytime.',
+		completed: '2026-05-02',
+		images: [
+			{
+				src: '/images/woodworking/flag-alabama/flag-alabama-front.jpg',
+				alt: 'Alabama wooden flag wall piece, front view',
+				caption: 'Front view.',
+			},
+			{
+				src: '/images/woodworking/flag-alabama/flag-alabama-left.jpg',
+				alt: 'Alabama wooden flag, left-angle view',
+				caption: 'Left angle.',
+			},
+			{
+				src: '/images/woodworking/flag-alabama/flag-alabama-right.jpg',
+				alt: 'Alabama wooden flag, right-angle view',
+				caption: 'Right angle.',
+			},
+		],
+	},
 	{
 		slug: 'walnut-box',
 		title: 'Walnut keepsake box',
