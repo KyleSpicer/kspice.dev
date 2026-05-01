@@ -1,45 +1,74 @@
 /**
- * Document builds here: each project becomes /woodworking/<slug>/ on the site.
+ * Each project → /woodworking/<slug>/
  *
- * Photos: put files under `public/images/woodworking/<slug>/…` then reference paths
- * from the site root below (e.g. `/images/woodworking/workbench/joint-detail.jpg`).
+ * Save photos on disk under:
+ *   public/images/woodworking/<slug>/<filename>
+ * Reference them here as:
+ *   /images/woodworking/<slug>/<filename>
+ *
+ * The two projects below use placeholder PNGs (copies of the site logo) so the grid works
+ * until you overwrite those files with real photos (same names) or change `src` paths.
  */
 export interface WoodworkingImage {
 	src: string;
 	alt: string;
-	/** Short line shown under the thumbnail and in the full-screen viewer. */
+	/** Short line under the thumbnail and in the full-screen viewer. */
 	caption: string;
 }
 
 export interface WoodworkingProject {
 	slug: string;
 	title: string;
-	/** Shown under the title on both the listing and detail page (summary / story). */
 	description: string;
-	/** Extra paragraphs shown on the detail page only (optional). */
 	details?: readonly string[];
-	/** Optional ISO date shown on the listing and detail pages. */
 	completed?: string;
 	images: readonly WoodworkingImage[];
 }
 
 export const woodworkingProjects: WoodworkingProject[] = [
 	{
-		slug: 'gallery-structure-example',
-		title: 'How this woodworking section works',
+		slug: 'walnut-box',
+		title: 'Walnut keepsake box',
 		description:
-			'Duplicate or edit rows in projects.ts for each real build: set slug, title, story text, then list images with alt text (for accessibility and search) and captions (what visitors see).',
+			'Hand-cut joinery and a simple oil finish. Replace the placeholder images in this folder with your build photos when you are ready.',
 		details: [
-			'On each project page, clicks open photos in an in-page full-screen viewer.',
-			'When you replace this starter entry, drop your files under `public/images/woodworking/<slug>/`.',
+			'Photos live in `public/images/woodworking/walnut-box/`. Swap `case-open.png`, `miter-detail.png`, and `finished.png` for your files (same names), or rename files and update the `src` fields below.',
 		],
-		completed: '2026-05-01',
+		completed: '2026-04-18',
 		images: [
 			{
-				src: '/images/logo/KSPICE.DEV-Logo-01.png',
-				alt: 'Temporary placeholder graphic',
-				caption:
-					'Placeholder using the site mark—swap this for shop photos once files are under public/images/woodworking/',
+				src: '/images/woodworking/walnut-box/case-open.png',
+				alt: 'Box case open showing interior',
+				caption: 'Case dry fit—lid off, checking gaps before glue-up.',
+			},
+			{
+				src: '/images/woodworking/walnut-box/miter-detail.png',
+				alt: 'Close-up of corner joinery',
+				caption: 'Corner detail after first cleanup with the shooting board.',
+			},
+			{
+				src: '/images/woodworking/walnut-box/finished.png',
+				alt: 'Finished box on the bench',
+				caption: 'Finished with oil; ready for lining or hardware.',
+			},
+		],
+	},
+	{
+		slug: 'bench-hooks',
+		title: 'French-cleat tool hooks',
+		description:
+			'Quick shop organization: matched cleats on the back of blocks and holders. Edit this blurb and the images to match your build.',
+		completed: '2026-03-02',
+		images: [
+			{
+				src: '/images/woodworking/bench-hooks/glue-up.png',
+				alt: 'Hook blanks in clamps',
+				caption: 'Gluing laminations for thicker hook stock.',
+			},
+			{
+				src: '/images/woodworking/bench-hooks/hung.png',
+				alt: 'Hooks on wall',
+				caption: 'Hung on the cleat wall—adjust spacing as tools change.',
 			},
 		],
 	},
