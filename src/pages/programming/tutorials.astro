@@ -2,6 +2,14 @@
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/page-main.css';
 import { sitePath } from '../../utils/sitePath';
+import { formatListDate } from '../../utils/formatListDate';
+import { tutorialCards } from '../../data/programming/tutorials';
+
+const sorted = [...tutorialCards].sort((a, b) => {
+	if (!a.published) return 1;
+	if (!b.published) return -1;
+	return b.published.localeCompare(a.published);
+});
 ---
 
 <Layout
@@ -17,14 +25,21 @@ import { sitePath } from '../../utils/sitePath';
 		<section class="section" aria-labelledby="tutorials-list-heading">
 			<h2 id="tutorials-list-heading">All tutorials</h2>
 			<ul class="cards">
-				<li>
-					<a class="card" href={sitePath('/programming/aliases')}>
-						<h3>Aliases</h3>
-						<p>
-							How to create and use aliases in bash, PowerShell, and Windows Command Prompt.
-						</p>
-					</a>
-				</li>
+				{
+					sorted.map((t) => (
+						<li>
+							<a class="card" href={sitePath(`/programming/${t.slug}`)}>
+								<h3>{t.title}</h3>
+								<p>{t.description}</p>
+								{t.published ? (
+									<p class="card-meta">
+										<time datetime={t.published}>{formatListDate(t.published)}</time>
+									</p>
+								) : null}
+							</a>
+						</li>
+					))
+				}
 			</ul>
 		</section>
 	</main>

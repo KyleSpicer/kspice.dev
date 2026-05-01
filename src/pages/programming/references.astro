@@ -1,6 +1,14 @@
 ---
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/page-main.css';
+import { formatListDate } from '../../utils/formatListDate';
+import { referenceCards } from '../../data/programming/references';
+
+const sorted = [...referenceCards].sort((a, b) => {
+	if (!a.published) return 1;
+	if (!b.published) return -1;
+	return b.published.localeCompare(a.published);
+});
 ---
 
 <Layout
@@ -13,35 +21,44 @@ import '../../styles/page-main.css';
 		<section class="section" aria-labelledby="refs-list-heading">
 			<h2 id="refs-list-heading">Curated links</h2>
 			<ul class="cards">
-				<li>
-					<a
-						class="card"
-						href="https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<h3>Barr C coding standard (2018)</h3>
-						<p>
-							The Barr Group’s embedded C coding standard as a PDF. The baseline that the
-							<span class="inline-code">.clang-format</span> entry below is meant to approximate.
-						</p>
-					</a>
-				</li>
-				<li>
-					<a
-						class="card"
-						href="https://github.com/petertorelli/clang-format-barr-c/blob/master/.clang-format"
-						target="_blank"
-						rel="noopener noreferrer"
-					>
-						<h3>Barr C <span class="inline-code">.clang-format</span></h3>
-						<p>
-							Peter Torelli’s <span class="inline-code">.clang-format</span> that approximates the Barr
-							Group’s embedded C coding guidelines (2018) via clang-format. Useful for consistent C
-							code styling.
-						</p>
-					</a>
-				</li>
+				{
+					sorted.map((card) => (
+						<li>
+							<a
+								class="card"
+								href={card.href}
+								target="_blank"
+								rel="noopener noreferrer"
+							>
+								<h3>
+									{card.title.map((part) =>
+										'code' in part ? (
+											<span class="inline-code">{part.code}</span>
+										) : (
+											part.text
+										),
+									)}
+								</h3>
+								<p>
+									{card.description.map((part) =>
+										'code' in part ? (
+											<span class="inline-code">{part.code}</span>
+										) : (
+											part.text
+										),
+									)}
+								</p>
+								{card.published ? (
+									<p class="card-meta">
+										<time datetime={card.published}>
+											{formatListDate(card.published)}
+										</time>
+									</p>
+								) : null}
+							</a>
+						</li>
+					))
+				}
 			</ul>
 		</section>
 	</main>

@@ -46,8 +46,11 @@ You can also run the workflow manually: **Actions → Deploy Astro site to Pages
 | Path | Role |
 |------|------|
 | `src/pages/` | Routes (`.astro` files) |
+| `src/data/programming/tutorials.ts` | Tutorial listing entries (titles + dates on `/programming/tutorials`) |
+| `src/data/programming/references.ts` | Reference link cards + dates on `/programming/references` |
+| `src/data/woodworking/projects.ts` | Woodworking projects + gallery metadata |
 | `src/layouts/Layout.astro` | Shell, nav, theme toggle, footer |
-| `src/components/` | Reusable pieces (e.g. contact footer) |
+| `src/components/` | Reusable pieces (footer, woodworking gallery, etc.) |
 | `src/styles/global.css` | Theme tokens and base styles |
 | `src/styles/page-main.css` | Shared styles for inner pages |
 | `public/` | Static assets (favicon, etc.) |

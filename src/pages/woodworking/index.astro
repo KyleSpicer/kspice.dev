@@ -18,8 +18,7 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 	<main class="main">
 		<h1>Woodworking</h1>
 		<p class="lede">
-			Built pieces and shop notes, each with dated photos. Open a project for a short write-up and an
-			image grid—click any photo to view it full size with the same caption.
+			Built pieces and shop notes from Spicer Woodworking. Link to Facebook in Contact.
 		</p>
 		<section class="section" aria-labelledby="projects-heading">
 			<h2 id="projects-heading">Projects</h2>
@@ -67,49 +66,3 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 		</section>
 	</main>
 </Layout>
-
-<style>
-	.wood-project-card--thumb {
-		display: flex;
-		flex-direction: row;
-		align-items: flex-start;
-		gap: 1rem;
-	}
-
-	.wood-project-card__thumb {
-		position: relative;
-		flex-shrink: 0;
-		width: 6.75rem;
-		aspect-ratio: 4 / 3;
-		border-radius: 8px;
-		overflow: hidden;
-		border: 1px solid var(--border);
-		background: var(--purple-soft);
-	}
-
-	.wood-project-card__thumb img {
-		position: absolute;
-		inset: 0;
-		width: 100%;
-		height: 100%;
-		object-fit: cover;
-		display: block;
-	}
-
-	.wood-project-card__body {
-		flex: 1;
-		min-width: 0;
-	}
-
-	/* Titles inside horizontal cards: tighten top edge next to thumbnail */
-	.wood-project-card--thumb .wood-project-card__body :is(h2, h3):first-child {
-		margin-top: 0;
-	}
-
-	.card-meta {
-		margin: 0.75rem 0 0;
-		font-size: 0.875rem;
-		color: var(--teal-dark);
-		font-weight: 600;
-	}
-</style>
