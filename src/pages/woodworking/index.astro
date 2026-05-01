@@ -54,7 +54,7 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 									}
 									<span class="wood-project-card__body">
 										<h3>{p.title}</h3>
-										<p>{p.description}</p>
+										<p>{p.listSummary ?? p.description}</p>
 										<p class="card-meta">{meta}</p>
 									</span>
 								</a>
