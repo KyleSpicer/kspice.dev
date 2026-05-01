@@ -28,6 +28,46 @@ export interface WoodworkingProject {
 
 export const woodworkingProjects: WoodworkingProject[] = [
 	{
+		slug: 'can-usa-coin-rack',
+		title: 'Canadian and American coin rack',
+		description:
+			'A Canadian Soldier on tour in the States requested a full size coin rack that incorporated the Canadian and American flags.',
+		listSummary:
+			'Full size coin rack for a Canadian Soldier completing a tour in the States.',
+		completed: '2026-05-27',
+		listThumbnail: {
+			src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-close-left-full.jpg',
+			alt: 'Canadian and American full-size coin rack, close left view',
+		},
+		images: [
+			{
+				src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-close-left-full.jpg',
+				alt: 'Coin rack with Canadian and American flags, close left',
+				caption: 'Close left, full rack.',
+			},
+			{
+				src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-with-coins.jpg',
+				alt: 'Coin rack filled with challenge coins',
+				caption: 'With coins.',
+			},
+			{
+				src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-top.jpg',
+				alt: 'Coin rack, top view',
+				caption: 'Top view.',
+			},
+			{
+				src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-close-left.jpg',
+				alt: 'Coin rack, close left detail',
+				caption: 'Close left.',
+			},
+			{
+				src: '/images/woodworking/can-usa-coin-rack/can-usa-coin-rack-close-right.jpg',
+				alt: 'Coin rack, close right detail',
+				caption: 'Close right.',
+			},
+		],
+	},
+	{
 		slug: 'cutting-board',
 		title: 'First cutting board',
 		description:

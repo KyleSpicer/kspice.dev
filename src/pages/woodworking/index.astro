@@ -9,6 +9,8 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 	if (!b.completed) return -1;
 	return b.completed.localeCompare(a.completed);
 });
+
+const heroSrc = sitePath('/images/woodworking/cnc-and-handmade.png');
 ---
 
 <Layout
@@ -16,6 +18,15 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 	description="Documented shop projects and galleries on kspice.dev."
 >
 	<main class="main">
+		<figure class="wood-index-hero">
+			<img
+				class="wood-index-hero__img"
+				src={heroSrc}
+				alt="CNC and handmade woodworking"
+				loading="eager"
+				decoding="async"
+			/>
+		</figure>
 		<h1>Woodworking</h1>
 		<p class="lede">
 			Built pieces and shop notes from Spicer Woodworking. Link to Facebook in Contact.
@@ -66,3 +77,21 @@ const sorted = [...woodworkingProjects].sort((a, b) => {
 		</section>
 	</main>
 </Layout>
+
+<style>
+	.wood-index-hero {
+		margin: 0 auto 1.75rem;
+		padding: 0;
+		border: none;
+		max-width: min(28rem, 92%);
+	}
+
+	.wood-index-hero__img {
+		display: block;
+		width: 100%;
+		height: auto;
+		border-radius: 12px;
+		border: 2px solid var(--border);
+		box-shadow: 0 4px 24px color-mix(in srgb, var(--purple) 10%, transparent);
+	}
+</style>
