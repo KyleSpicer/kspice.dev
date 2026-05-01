@@ -1,0 +1,273 @@
+---
+import { sitePath } from '../utils/sitePath';
+
+interface Img {
+	src: string;
+	alt: string;
+	caption: string;
+}
+
+interface Props {
+	projectSlug: string;
+	images: readonly Img[];
+}
+
+const { projectSlug, images } = Astro.props;
+
+const slugPart = projectSlug.replace(/[^\w-]/g, '-');
+const rootId = `wood-gallery-${slugPart}`;
+---
+
+{
+	images.length === 0 ? (
+		<p class="gallery-empty">No photos in this entry yet.</p>
+	) : (
+		<div class="wood-gallery" id={rootId}>
+			<ul class="gallery-grid">
+				{images.map((im) => {
+					const full = sitePath(im.src);
+					return (
+						<li>
+							<figure class="gallery-fig">
+								<button
+									type="button"
+									class="gallery-thumb-wrap"
+									aria-haspopup="dialog"
+									data-full-src={full}
+								>
+									<img
+										class="gallery-thumb"
+										src={full}
+										alt={im.alt}
+										width="640"
+										height="480"
+										loading="lazy"
+										decoding="async"
+									/>
+								</button>
+								<figcaption class="gallery-caption">{im.caption}</figcaption>
+							</figure>
+						</li>
+					);
+				})}
+			</ul>
+			<dialog class="gallery-lightbox" aria-label="Full size photo">
+				<button type="button" class="lightbox-dismiss" aria-label="Close">&times;</button>
+				<div class="lightbox-frame">
+					<img class="lightbox-img" src="" alt="" />
+					<p class="lightbox-caption"></p>
+				</div>
+			</dialog>
+		</div>
+	)
+}
+
+{images.length > 0 ? (
+	<script define:vars={{ rootId }}>
+		(function () {
+			const root = document.getElementById(rootId);
+			if (!(root instanceof HTMLElement)) return;
+
+			const dialog = root.querySelector('dialog.gallery-lightbox');
+			const dismiss = root.querySelector('button.lightbox-dismiss');
+			const img = root.querySelector('img.lightbox-img');
+			const cap = root.querySelector('p.lightbox-caption');
+			if (!dialog || !dismiss || !(img instanceof HTMLImageElement) || !cap)
+				return;
+
+			function captionFrom(btn) {
+				const fig = btn.closest('figure.gallery-fig');
+				const fc = fig?.querySelector('figcaption.gallery-caption');
+				return fc ? fc.textContent?.trim() ?? '' : '';
+			}
+
+			root.addEventListener('click', function (ev) {
+				const btn = ev.target instanceof Element ? ev.target.closest('.gallery-thumb-wrap') : null;
+				if (!(btn instanceof HTMLButtonElement)) return;
+				ev.preventDefault();
+				const src = btn.getAttribute('data-full-src');
+				if (!src || !(dialog instanceof HTMLDialogElement)) return;
+				const thumbs = btn.querySelector('img.gallery-thumb');
+				const alt =
+					thumbs instanceof HTMLImageElement ? thumbs.alt || '' : '';
+				img.src = src;
+				img.alt = alt;
+				cap.textContent = captionFrom(btn);
+				dialog.showModal();
+			});
+
+			dismiss.addEventListener('click', function () {
+				if (dialog instanceof HTMLDialogElement) dialog.close();
+			});
+
+			dialog.addEventListener('close', function () {
+				img.removeAttribute('src');
+				cap.textContent = '';
+			});
+
+			dialog.addEventListener('click', function (ev) {
+				if (ev.target === dialog && dialog instanceof HTMLDialogElement)
+					dialog.close();
+			});
+
+			window.addEventListener('keydown', function (ev) {
+				if (
+					ev.key !== 'Escape' ||
+					!(dialog instanceof HTMLDialogElement) ||
+					!dialog.open
+				)
+					return;
+				dialog.close();
+			});
+		})();
+	</script>
+) : null}
+
+<style>
+	.gallery-empty {
+		margin: 0;
+		padding: 1rem 1.25rem;
+		border-radius: 10px;
+		border: 1px dashed var(--border);
+		background: var(--bg-elevated);
+		color: var(--muted);
+		font-size: 1rem;
+	}
+
+	.gallery-grid {
+		list-style: none;
+		margin: 0;
+		padding: 0;
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 16.5rem), 1fr));
+		gap: 1.25rem;
+	}
+
+	.gallery-fig {
+		margin: 0;
+		display: flex;
+		flex-direction: column;
+		gap: 0.55rem;
+		height: 100%;
+	}
+
+	.gallery-thumb-wrap {
+		display: block;
+		padding: 0;
+		border: none;
+		background: transparent;
+		cursor: zoom-in;
+		border-radius: 10px;
+		overflow: hidden;
+		border: 2px solid var(--border);
+		transition:
+			border-color 0.15s ease,
+			box-shadow 0.15s ease;
+
+		aspect-ratio: 4 / 3;
+	}
+
+	.gallery-thumb-wrap:focus-visible {
+		outline: 2px solid var(--teal);
+		outline-offset: 3px;
+	}
+
+	.gallery-thumb-wrap:hover {
+		border-color: var(--teal);
+		box-shadow: 0 6px 24px color-mix(in srgb, var(--purple) 14%, transparent);
+	}
+
+	.gallery-thumb {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+		display: block;
+		vertical-align: middle;
+	}
+
+	.gallery-caption {
+		margin: 0;
+		font-size: 0.9375rem;
+		line-height: 1.45;
+		color: var(--muted);
+	}
+
+	.gallery-lightbox::backdrop {
+		background: rgba(0, 0, 0, 0.78);
+		backdrop-filter: blur(6px);
+	}
+
+	.gallery-lightbox {
+		max-width: min(94vw, 72rem);
+		width: calc(100% - 2rem);
+		margin: auto;
+		padding: 0;
+		border: 1px solid var(--border);
+		border-radius: 12px;
+		background: var(--bg-elevated);
+		color: var(--ink);
+		box-shadow: 0 20px 60px rgb(0 0 0 / 0.45);
+		overflow: visible;
+	}
+
+	.lightbox-dismiss {
+		position: absolute;
+		top: 0.5rem;
+		right: 0.55rem;
+		z-index: 2;
+		width: 2.5rem;
+		height: 2.5rem;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+		background: var(--bg);
+		color: var(--ink);
+		font-size: 1.5rem;
+		line-height: 1;
+		cursor: pointer;
+		transition:
+			background-color 0.15s ease,
+			border-color 0.15s ease;
+	}
+
+	.lightbox-dismiss:hover {
+		border-color: var(--teal);
+		background: var(--purple-soft);
+	}
+
+	.gallery-lightbox,
+	.gallery-lightbox[open],
+	.gallery-lightbox:modal {
+		overflow: visible;
+	}
+
+	.lightbox-frame {
+		padding: 2.65rem 1.25rem 1.35rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+		align-items: center;
+	}
+
+	.lightbox-img {
+		max-width: 100%;
+		max-height: min(74vh, 52rem);
+		width: auto;
+		height: auto;
+		object-fit: contain;
+		border-radius: 8px;
+		border: 1px solid var(--border);
+	}
+
+	.lightbox-caption {
+		margin: 0;
+		font-size: 1rem;
+		line-height: 1.55;
+		color: var(--muted);
+		max-width: 48rem;
+		text-align: center;
+	}
+
+	.gallery-lightbox {
+		position: fixed;
+	}
+</style>

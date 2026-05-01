@@ -1,0 +1,55 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/page-main.css';
+import { sitePath } from '../../utils/sitePath';
+import { woodworkingProjects } from '../../data/woodworking/projects';
+
+const sorted = [...woodworkingProjects].sort((a, b) => {
+	if (!a.completed) return 1;
+	if (!b.completed) return -1;
+	return b.completed.localeCompare(a.completed);
+});
+---
+
+<Layout
+	title="Woodworking"
+	description="Documented shop projects and galleries on kspice.dev."
+>
+	<main class="main">
+		<h1>Woodworking</h1>
+		<p class="lede">
+			Built pieces and shop notes, each with dated photos. Open a project for a short write-up and an
+			image grid—click any photo to view it full size with the same caption.
+		</p>
+		<section class="section" aria-labelledby="projects-heading">
+			<h2 id="projects-heading">Projects</h2>
+			<ul class="cards">
+				{
+					sorted.map((p) => {
+						const n = p.images.length;
+						const photoLine = n === 0 ? 'No photos yet' : `${n} photo${n === 1 ? '' : 's'}`;
+						const meta = [photoLine, p.completed].filter(Boolean).join(' · ');
+						return (
+							<li>
+								<a class="card" href={sitePath(`/woodworking/${p.slug}`)}>
+									<h3>{p.title}</h3>
+									<p>{p.description}</p>
+									<p class="card-meta">{meta}</p>
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.card-meta {
+		margin: 0.75rem 0 0;
+		font-size: 0.875rem;
+		color: var(--teal-dark);
+		font-weight: 600;
+	}
+</style>

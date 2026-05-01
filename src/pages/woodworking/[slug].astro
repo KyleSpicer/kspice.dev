@@ -1,0 +1,108 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/page-main.css';
+import { sitePath } from '../../utils/sitePath';
+import { woodworkingProjects } from '../../data/woodworking/projects';
+import WoodGallery from '../../components/WoodGallery.astro';
+
+export function getStaticPaths() {
+	return woodworkingProjects.map((p) => ({
+		params: { slug: p.slug },
+		props: { project: p },
+	}));
+}
+
+interface Props {
+	project: (typeof woodworkingProjects)[number];
+}
+
+const { project } = Astro.props;
+
+const dateLabel = project.completed
+	? new Date(project.completed + 'T12:00:00').toLocaleDateString('en-US', {
+			year: 'numeric',
+			month: 'long',
+			day: 'numeric',
+		})
+	: null;
+
+const desc = `${project.title} — woodworking project on kspice.dev.`;
+---
+
+<Layout title={project.title} description={desc}>
+	<main class="main woodworking-detail">
+		<p class="wood-back">
+			<a href={sitePath('/woodworking')}>← All woodworking</a>
+		</p>
+		<header class="wood-head">
+			<h1>{project.title}</h1>
+			{
+				dateLabel ? (
+					<p class="wood-date">
+						<time datetime={project.completed}>{dateLabel}</time>
+					</p>
+				) : null
+			}
+			<p class="lede wood-lede">{project.description}</p>
+			{
+				project.details?.length
+					? project.details.map((para) => (
+							<p class="wood-detail">{para}</p>
+						))
+					: null
+			}
+		</header>
+
+		<section class="section wood-photos" aria-labelledby="photos-heading">
+			<h2 id="photos-heading">Photos</h2>
+			<WoodGallery projectSlug={project.slug} images={project.images} />
+		</section>
+	</main>
+</Layout>
+
+<style>
+	.wood-back {
+		margin: 0 0 1rem;
+		font-size: 0.9375rem;
+	}
+
+	.wood-back a {
+		color: var(--teal-dark);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		font-weight: 500;
+	}
+
+	.wood-back a:hover {
+		color: var(--purple-dark);
+	}
+
+	.wood-head {
+		margin-bottom: 2rem;
+	}
+
+	.wood-date {
+		margin: -0.35rem 0 0.75rem;
+		font-size: 0.9375rem;
+		color: var(--muted);
+	}
+
+	.wood-lede {
+		margin-bottom: 0.85rem;
+	}
+
+	.wood-detail {
+		margin: 0 0 0.85rem;
+		color: var(--muted);
+		font-size: 1.0625rem;
+		line-height: 1.55;
+	}
+
+	.wood-detail:last-child {
+		margin-bottom: 0;
+	}
+
+	.wood-photos h2 {
+		margin-bottom: 1rem;
+	}
+</style>
