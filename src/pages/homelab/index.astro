@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import '../../styles/page-main.css';
+import { sitePath } from '../../utils/sitePath';
+import { formatMarkdownDate } from '../../utils/formatMarkdownDate';
+import { getCollection } from 'astro:content';
+
+const posts = await getCollection('homelab');
+/** Sort by latest activity (updated beats published when present). */
+function postSortKey(p: (typeof posts)[number]) {
+	return (p.data.updated ?? p.data.published).valueOf();
+}
+const sortedPosts = posts.sort((a, b) => postSortKey(b) - postSortKey(a));
+
+const specs = await getCollection('homelabSpecs');
+const sortedSpecs = specs.sort((a, b) => {
+	const ua = a.data.updated?.valueOf() ?? 0;
+	const ub = b.data.updated?.valueOf() ?? 0;
+	if (ub !== ua) return ub - ua;
+	return a.data.title.localeCompare(b.data.title);
+});
+---
+
+<Layout
+	title="HomeLab Blog"
+	description="HP DL380 Gen9 HomeLab adventures and notes on kspice.dev."
+>
+	<main class="main homelab-index">
+		<h1>HomeLab Blog</h1>
+		<p class="lede">HP DL380 Gen 9 HomeLab adventures.</p>
+
+		<section class="section" aria-labelledby="specs-heading">
+			<h2 id="specs-heading">Server Specs</h2>
+			<ul class="cards">
+				{
+					sortedSpecs.map((page) => {
+						const excerpt = page.data.listSummary?.trim() || '';
+						const meta = page.data.updated
+							? `Updated ${formatMarkdownDate(page.data.updated).label}`
+							: null;
+						return (
+							<li>
+								<a
+									class="card"
+									href={sitePath(`/homelab/specs/${page.id}`)}
+								>
+									<h3>{page.data.title}</h3>
+									<p>{excerpt}</p>
+									{
+										meta ? (
+											<p class="card-meta">{meta}</p>
+										) : null
+									}
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+
+		<section class="section" aria-labelledby="posts-heading">
+			<h2 id="posts-heading">Posts</h2>
+			<ul class="cards">
+				{
+					sortedPosts.map((post) => {
+						const pub = formatMarkdownDate(post.data.published).label;
+						const meta = post.data.updated
+							? `Published ${pub} · Updated ${formatMarkdownDate(post.data.updated).label}`
+							: `Published ${pub}`;
+						const excerpt = post.data.listSummary?.trim() || '';
+						return (
+							<li>
+								<a
+									class="card"
+									href={sitePath(`/homelab/${post.id}`)}
+								>
+									<h3>{post.data.title}</h3>
+									<p>{excerpt}</p>
+									<p class="card-meta">{meta}</p>
+								</a>
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+	</main>
+</Layout>

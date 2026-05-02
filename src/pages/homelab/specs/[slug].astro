@@ -1,0 +1,97 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import '../../../styles/page-main.css';
+import '../../../styles/homelab-prose.css';
+import { sitePath } from '../../../utils/sitePath';
+import { formatMarkdownDate } from '../../../utils/formatMarkdownDate';
+import { getCollection, render } from 'astro:content';
+
+export async function getStaticPaths() {
+	const pages = await getCollection('homelabSpecs');
+	return pages.map((entry) => ({
+		params: { slug: entry.id },
+		props: { entry },
+	}));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+const { title, listSummary, updated } = entry.data;
+
+const desc =
+	listSummary?.trim() || `${title} — HomeLab server specs on kspice.dev.`;
+
+let updatedLabel: string | null = null;
+let updatedIso: string | null = null;
+if (updated) {
+	const fmt = formatMarkdownDate(updated);
+	updatedLabel = fmt.label;
+	updatedIso = fmt.isoDay;
+}
+---
+
+<Layout title={title} description={desc}>
+	<main class="main homelab-post homelab-spec">
+		<p class="homelab-back">
+			<a href={sitePath('/homelab')}>← HomeLab Blog</a>
+		</p>
+		<header class="homelab-head">
+			<h1>{title}</h1>
+			{
+				updatedLabel && updatedIso ? (
+					<p class="homelab-date">
+						<span class="homelab-date__label">Last updated </span>
+						<time datetime={updatedIso}>{updatedLabel}</time>
+					</p>
+				) : null
+			}
+			{listSummary?.trim() ? (
+				<p class="lede homelab-lede">{listSummary.trim()}</p>
+			) : null}
+		</header>
+
+		<article
+			class="section homelab-article homelab-prose"
+			aria-label="Server specs document"
+		>
+			<Content />
+		</article>
+	</main>
+</Layout>
+
+<style>
+	.homelab-back {
+		margin: 0 0 1rem;
+		font-size: 0.9375rem;
+	}
+
+	.homelab-back a {
+		color: var(--teal-dark);
+		text-decoration: underline;
+		text-underline-offset: 2px;
+		font-weight: 500;
+	}
+
+	.homelab-back a:hover {
+		color: var(--purple-dark);
+	}
+
+	.homelab-head {
+		margin-bottom: 1.5rem;
+	}
+
+	.homelab-date {
+		margin: -0.35rem 0 0.75rem;
+		font-size: 0.9375rem;
+		color: var(--muted);
+	}
+
+	.homelab-date__label {
+		font-weight: 600;
+		color: var(--teal-dark);
+	}
+
+	.homelab-head .homelab-lede {
+		margin-bottom: 1rem;
+	}
+</style>
