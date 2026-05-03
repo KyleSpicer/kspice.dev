@@ -13,7 +13,6 @@ published: 2026-05-02
 1. [Step 2: Adding ProxMox as the Server OS](#step-2-adding-proxmox-as-the-server-os)
 1. [Step 3: Updating the ProxMox OS](#step-3-updating-the-proxmox-os)
 1. [Glossary](#glossary)
-1. [References](#references)
 
 ## Overview
 
@@ -67,9 +66,6 @@ deb http://download.proxmox.com/debian/pve bookworm pve-no-subscription
 2. **POST (Power-On Self-Test)**: is the firmware startup phase right after main power-on and before the OS loads. The System ROM checks and initializes core hardware, then hands off to the configured boot device.
 
 3. **/etc/apt/sources.list**: is the primary APT file on Debian-based systems that lists package repositories: where apt should fetch software and which suite or component to use. `apt update` reads it, together with files under **/etc/apt/sources.list.d/**, to refresh the local package index, so edits there change which mirrors and tracks your system uses.
-
-## References
-
 
 
 
