@@ -30,7 +30,7 @@ updated: 2026-05-03
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Intel(R) Xeon(R) CPU E5-2620 v3 @ 2.40GHz (2 Sockets, two physical CPUs installed)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">The server has two physical processors, one per socket. That is 12 physical cores in total (6 per CPU). With Hyper-Threading, each core runs two hardware threads, so the total thread count is 24.</td>
     </tr>
-        <tr>
+    <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Memory (RAM)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">32 GB total (2×16 GB DDR4 ECC RDIMM, 2Rx4)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips).</td>
