@@ -2,15 +2,14 @@
 title: Current Server Resources
 listSummary: >-
   Inventory and current specs for the HP ProLiant DL380 Gen9.
-updated: 2026-05-02
+updated: 2026-05-03
 ---
 
 ## Table of Contents
-1. [Server Overview](#server-overview)
-1. [Server Resources](#server-resources)
+1. [Current Server Resources](#current-server-resources)
 1. [References](#references)
 
-## Server Overview
+## Current Server Resources
 
 <table style="border-collapse:collapse;width:100%;margin:0 0 1rem;font-size:1.0625rem">
   <thead>
@@ -24,20 +23,22 @@ updated: 2026-05-02
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Server</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">HP ProLiant DL380 Gen9</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">a 2U dual-socket Intel Xeon rack server from HPE's ninth-generation ProLiant line, built for general-purpose datacenter workloads with lots of memory and storage options in a dense, serviceable chassis.</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">2U dual-socket Intel Xeon rack server.</td>
     </tr>
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">CPUs</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Intel(R) Xeon(R) CPU E5-2620 v3 @ 2.40GHz (2 Sockets, two physical CPUs installed)</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">The server has two physical Intel Xeon E5-2620 v3 processors (Haswell-EP), one per socket. That is 12 physical cores in total (6 per CPU). With Hyper-Threading, each core runs two hardware threads, so the total thread count is 24. Each CPU is listed at 2.40 GHz base clock.</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">The server has two physical processors, one per socket. That is 12 physical cores in total (6 per CPU). With Hyper-Threading, each core runs two hardware threads, so the total thread count is 24.</td>
+    </tr>
+        <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Memory (RAM)</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">32 GB total (2×16 GB DDR4 ECC RDIMM, 2Rx4)</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips).</td>
     </tr>
   </tbody>
 </table>
 
-## Server Resources
-
-- TBD
-
 ## References
 
 - [HPE ProLiant DL380 Gen9 Server User Guide (PDF)](https://www.theserverstore.com/assets/images/HPE_c04436966_ProLiant_DL380_Gen9_Server_User_Guide-TheServerStore.pdf) — hosted copy on TheServerStore (HPE part **c04436966**).
+- [Corsair DIMM Definitions](https://www.corsair.com/us/en/explorer/diy-builder/memory/dimm-vs-udimm-vs-rdimm-vs-sodimm-vs-cudimm-whats-the-difference/?srsltid=AfmBOorzvB0hWiMO86ySe8o0DUmSJQE0JwOK1T36g4ecnsNRU22CaGg3)
