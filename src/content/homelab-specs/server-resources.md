@@ -33,7 +33,7 @@ updated: 2026-05-03
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Memory (RAM)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">32 GB total (2×16 GB DDR4 ECC RDIMM, 2Rx4)</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips).</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips). P/N: 809081-081</td>
     </tr>
   </tbody>
 </table>
