@@ -1,8 +1,7 @@
 ---
-title: Connecting to Integrated Lights Out (iLO) with a laptop
+title: Connecting to Integrated Lights Out (iLO), Assigning Static IP, and Installing ProxMox (without Subscription)
 listSummary: >-
-  Getting the HP ProLiant DL380 Gen9 iLO reachable from Windows over Ethernet so I can
-  configure and boot the host remotely.
+  Configuring the HP ProLiant DL380 Gen9 through static IP assignment and using the iLO.
 published: 2026-05-02
 ---
 
@@ -16,7 +15,7 @@ published: 2026-05-02
 
 ## Overview
 
-- This write up is to document reaching the HP ProLiant **Integrated Lights-Out (iLO)** from my laptop for the first time. I received the server without a known ip address and wanted to connect to the iLO to install Proxmox.
+- This write up is to document reaching the HP ProLiant **Integrated Lights-Out (iLO)** from my laptop (Lenovo ThinkPad running Windows 11) for the first time.
 - I received the server with working components and just needed to figure out how to connect to the **iLO** to be able to fetch or assign a static ip address.
 
 ## Step 1: Power On and Connect to iLO
