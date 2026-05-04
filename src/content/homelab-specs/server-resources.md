@@ -40,5 +40,5 @@ updated: 2026-05-03
 
 ## References
 
-- [HPE ProLiant DL380 Gen9 Server User Guide (PDF)](https://www.theserverstore.com/assets/images/HPE_c04436966_ProLiant_DL380_Gen9_Server_User_Guide-TheServerStore.pdf) — hosted copy on TheServerStore (HPE part **c04436966**).
+- [HPE ProLiant DL380 Gen9 Server User Guide (PDF)](https://www.theserverstore.com/assets/images/HPE_c04436966_ProLiant_DL380_Gen9_Server_User_Guide-TheServerStore.pdf) - hosted copy on TheServerStore (HPE part **c04436966**).
 - [Corsair DIMM Definitions](https://www.corsair.com/us/en/explorer/diy-builder/memory/dimm-vs-udimm-vs-rdimm-vs-sodimm-vs-cudimm-whats-the-difference/?srsltid=AfmBOorzvB0hWiMO86ySe8o0DUmSJQE0JwOK1T36g4ecnsNRU22CaGg3)
