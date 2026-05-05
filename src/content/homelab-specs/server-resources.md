@@ -2,7 +2,7 @@
 title: Current Server Resources
 listSummary: >-
   Inventory and current specs for the HP ProLiant DL380 Gen9.
-updated: 2026-05-03
+updated: 2026-05-04
 ---
 
 ## Table of Contents
@@ -33,7 +33,22 @@ updated: 2026-05-03
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Memory (RAM)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">32 GB total (2×16 GB DDR4 ECC RDIMM, 2Rx4)</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips). P/N: 809081-081</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips). <br>P/N: 809081-081</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Storage</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">1TB Crucial MX500 SSD</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">1 x 1TB SATA 2.5-inch SSD used as the current host storage device. <br>Model: Crucial MX500.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Power Supplies</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">2 x 500W hot-plug redundant PSUs</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Dual HPE Flex Slot power supplies in a 1+1 redundant setup. Each unit is rated for 500W and can be hot-swapped.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Networking (NIC)</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Broadcom NetXtreme BCM5719, 4 x 1GbE (14e4:1657)</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Broadcom BCM5719 quad-port 1GbE NIC; nic1 is the active uplink and is attached to vmbr0, while nic0/nic2/nic3 are currently down.</td>
     </tr>
   </tbody>
 </table>
