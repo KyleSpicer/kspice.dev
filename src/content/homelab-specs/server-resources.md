@@ -41,8 +41,8 @@ updated: 2026-05-04
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">1 x 1TB SATA 2.5-inch SSD used as the current host storage device. <br>Model: Crucial MX500.</td>
     </tr>
     <tr>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Power Supplies</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">2 x 500W hot-plug redundant PSUs</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Power Configuration</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">2 x 500W hot-plug redundant PSUs. Model: 720478-B21</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Dual HPE Flex Slot power supplies in a 1+1 redundant setup. Each unit is rated for 500W and can be hot-swapped.</td>
     </tr>
     <tr>
