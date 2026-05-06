@@ -3,13 +3,30 @@ import Layout from '../../layouts/Layout.astro';
 import '../../styles/page-main.css';
 import { sitePath } from '../../utils/sitePath';
 import { formatListDate } from '../../utils/formatListDate';
-import { tutorialCards } from '../../data/programming/tutorials';
+import {
+	tutorialCards,
+	type TutorialCategory,
+} from '../../data/programming/tutorials';
 
-const sorted = [...tutorialCards].sort((a, b) => {
-	if (!a.published) return 1;
-	if (!b.published) return -1;
-	return b.published.localeCompare(a.published);
-});
+const sortTutorials = (
+	cards: typeof tutorialCards,
+): typeof tutorialCards => {
+	return [...cards].sort((a, b) => {
+		if (!a.published) return 1;
+		if (!b.published) return -1;
+		return b.published.localeCompare(a.published);
+	});
+};
+
+/** Uncategorized only — categorized cards appear solely under their section (no duplicates). */
+const generalTutorials = sortTutorials(
+	tutorialCards.filter((t) => !t.categories?.length),
+);
+
+const byCategory = (cat: TutorialCategory) =>
+	sortTutorials(tutorialCards.filter((t) => t.categories?.includes(cat)));
+
+const visualStudioTutorials = byCategory('visual-studio');
 ---
 
 <Layout
@@ -22,18 +39,35 @@ const sorted = [...tutorialCards].sort((a, b) => {
 			Too often, developers research and create unique solutions that go undocumented and forgotten.
 			The purpose of this section is to document and archive tutorials for future reference.
 		</p>
-		<section class="section" aria-labelledby="tutorials-list-heading">
-			<h2 id="tutorials-list-heading">All tutorials</h2>
+		<nav class="tutorials-types-toc section" aria-labelledby="tutorials-types-toc-heading">
+			<h2 id="tutorials-types-toc-heading">Table of contents</h2>
+			<ul class="tutorials-types-toc__list">
+				<li>
+					<a href="#general-heading">General</a>
+				</li>
+				{
+					visualStudioTutorials.length > 0 ? (
+						<li>
+							<a href="#visual-studio-heading">Visual Studio</a>
+						</li>
+					) : null
+				}
+			</ul>
+		</nav>
+		<section class="section" aria-labelledby="general-heading">
+			<h2 id="general-heading">General</h2>
 			<ul class="cards">
 				{
-					sorted.map((t) => (
+					generalTutorials.map((t) => (
 						<li>
 							<a class="card" href={sitePath(`/programming/${t.slug}`)}>
 								<h3>{t.title}</h3>
 								<p>{t.description}</p>
 								{t.published ? (
 									<p class="card-meta">
-										<time datetime={t.published}>{formatListDate(t.published)}</time>
+										<time class="card-meta-pill" datetime={t.published}>
+											Published {formatListDate(t.published)}
+										</time>
 									</p>
 								) : null}
 							</a>
@@ -42,5 +76,29 @@ const sorted = [...tutorialCards].sort((a, b) => {
 				}
 			</ul>
 		</section>
+		{
+			visualStudioTutorials.length > 0 ? (
+				<section class="section" aria-labelledby="visual-studio-heading">
+					<h2 id="visual-studio-heading">Visual Studio</h2>
+					<ul class="cards">
+						{visualStudioTutorials.map((t) => (
+							<li>
+								<a class="card" href={sitePath(`/programming/${t.slug}`)}>
+									<h3>{t.title}</h3>
+									<p>{t.description}</p>
+									{t.published ? (
+										<p class="card-meta">
+											<time class="card-meta-pill" datetime={t.published}>
+												Published {formatListDate(t.published)}
+											</time>
+										</p>
+									) : null}
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			) : null
+		}
 	</main>
 </Layout>

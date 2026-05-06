@@ -33,6 +33,35 @@
 	margin-top: 2rem;
 }
 
+/* Programming tutorials: category jump links */
+.main .tutorials-types-toc__list {
+	list-style: none;
+	margin: 0.75rem 0 0;
+	padding: 0;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	gap: 0.35rem;
+}
+
+.main .tutorials-types-toc__list li {
+	display: flex;
+	align-items: baseline;
+	gap: 0.5rem;
+}
+
+.main .tutorials-types-toc__list li::before {
+	content: '-';
+	flex-shrink: 0;
+	color: var(--muted);
+	font-weight: 600;
+}
+
+.main nav.tutorials-types-toc .tutorials-types-toc__list a {
+	font-size: 1.0625rem;
+	font-weight: 600;
+}
+
 .main .section h2 {
 	font-size: 1.25rem;
 	font-weight: 600;
@@ -139,6 +168,16 @@
 .main a.card p.card-meta {
 	margin-top: 0.75rem;
 	font-size: 0.875rem;
-	color: var(--teal-dark);
+	color: inherit;
+}
+
+.main a.card .card-meta-pill {
+	display: inline-block;
+	padding: 0.2rem 0.65rem;
+	border-radius: 999px;
+	font-size: 0.8125rem;
 	font-weight: 600;
+	color: var(--teal-dark);
+	background: color-mix(in srgb, var(--teal) 14%, transparent);
+	border: 1px solid color-mix(in srgb, var(--teal) 35%, var(--border));
 }

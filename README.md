@@ -46,6 +46,8 @@ You can also run the workflow manually: **Actions → Deploy Astro site to Pages
 | Path | Role |
 |------|------|
 | `src/pages/` | Routes (`.astro` files) |
+| `src/tutorials-notes/` | Draft README / notes while writing programming tutorials (not published) |
+| `src/tutorials-notes/images/` | Photos for those READMEs (link with e.g. `../images/name.png` from a topic folder) |
 | `src/data/programming/tutorials.ts` | Tutorial listing entries (titles + dates on `/programming/tutorials`) |
 | `src/data/programming/references.ts` | Reference link cards + dates on `/programming/references` |
 | `src/data/woodworking/projects.ts` | Woodworking projects + gallery metadata |
