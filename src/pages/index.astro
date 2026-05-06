@@ -2,9 +2,92 @@
 import Layout from '../layouts/Layout.astro';
 import '../styles/page-main.css';
 import { sitePath } from '../utils/sitePath';
+import { getCollection } from 'astro:content';
+import { tutorialCards } from '../data/programming/tutorials';
+import { referenceCards } from '../data/programming/references';
+import { woodworkingProjects } from '../data/woodworking/projects';
+import { homepageUpdates } from '../data/homepage-updates';
+import { formatListDate } from '../utils/formatListDate';
+import { formatMarkdownDate } from '../utils/formatMarkdownDate';
 
 /** Home hero: blue/teal tile mark (`public/images/logo/`). */
 const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
+
+type HomeCard = {
+	href: string;
+	title: string;
+	description: string;
+	lastUpdated: Date | null;
+	baseOrder: number;
+};
+
+const homelabPosts = await getCollection('homelab');
+const homelabSpecs = await getCollection('homelabSpecs');
+const homelabLatest = [...homelabPosts, ...homelabSpecs].reduce<Date | null>((latest, entry) => {
+	const entryDate = (entry.data.updated ?? entry.data.published) ?? null;
+	if (!entryDate) return latest;
+	if (!latest) return entryDate;
+	return entryDate > latest ? entryDate : latest;
+}, null);
+
+const programmingLatestIso = [...tutorialCards, ...referenceCards].reduce<string | null>((latest, card) => {
+	if (!card.published) return latest;
+	if (!latest) return card.published;
+	return card.published > latest ? card.published : latest;
+}, null);
+const programmingLatest = programmingLatestIso ? new Date(programmingLatestIso + 'T12:00:00') : null;
+
+const woodworkingLatestIso = woodworkingProjects.reduce<string | null>((latest, project) => {
+	if (!project.completed) return latest;
+	if (!latest) return project.completed;
+	return project.completed > latest ? project.completed : latest;
+}, null);
+const woodworkingLatest = woodworkingLatestIso ? new Date(woodworkingLatestIso + 'T12:00:00') : null;
+const resumeLatest = new Date(homepageUpdates.resume + 'T12:00:00');
+const recommendationsLatest = new Date(homepageUpdates.recommendations + 'T12:00:00');
+
+const homeCards: HomeCard[] = [
+	{
+		href: sitePath('/programming'),
+		title: 'Programming',
+		description: 'Tutorials, references, and teaching notes.',
+		lastUpdated: programmingLatest,
+		baseOrder: 1,
+	},
+	{
+		href: sitePath('/homelab'),
+		title: 'HomeLab Blog',
+		description: 'HP DL380 Gen 9 HomeLab adventures.',
+		lastUpdated: homelabLatest,
+		baseOrder: 2,
+	},
+	{
+		href: sitePath('/woodworking'),
+		title: 'Woodworking',
+		description: 'Projects, photos, and notes from the shop.',
+		lastUpdated: woodworkingLatest,
+		baseOrder: 3,
+	},
+	{
+		href: sitePath('/resume'),
+		title: 'Resume',
+		description: 'Experience and background.',
+		lastUpdated: resumeLatest,
+		baseOrder: 4,
+	},
+	{
+		href: sitePath('/recommendations'),
+		title: 'Book Recommendations',
+		description: 'Books and affiliate picks.',
+		lastUpdated: recommendationsLatest,
+		baseOrder: 5,
+	},
+].sort((a, b) => {
+	const aTime = a.lastUpdated?.valueOf() ?? -1;
+	const bTime = b.lastUpdated?.valueOf() ?? -1;
+	if (bTime !== aTime) return bTime - aTime;
+	return a.baseOrder - b.baseOrder;
+});
 ---
 
 <Layout
@@ -23,37 +106,28 @@ const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
 				decoding="async"
 			/>
 		</h1>
-		<ul class="cards">
-			<li>
-				<a class="card" href={sitePath('/programming')}>
-					<h2>Programming</h2>
-					<p>Tutorials, references, and teaching notes.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/homelab')}>
-					<h2>HomeLab Blog</h2>
-					<p>HP DL380 Gen 9 HomeLab adventures.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/woodworking')}>
-					<h2>Woodworking</h2>
-					<p>Projects, photos, and notes from the shop.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/resume')}>
-					<h2>Resume</h2>
-					<p>Experience and background.</p>
-				</a>
-			</li>
-			<li>
-				<a class="card" href={sitePath('/recommendations')}>
-					<h2>Book Recommendations</h2>
-					<p>Books and affiliate picks.</p>
-				</a>
-			</li>
+		<ul class="cards home-cards">
+			{
+				homeCards.map((card) => (
+					<li>
+						<a class="card" href={card.href}>
+							<h2>{card.title}</h2>
+							<p>{card.description}</p>
+							{
+								card.lastUpdated ? (
+									<p class="card-meta">
+										Last updated {
+											card.title === 'HomeLab Blog'
+												? formatMarkdownDate(card.lastUpdated).label
+												: formatListDate(card.lastUpdated.toISOString().slice(0, 10))
+										}
+									</p>
+								) : null
+							}
+						</a>
+					</li>
+				))
+			}
 		</ul>
 	</main>
 </Layout>
@@ -79,5 +153,26 @@ const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
 		display: block;
 		border: none;
 		border-radius: 12px;
+	}
+
+	.home-cards {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: 1rem;
+	}
+
+	.home-cards > li {
+		display: flex;
+	}
+
+	.home-cards .card {
+		width: 100%;
+		padding: 1rem 1.1rem;
+	}
+
+	@media (max-width: 34rem) {
+		.home-cards {
+			grid-template-columns: 1fr;
+		}
 	}
 </style>

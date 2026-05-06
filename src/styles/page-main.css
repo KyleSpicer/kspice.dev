@@ -1,8 +1,15 @@
 /* Shared layout for inner pages (programming, woodworking, homelab, resume). */
 .main {
-	max-width: 42rem;
+	max-width: 54rem;
 	margin: 0 auto;
-	padding: 2rem 1.5rem 3rem;
+	padding: 2rem 1rem 3rem;
+}
+
+@media (min-width: 48rem) {
+	.main {
+		padding-left: 1.5rem;
+		padding-right: 1.5rem;
+	}
 }
 
 .main h1 {
