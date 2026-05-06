@@ -18,9 +18,10 @@ The purpose of this writeup is to document how I configure a C project and gener
 1. [Adjust Project Settings](#adjust-project-settings)
     - [Add Main.c and sample source code](#add-mainc-and-sample-source-code)
     - [Update Default Output and Intermediate Directories](#update-default-output-and-intermediate-directories)
+    - [Add Build Hardening with Warning Level 4 and Address Sanitizer](#add-build-hardening-with-warning-level-4-and-address-sanitizer)
+    - [Conduct a Test Build](#conduct-a-test-build)
 1. [Export as a Visual Studio template](#export-as-a-visual-studio-template)
 1. [Using the template](#using-the-template)
-1. [References](#references)
 
 ## System Requirements
 
@@ -95,7 +96,7 @@ By default, when Visual Studio builds your programs, the x64|x86 directories are
 
 ![Example update build hardening](../../tutorials-notes/visual-studio-cpp-console-template/5-c-settings-update.png)
 
-## Conduct a Test Build
+### Conduct a Test Build
 
 Once you are content with the updates, I like to run a test build of all configurations [x64|x86|DEBUG|RELEASE] to ensure everything builds without warnings/errors. To build all configurations in one easy step, you can use the `Batch Build` feature in Visual Studio. 
 
