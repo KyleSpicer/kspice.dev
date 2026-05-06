@@ -176,6 +176,16 @@
 	margin-top: 0.75rem;
 	font-size: 0.875rem;
 	color: inherit;
+	display: flex;
+	flex-wrap: wrap;
+	align-items: center;
+	gap: 0.5rem;
+}
+
+.main a.card .card-meta-aside {
+	font-size: 0.8125rem;
+	font-weight: 500;
+	color: var(--muted);
 }
 
 .main a.card .card-meta-pill {

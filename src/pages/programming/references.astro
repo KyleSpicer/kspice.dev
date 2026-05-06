@@ -50,8 +50,8 @@ const sorted = [...referenceCards].sort((a, b) => {
 								</p>
 								{card.published ? (
 									<p class="card-meta">
-										<time datetime={card.published}>
-											{formatListDate(card.published)}
+										<time class="card-meta-pill" datetime={card.published}>
+											Published {formatListDate(card.published)}
 										</time>
 									</p>
 								) : null}

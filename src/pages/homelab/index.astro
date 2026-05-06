@@ -35,8 +35,8 @@ const sortedSpecs = specs.sort((a, b) => {
 				{
 					sortedSpecs.map((page) => {
 						const excerpt = page.data.listSummary?.trim() || '';
-						const meta = page.data.updated
-							? `Updated ${formatMarkdownDate(page.data.updated).label}`
+						const updatedFmt = page.data.updated
+							? formatMarkdownDate(page.data.updated)
 							: null;
 						return (
 							<li>
@@ -47,8 +47,12 @@ const sortedSpecs = specs.sort((a, b) => {
 									<h3>{page.data.title}</h3>
 									<p>{excerpt}</p>
 									{
-										meta ? (
-											<p class="card-meta">{meta}</p>
+										updatedFmt ? (
+											<p class="card-meta">
+												<time class="card-meta-pill" datetime={updatedFmt.isoDay}>
+													Updated {updatedFmt.label}
+												</time>
+											</p>
 										) : null
 									}
 								</a>
@@ -64,10 +68,10 @@ const sortedSpecs = specs.sort((a, b) => {
 			<ul class="cards">
 				{
 					sortedPosts.map((post) => {
-						const pub = formatMarkdownDate(post.data.published).label;
-						const meta = post.data.updated
-							? `Published ${pub} · Updated ${formatMarkdownDate(post.data.updated).label}`
-							: `Published ${pub}`;
+						const pubFmt = formatMarkdownDate(post.data.published);
+						const updatedFmt = post.data.updated
+							? formatMarkdownDate(post.data.updated)
+							: null;
 						const excerpt = post.data.listSummary?.trim() || '';
 						return (
 							<li>
@@ -77,7 +81,18 @@ const sortedSpecs = specs.sort((a, b) => {
 								>
 									<h3>{post.data.title}</h3>
 									<p>{excerpt}</p>
-									<p class="card-meta">{meta}</p>
+									<p class="card-meta">
+										<time class="card-meta-pill" datetime={pubFmt.isoDay}>
+											Published {pubFmt.label}
+										</time>
+										{
+											updatedFmt ? (
+												<time class="card-meta-pill" datetime={updatedFmt.isoDay}>
+													Updated {updatedFmt.label}
+												</time>
+											) : null
+										}
+									</p>
 								</a>
 							</li>
 						);
