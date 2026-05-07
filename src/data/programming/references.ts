@@ -11,18 +11,6 @@ export interface ReferenceCard {
 
 export const referenceCards: ReferenceCard[] = [
 	{
-		href: 'https://barrgroup.com/sites/default/files/barr_c_coding_standard_2018.pdf',
-		title: [{ text: 'Barr C coding standard (2018)' }],
-		description: [
-			{
-				text: "The Barr Group's embedded C coding standard as a PDF. The baseline that the ",
-			},
-			{ code: '.clang-format' },
-			{ text: ' entry below is meant to approximate.' },
-		],
-		published: '2026-04-12',
-	},
-	{
 		href: 'https://github.com/petertorelli/clang-format-barr-c/blob/master/.clang-format',
 		title: [{ text: 'Barr C ' }, { code: '.clang-format' }],
 		description: [

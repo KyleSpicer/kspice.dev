@@ -22,8 +22,16 @@ export const tutorialCards: TutorialCard[] = [
 		slug: 'visual-studio-cpp-console-template',
 		title: 'Visual Studio Template from Configured C/C++ Console App',
 		description:
-			'How to create a new C/C++ console app, adjust personal settings, add .clang-format, and convert to template for repeated use.',
+			'How to create a new C/C++ console app, adjust default settings, and convert to template for repeated use.',
 		published: '2026-05-05',
+		categories: ['visual-studio'],
+	},
+	{
+		slug: 'visual-studio-cpp-static-library-template',
+		title: 'Visual Studio Template from Configured Static Library',
+		description:
+			'How to create a Static Library program, adjust default settings, and convert to reusable template.',
+		published: '2026-05-07',
 		categories: ['visual-studio'],
 	},
 ];
