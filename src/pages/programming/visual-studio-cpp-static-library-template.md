@@ -118,12 +118,14 @@ Finally, we will step through the default project settings to harden our warning
     - Remove `pch.h` from the `Precompiled Header File`
     - Click `Apply`
 1. Change Debug Build from Dynamic to Static Linking of CRT
+    - **PLEASE NOTE** I choose to statically link the CRT by default to test against various versions of Windows, if this does not matter to you, skip this step.
     - Change `All Configurations` to `Debug`
     - Goto `Configuration Properties > C/C++ > Code Generation`
     - Change `Runtime Library` from `Multi-threaded Debug DLL (/MDd)` to `Multi-threaded Debug (/MTd)`
     - Click `Apply`
     - This will statically link CRT during Debug builds of this static library by default.
 1. Change Release Build from Dynamic to Static Linking of CRT
+    - **PLEASE NOTE** I choose to statically link the CRT by default to test against various versions of Windows, if this does not matter to you, skip this step.
     - Change `All Configurations` to `Release`
     - Goto `Configuration Properties > C/C++ > Code Generation`
     - Change `Runtime Library` from `Multi-threaded DLL (/MD)` to `Multi-threaded (/MT)`
