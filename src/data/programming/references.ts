@@ -5,7 +5,10 @@ export interface ReferenceCard {
 	href: string;
 	title: RefSegment[];
 	description: RefSegment[];
-	/** ISO YYYY-MM-DD — shown on the references listing card */
+	/**
+	 * ISO YYYY-MM-DD — optional fallback; listing “Updated” uses the last commit
+	 * on `src/data/programming/references.ts` (shared for all curated links).
+	 */
 	published?: string;
 }
 

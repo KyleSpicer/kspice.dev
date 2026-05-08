@@ -2,6 +2,26 @@
 import Layout from '../../layouts/Layout.astro';
 import '../../styles/page-main.css';
 import { sitePath } from '../../utils/sitePath';
+import { tutorialCards } from '../../data/programming/tutorials';
+import { referenceCards } from '../../data/programming/references';
+import {
+	getReferencesDataLastUpdatedIsoDay,
+	getTutorialSourceLastUpdatedIsoDay,
+} from '../../utils/programmingSourceDates';
+import { formatListDate } from '../../utils/formatListDate';
+
+const tutorialsLatestIso = tutorialCards
+	.map((t) => getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published)
+	.filter((d): d is string => Boolean(d))
+	.reduce<string | null>(
+		(latest, day) => (!latest || day > latest ? day : latest),
+		null,
+	);
+
+const referencesLatestIso =
+	getReferencesDataLastUpdatedIsoDay() ??
+	referenceCards.find((c) => c.published)?.published ??
+	null;
 ---
 
 <Layout
@@ -20,12 +40,26 @@ import { sitePath } from '../../utils/sitePath';
 					<a class="card" href={sitePath('/programming/tutorials')}>
 						<h3>Tutorials</h3>
 						<p>Step-by-step lessons and notes.</p>
+						{tutorialsLatestIso ? (
+							<p class="card-meta">
+								<time class="card-meta-muted" datetime={tutorialsLatestIso}>
+									Last updated {formatListDate(tutorialsLatestIso)}
+								</time>
+							</p>
+						) : null}
 					</a>
 				</li>
 				<li>
 					<a class="card" href={sitePath('/programming/references')}>
 						<h3>References</h3>
 						<p>Curated links and files worth bookmarking for day-to-day development.</p>
+						{referencesLatestIso ? (
+							<p class="card-meta">
+								<time class="card-meta-muted" datetime={referencesLatestIso}>
+									Last updated {formatListDate(referencesLatestIso)}
+								</time>
+							</p>
+						) : null}
 					</a>
 				</li>
 			</ul>

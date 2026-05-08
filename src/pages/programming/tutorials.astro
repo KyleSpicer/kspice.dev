@@ -6,25 +6,39 @@ import { formatListDate } from '../../utils/formatListDate';
 import {
 	tutorialCards,
 	type TutorialCategory,
+	type TutorialCard,
 } from '../../data/programming/tutorials';
+import { getTutorialSourceLastUpdatedIsoDay } from '../../utils/programmingSourceDates';
 
-const sortTutorials = (
-	cards: typeof tutorialCards,
-): typeof tutorialCards => {
-	return [...cards].sort((a, b) => {
-		if (!a.published) return 1;
-		if (!b.published) return -1;
-		return b.published.localeCompare(a.published);
-	});
+type TutorialWithActivity = TutorialCard & {
+	/** YYYY-MM-DD from git / mtime, or `published` when the source file is absent. */
+	activityIsoDay: string | null;
 };
+
+function enrichActivity(cards: typeof tutorialCards): TutorialWithActivity[] {
+	return cards.map((t) => ({
+		...t,
+		activityIsoDay:
+			getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published ?? null,
+	}));
+}
+
+const sortTutorials = (cards: TutorialWithActivity[]): TutorialWithActivity[] =>
+	[...cards].sort((a, b) => {
+		const ad = a.activityIsoDay ?? '';
+		const bd = b.activityIsoDay ?? '';
+		return bd.localeCompare(ad);
+	});
 
 /** Uncategorized only — categorized cards appear solely under their section (no duplicates). */
 const generalTutorials = sortTutorials(
-	tutorialCards.filter((t) => !t.categories?.length),
+	enrichActivity(tutorialCards.filter((t) => !t.categories?.length)),
 );
 
 const byCategory = (cat: TutorialCategory) =>
-	sortTutorials(tutorialCards.filter((t) => t.categories?.includes(cat)));
+	sortTutorials(
+		enrichActivity(tutorialCards.filter((t) => t.categories?.includes(cat))),
+	);
 
 const visualStudioTutorials = byCategory('visual-studio');
 ---
@@ -63,10 +77,10 @@ const visualStudioTutorials = byCategory('visual-studio');
 							<a class="card" href={sitePath(`/programming/${t.slug}`)}>
 								<h3>{t.title}</h3>
 								<p>{t.description}</p>
-								{t.published ? (
+								{t.activityIsoDay ? (
 									<p class="card-meta">
-										<time class="card-meta-pill" datetime={t.published}>
-											Published {formatListDate(t.published)}
+										<time class="card-meta-muted" datetime={t.activityIsoDay}>
+											Updated {formatListDate(t.activityIsoDay)}
 										</time>
 									</p>
 								) : null}
@@ -86,10 +100,10 @@ const visualStudioTutorials = byCategory('visual-studio');
 								<a class="card" href={sitePath(`/programming/${t.slug}`)}>
 									<h3>{t.title}</h3>
 									<p>{t.description}</p>
-									{t.published ? (
+									{t.activityIsoDay ? (
 										<p class="card-meta">
-											<time class="card-meta-pill" datetime={t.published}>
-												Published {formatListDate(t.published)}
+											<time class="card-meta-muted" datetime={t.activityIsoDay}>
+												Updated {formatListDate(t.activityIsoDay)}
 											</time>
 										</p>
 									) : null}

@@ -4,7 +4,10 @@ export interface TutorialCard {
 	slug: string;
 	title: string;
 	description: string;
-	/** ISO YYYY-MM-DD — shown on the tutorials listing card */
+	/**
+	 * ISO YYYY-MM-DD — original publish / fallback when git or the `.md` file
+	 * is unavailable (listing uses last commit on `src/pages/programming/{slug}.md`).
+	 */
 	published?: string;
 	/** When set, the tutorial is also listed under matching category sections on /programming/tutorials */
 	categories?: readonly TutorialCategory[];

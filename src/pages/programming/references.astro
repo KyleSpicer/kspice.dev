@@ -3,11 +3,19 @@ import Layout from '../../layouts/Layout.astro';
 import '../../styles/page-main.css';
 import { formatListDate } from '../../utils/formatListDate';
 import { referenceCards } from '../../data/programming/references';
+import { getReferencesDataLastUpdatedIsoDay } from '../../utils/programmingSourceDates';
 
-const sorted = [...referenceCards].sort((a, b) => {
-	if (!a.published) return 1;
-	if (!b.published) return -1;
-	return b.published.localeCompare(a.published);
+const dataFileDay = getReferencesDataLastUpdatedIsoDay();
+
+const enriched = referenceCards.map((card) => ({
+	card,
+	activityIsoDay: dataFileDay ?? card.published ?? null,
+}));
+
+const sorted = [...enriched].sort((a, b) => {
+	const ad = a.activityIsoDay ?? '';
+	const bd = b.activityIsoDay ?? '';
+	return bd.localeCompare(ad);
 });
 ---
 
@@ -22,7 +30,7 @@ const sorted = [...referenceCards].sort((a, b) => {
 			<h2 id="refs-list-heading">Curated links</h2>
 			<ul class="cards">
 				{
-					sorted.map((card) => (
+					sorted.map(({ card, activityIsoDay }) => (
 						<li>
 							<a
 								class="card"
@@ -48,10 +56,10 @@ const sorted = [...referenceCards].sort((a, b) => {
 										),
 									)}
 								</p>
-								{card.published ? (
+								{activityIsoDay ? (
 									<p class="card-meta">
-										<time class="card-meta-pill" datetime={card.published}>
-											Published {formatListDate(card.published)}
+										<time class="card-meta-muted" datetime={activityIsoDay}>
+											Updated {formatListDate(activityIsoDay)}
 										</time>
 									</p>
 								) : null}

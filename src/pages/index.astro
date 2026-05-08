@@ -9,6 +9,10 @@ import { woodworkingProjects } from '../data/woodworking/projects';
 import { homepageUpdates } from '../data/homepage-updates';
 import { formatListDate } from '../utils/formatListDate';
 import { formatMarkdownDate } from '../utils/formatMarkdownDate';
+import {
+	getReferencesDataLastUpdatedIsoDay,
+	getTutorialSourceLastUpdatedIsoDay,
+} from '../utils/programmingSourceDates';
 
 /** Home hero: blue/teal tile mark (`public/images/logo/`). */
 const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
@@ -30,11 +34,24 @@ const homelabLatest = [...homelabPosts, ...homelabSpecs].reduce<Date | null>((la
 	return entryDate > latest ? entryDate : latest;
 }, null);
 
-const programmingLatestIso = [...tutorialCards, ...referenceCards].reduce<string | null>((latest, card) => {
-	if (!card.published) return latest;
-	if (!latest) return card.published;
-	return card.published > latest ? card.published : latest;
-}, null);
+const tutorialActivityDays = tutorialCards
+	.map((t) => getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published)
+	.filter((d): d is string => Boolean(d));
+const refsDataDay = getReferencesDataLastUpdatedIsoDay();
+const referenceFallback =
+	referenceCards.find((c) => c.published)?.published ?? null;
+const programmingActivityCandidates = [
+	...tutorialActivityDays,
+	...(refsDataDay ? [refsDataDay] : []),
+	...(referenceFallback && !refsDataDay ? [referenceFallback] : []),
+];
+const programmingLatestIso = programmingActivityCandidates.reduce<string | null>(
+	(latest, day) => {
+		if (!latest) return day;
+		return day > latest ? day : latest;
+	},
+	null,
+);
 const programmingLatest = programmingLatestIso ? new Date(programmingLatestIso + 'T12:00:00') : null;
 
 const woodworkingLatestIso = woodworkingProjects.reduce<string | null>((latest, project) => {
@@ -124,7 +141,7 @@ const homeCardsWithMeta = homeCards.map((card) => {
 							{
 								lastUpdatedPill ? (
 									<p class="card-meta">
-										<time class="card-meta-pill" datetime={lastUpdatedPill.isoDay}>
+										<time class="card-meta-muted" datetime={lastUpdatedPill.isoDay}>
 											Last updated {lastUpdatedPill.label}
 										</time>
 									</p>

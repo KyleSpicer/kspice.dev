@@ -49,7 +49,7 @@ const sortedSpecs = specs.sort((a, b) => {
 									{
 										updatedFmt ? (
 											<p class="card-meta">
-												<time class="card-meta-pill" datetime={updatedFmt.isoDay}>
+												<time class="card-meta-muted" datetime={updatedFmt.isoDay}>
 													Updated {updatedFmt.label}
 												</time>
 											</p>
@@ -82,12 +82,12 @@ const sortedSpecs = specs.sort((a, b) => {
 									<h3>{post.data.title}</h3>
 									<p>{excerpt}</p>
 									<p class="card-meta">
-										<time class="card-meta-pill" datetime={pubFmt.isoDay}>
+										<time class="card-meta-muted" datetime={pubFmt.isoDay}>
 											Published {pubFmt.label}
 										</time>
 										{
 											updatedFmt ? (
-												<time class="card-meta-pill" datetime={updatedFmt.isoDay}>
+												<time class="card-meta-muted" datetime={updatedFmt.isoDay}>
 													Updated {updatedFmt.label}
 												</time>
 											) : null

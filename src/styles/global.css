@@ -6,6 +6,8 @@ html[data-theme='dark'] {
 	--bg-elevated: #18181b;
 	--ink: #fafafa;
 	--muted: #a1a1aa;
+	/* Secondary to body/description text (timestamps, faint meta). */
+	--muted-dim: color-mix(in srgb, var(--muted) 68%, var(--border) 32%);
 	--teal: #2dd4bf;
 	--teal-dark: #5eead4;
 	--teal-soft: color-mix(in srgb, var(--teal) 22%, transparent);
@@ -21,6 +23,7 @@ html[data-theme='light'] {
 	--bg-elevated: #ffffff;
 	--ink: #0a0a0a;
 	--muted: #404040;
+	--muted-dim: color-mix(in srgb, var(--muted) 72%, var(--border) 28%);
 	--teal: #0d9488;
 	--teal-dark: #0f766e;
 	--teal-soft: color-mix(in srgb, var(--teal) 14%, var(--bg));

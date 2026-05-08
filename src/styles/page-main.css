@@ -182,19 +182,33 @@
 	gap: 0.5rem;
 }
 
+.main a.card p.card-meta time {
+	opacity: 0.85;
+}
+
 .main a.card .card-meta-aside {
 	font-size: 0.8125rem;
 	font-weight: 500;
 	color: var(--muted);
 }
 
-.main a.card .card-meta-pill {
-	display: inline-block;
-	padding: 0.2rem 0.65rem;
-	border-radius: 999px;
+/* Listing meta dates (no chip): slightly dimmer than card body copy */
+.main a.card .card-meta-muted {
+	display: inline;
 	font-size: 0.8125rem;
-	font-weight: 600;
-	color: var(--teal-dark);
-	background: color-mix(in srgb, var(--teal) 14%, transparent);
-	border: 1px solid color-mix(in srgb, var(--teal) 35%, var(--border));
+	font-weight: 500;
+	color: var(--muted-dim);
+}
+
+.homelab-post .homelab-date--updated {
+	color: var(--muted-dim);
+}
+
+.homelab-post .homelab-date--updated .homelab-date__label {
+	font-weight: 500;
+	color: inherit;
+}
+
+.homelab-post .homelab-head .homelab-date {
+	opacity: 0.85;
 }
