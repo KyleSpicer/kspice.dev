@@ -1,5 +1,6 @@
 ---
 import Layout from '../layouts/Layout.astro';
+import RecentlyPosted from '../components/RecentlyPosted.astro';
 import '../styles/page-main.css';
 import { sitePath } from '../utils/sitePath';
 import { getCollection } from 'astro:content';
@@ -113,6 +114,61 @@ const homeCardsWithMeta = homeCards.map((card) => {
 		card.title === 'HomeLab Blog' ? md.label : formatListDate(md.isoDay);
 	return { card, lastUpdatedPill: { isoDay: md.isoDay, label } };
 });
+
+/** Max items in homepage “Recently posted” (shown in a scrollable area; viewport shows ~10 at once). */
+const RECENT_POSTED_LIMIT = 50;
+
+const recentPostedRaw: {
+	title: string;
+	href: string;
+	at: Date;
+	badge: string;
+}[] = [];
+
+for (const e of homelabPosts) {
+	const at = e.data.updated ?? e.data.published;
+	recentPostedRaw.push({
+		title: e.data.title,
+		href: sitePath(`/homelab/${e.id}`),
+		at,
+		badge: 'HomeLab',
+	});
+}
+
+for (const e of homelabSpecs) {
+	if (!e.data.updated) continue;
+	recentPostedRaw.push({
+		title: e.data.title,
+		href: sitePath(`/homelab/specs/${e.id}`),
+		at: e.data.updated,
+		badge: 'HomeLab specs',
+	});
+}
+
+for (const p of woodworkingProjects) {
+	if (!p.completed) continue;
+	recentPostedRaw.push({
+		title: p.title,
+		href: sitePath(`/woodworking/${p.slug}`),
+		at: new Date(p.completed + 'T12:00:00'),
+		badge: 'Woodworking',
+	});
+}
+
+for (const t of tutorialCards) {
+	const isoDay =
+		getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published ?? null;
+	if (!isoDay) continue;
+	recentPostedRaw.push({
+		title: t.title,
+		href: sitePath(`/programming/${t.slug}`),
+		at: new Date(isoDay + 'T12:00:00'),
+		badge: 'Programming',
+	});
+}
+
+recentPostedRaw.sort((a, b) => b.at.valueOf() - a.at.valueOf());
+const recentPosted = recentPostedRaw.slice(0, RECENT_POSTED_LIMIT);
 ---
 
 <Layout
@@ -131,6 +187,7 @@ const homeCardsWithMeta = homeCards.map((card) => {
 				decoding="async"
 			/>
 		</h1>
+		<RecentlyPosted items={recentPosted} />
 		<ul class="cards home-cards">
 			{
 				homeCardsWithMeta.map(({ card, lastUpdatedPill }) => (
