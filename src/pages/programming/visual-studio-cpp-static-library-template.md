@@ -20,6 +20,7 @@ The purpose of this writeup is to document how I configure a Visual Studio Stati
     1. [Remove Precompiled Header and Other Files](#remove-precompiled-header-and-other-files)
     1. [Update Project Settings](#update-project-settings)
 1. [Export as Visual Studio Template](#export-as-visual-studio-template)
+1. [Download the exact template](#download-the-exact-template)
 
 ## Create a New Static Library Project
 
@@ -150,3 +151,9 @@ Once you are content with the updated static library project and you are ready t
 1. Once exported, you will be able to create new static libraries from your template with your exact custom settings.
 
 ![Template Recognized in Add Project](../../tutorials-notes/visual-studio-cpp-static-library-template/8-static-lib-template.png)
+
+## Download the exact template
+
+If you’d like to use the exact templates from this series, you can download them from my GitLab repository:
+
+[Download here](https://gitlab.com/kspice-dev/dev-resources/-/tree/main/templates/visual-studio?ref_type=heads)

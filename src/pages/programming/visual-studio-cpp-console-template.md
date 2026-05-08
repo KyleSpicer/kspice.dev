@@ -22,6 +22,7 @@ The purpose of this writeup is to document how I configure a C project and gener
     - [Conduct a Test Build](#conduct-a-test-build)
 1. [Export as a Visual Studio template](#export-as-a-visual-studio-template)
 1. [Using the template](#using-the-template)
+1. [Download the exact template](#download-the-exact-template)
 
 ## System Requirements
 
@@ -169,3 +170,9 @@ Now you have a new project with all of your template configurations ready to use
 There may be some additional settings you wish to adjust, but this should get you pointed in the right direction.
 
 ![Complete New Soltion with Project from Template](../../tutorials-notes/visual-studio-cpp-console-template/10-complete.png)
+
+## Download the exact template
+
+If you’d like to use the exact templates from this series, you can download them from my GitLab repository:
+
+[Download here](https://gitlab.com/kspice-dev/dev-resources/-/tree/main/templates/visual-studio?ref_type=heads)
