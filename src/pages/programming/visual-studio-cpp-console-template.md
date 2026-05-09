@@ -12,6 +12,8 @@ Date Created: 05-05-2026
 
 The purpose of this writeup is to document how I configure a C project and generate a reusable template for future projects. This tutorial will go over creating a C/Cpp Console App, adjusting default settings for better work flow, test building project, and finally exporting the skeleton project to a Visual Studio template for repeated use.
 
+**Please Note:** I create all of my Visual Studio templates for C language development.
+
 ## Table of Contents
 
 1. [Create a new C/C++ console app](#create-a-new-cc-console-app)
