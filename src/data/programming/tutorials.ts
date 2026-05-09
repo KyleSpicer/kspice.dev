@@ -5,8 +5,9 @@ export interface TutorialCard {
 	title: string;
 	description: string;
 	/**
-	 * ISO YYYY-MM-DD — original publish / fallback when git or the `.md` file
-	 * is unavailable (listing uses last commit on `src/pages/programming/{slug}.md`).
+	 * ISO YYYY-MM-DD — when set, used as the tutorial’s listed date and sort order
+	 * on the site (homepage + /programming/tutorials). If omitted, listing falls
+	 * back to the last git/mtime touch on `src/pages/programming/{slug}.md`.
 	 */
 	published?: string;
 	/** When set, the tutorial is also listed under matching category sections on /programming/tutorials */
@@ -22,11 +23,11 @@ export const tutorialCards: TutorialCard[] = [
 		published: '2026-04-10',
 	},
 	{
-		slug: 'visual-studio-cpp-console-template',
-		title: 'Visual Studio Template from Configured C/C++ Console App',
+		slug: 'visual-studio-cpp-dynamic-link-library-template',
+		title: 'Visual Studio Template from Configured Dynamic Link Library',
 		description:
-			'How to create a C/C++ console app, adjust default settings, and convert to reusable template.',
-		published: '2026-05-05',
+			'How to create a Dynamic Link Library, adjust default settings, and convert to template for repeat use.',
+		published: '2026-05-09',
 		categories: ['visual-studio'],
 	},
 	{
@@ -38,11 +39,11 @@ export const tutorialCards: TutorialCard[] = [
 		categories: ['visual-studio'],
 	},
 	{
-		slug: 'visual-studio-cpp-dynamic-link-library-template',
-		title: 'Visual Studio Template from Configured Dynamic Link Library',
+		slug: 'visual-studio-cpp-console-template',
+		title: 'Visual Studio Template from Configured C/C++ Console App',
 		description:
-			'How to create a Dynamic Link Library, adjust default settings, and convert to reusable template.',
-		published: '2026-05-09',
+			'How to create a C/C++ console app, adjust default settings, and convert to reusable template.',
+		published: '2026-05-05',
 		categories: ['visual-studio'],
 	},
 ];

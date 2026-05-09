@@ -6,12 +6,12 @@ import { tutorialCards } from '../../data/programming/tutorials';
 import { referenceCards } from '../../data/programming/references';
 import {
 	getReferencesDataLastUpdatedIsoDay,
-	getTutorialSourceLastUpdatedIsoDay,
+	getTutorialCardListedIsoDay,
 } from '../../utils/programmingSourceDates';
 import { formatListDate } from '../../utils/formatListDate';
 
 const tutorialsLatestIso = tutorialCards
-	.map((t) => getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published)
+	.map((t) => getTutorialCardListedIsoDay(t.slug, t.published))
 	.filter((d): d is string => Boolean(d))
 	.reduce<string | null>(
 		(latest, day) => (!latest || day > latest ? day : latest),

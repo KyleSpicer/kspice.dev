@@ -12,8 +12,10 @@ import { formatListDate } from '../utils/formatListDate';
 import { formatMarkdownDate } from '../utils/formatMarkdownDate';
 import {
 	getReferencesDataLastUpdatedIsoDay,
+	getTutorialCardListedIsoDay,
 	getTutorialSourceLastUpdatedIsoDay,
 } from '../utils/programmingSourceDates';
+import { getProgrammingMarkdownOrphanTutorials } from '../utils/programmingTutorialMarkdown';
 
 /** Home hero: blue/teal tile mark (`public/images/logo/`). */
 const heroLogoSrc = sitePath('/images/logo/KSPICE.DEV-Logo-01.png');
@@ -35,9 +37,13 @@ const homelabLatest = [...homelabPosts, ...homelabSpecs].reduce<Date | null>((la
 	return entryDate > latest ? entryDate : latest;
 }, null);
 
-const tutorialActivityDays = tutorialCards
-	.map((t) => getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published)
-	.filter((d): d is string => Boolean(d));
+const tutorialSlugSet = new Set(tutorialCards.map((t) => t.slug));
+const orphanProgrammingTutorialPages = getProgrammingMarkdownOrphanTutorials(tutorialSlugSet);
+
+const tutorialActivityDays = [
+	...tutorialCards.map((t) => getTutorialCardListedIsoDay(t.slug, t.published)),
+	...orphanProgrammingTutorialPages.map((o) => getTutorialSourceLastUpdatedIsoDay(o.slug)),
+].filter((d): d is string => Boolean(d));
 const refsDataDay = getReferencesDataLastUpdatedIsoDay();
 const referenceFallback =
 	referenceCards.find((c) => c.published)?.published ?? null;
@@ -156,12 +162,22 @@ for (const p of woodworkingProjects) {
 }
 
 for (const t of tutorialCards) {
-	const isoDay =
-		getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published ?? null;
+	const isoDay = getTutorialCardListedIsoDay(t.slug, t.published);
 	if (!isoDay) continue;
 	recentPostedRaw.push({
 		title: t.title,
 		href: sitePath(`/programming/${t.slug}`),
+		at: new Date(isoDay + 'T12:00:00'),
+		badge: 'Programming',
+	});
+}
+
+for (const o of orphanProgrammingTutorialPages) {
+	const isoDay = getTutorialSourceLastUpdatedIsoDay(o.slug) ?? null;
+	if (!isoDay) continue;
+	recentPostedRaw.push({
+		title: o.title,
+		href: sitePath(`/programming/${o.slug}`),
 		at: new Date(isoDay + 'T12:00:00'),
 		badge: 'Programming',
 	});

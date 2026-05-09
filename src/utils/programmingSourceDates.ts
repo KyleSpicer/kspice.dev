@@ -44,6 +44,16 @@ export function getTutorialSourceLastUpdatedIsoDay(
 	return git ?? fileMtimeIsoDay(abs);
 }
 
+/**
+ * Date used for homepage / Programming tutorial lists when the card defines
+ * `published` (curated publish day). Otherwise uses git/mtime of the Markdown
+ * file via {@link getTutorialSourceLastUpdatedIsoDay}.
+ */
+export function getTutorialCardListedIsoDay(slug: string, published?: string): string | null {
+	if (published) return published;
+	return getTutorialSourceLastUpdatedIsoDay(slug);
+}
+
 /** Shared `references.ts` row activity — all curated references use the same underlying file. */
 export function getReferencesDataLastUpdatedIsoDay(): string | null {
 	const abs = path.join(repoRoot, 'src', 'data', 'programming', 'references.ts');

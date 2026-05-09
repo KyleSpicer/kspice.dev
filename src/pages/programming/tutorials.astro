@@ -8,18 +8,17 @@ import {
 	type TutorialCategory,
 	type TutorialCard,
 } from '../../data/programming/tutorials';
-import { getTutorialSourceLastUpdatedIsoDay } from '../../utils/programmingSourceDates';
+import { getTutorialCardListedIsoDay } from '../../utils/programmingSourceDates';
 
 type TutorialWithActivity = TutorialCard & {
-	/** YYYY-MM-DD from git / mtime, or `published` when the source file is absent. */
+	/** YYYY-MM-DD: curated `published` when set, else git / mtime of the `.md` source. */
 	activityIsoDay: string | null;
 };
 
 function enrichActivity(cards: typeof tutorialCards): TutorialWithActivity[] {
 	return cards.map((t) => ({
 		...t,
-		activityIsoDay:
-			getTutorialSourceLastUpdatedIsoDay(t.slug, t.published) ?? t.published ?? null,
+		activityIsoDay: getTutorialCardListedIsoDay(t.slug, t.published) ?? null,
 	}));
 }
 
