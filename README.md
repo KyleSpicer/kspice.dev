@@ -2,6 +2,15 @@
 
 Static site for [kspice.dev](https://kspice.dev), built with [Astro](https://astro.build/).
 
+**kspice.dev** is a personal portfolio and technical blog covering four main areas:
+
+- **Programming** — step-by-step tutorials (shell aliases, Visual Studio C++ project templates) and curated developer reference cards
+- **HomeLab** — blog posts and hardware specs documenting home server and networking projects
+- **Woodworking** — photo galleries and write-ups for completed woodworking projects
+- **Resume & Recommendations** — a Markdown-driven resume (with PDF export) and book recommendations
+
+Content is a mix of Astro pages, Markdown files in `src/content/`, and TypeScript data files in `src/data/`. Pushing to `main` builds and deploys the site automatically via GitHub Actions.
+
 ## Requirements
 
 - [Node.js](https://nodejs.org/) **22.12+** (see `package.json` → `engines`)
@@ -43,17 +52,55 @@ You can also run the workflow manually: **Actions → Deploy Astro site to Pages
 
 ## Project layout
 
+### Pages & routes
+
 | Path | Role |
 |------|------|
-| `src/pages/` | Routes (`.astro` files) |
-| `src/tutorials-notes/` | Draft README / notes while writing programming tutorials (not published) |
-| `src/tutorials-notes/images/` | Photos for those READMEs (link with e.g. `../images/name.png` from a topic folder) |
-| `src/data/programming/tutorials.ts` | Tutorial listing entries (titles + dates on `/programming/tutorials`) |
-| `src/data/programming/references.ts` | Reference link cards + dates on `/programming/references` |
-| `src/data/woodworking/projects.ts` | Woodworking projects + gallery metadata |
-| `src/layouts/Layout.astro` | Shell, nav, theme toggle, footer |
-| `src/components/` | Reusable pieces (footer, woodworking gallery, etc.) |
-| `src/styles/global.css` | Theme tokens and base styles |
-| `src/styles/page-main.css` | Shared styles for inner pages |
-| `public/` | Static assets (favicon, etc.) |
-| `astro.config.mjs` | `site` URL for canonical links |
+| `src/pages/` | All routes — `.astro` pages and the Markdown resume |
+| `src/pages/programming/` | Programming index, tutorials listing, and references listing |
+| `src/pages/homelab/` | HomeLab index and `[slug].astro` dynamic route for posts |
+| `src/pages/homelab/specs/` | HomeLab specs index and `[slug].astro` dynamic route |
+| `src/pages/woodworking/` | Woodworking index and `[slug].astro` dynamic route for projects |
+| `src/pages/resume.md` | Resume source (rendered to HTML; PDF exported via `npm run resume:pdf`) |
+| `src/pages/recommendations.astro` | Book recommendations page |
+
+### Content (Markdown)
+
+| Path | Role |
+|------|------|
+| `src/content/homelab/` | HomeLab blog posts — each `.md` file becomes a route under `/homelab/` |
+| `src/content/homelab-specs/` | HomeLab hardware/config specs — each `.md` file becomes a route under `/homelab/specs/` |
+
+Frontmatter fields: `title`, `published` (ISO date), `updated` (ISO date), `listSummary`.
+
+### Data files (TypeScript)
+
+| Path | Role |
+|------|------|
+| `src/data/programming/tutorials.ts` | Tutorial listing entries (title, slug, description, published date) |
+| `src/data/programming/references.ts` | Reference link cards shown on `/programming/references` |
+| `src/data/woodworking/projects.ts` | Woodworking projects with gallery image metadata |
+| `src/data/homepage-updates.ts` | "Last updated" timestamps displayed on the homepage for resume and recommendations |
+
+### UI & styles
+
+| Path | Role |
+|------|------|
+| `src/layouts/Layout.astro` | Main shell — nav, theme toggle (dark/light), footer |
+| `src/layouts/MarkdownTutorial.astro` | Wrapper for Markdown-based programming tutorials |
+| `src/components/SocialFooter.astro` | Footer with social/contact links |
+| `src/components/RecentlyPosted.astro` | "Recently posted" activity feed on the homepage |
+| `src/components/WoodGallery.astro` | Thumbnail grid + lightbox viewer for woodworking galleries |
+| `src/styles/global.css` | CSS custom properties for dark/light theming and base typography |
+| `src/styles/page-main.css` | Shared styles for inner content pages |
+
+### Other
+
+| Path | Role |
+|------|------|
+| `public/` | Static assets — favicon, images, and the generated resume PDF |
+| `public/images/woodworking/` | Project gallery images, organized by project slug |
+| `src/utils/` | Shared helpers (date formatting, path utilities, git-date lookups) |
+| `src/tutorials-notes/` | Draft notes written while authoring programming tutorials (not published) |
+| `astro.config.mjs` | Astro configuration — sets `site` URL for canonical links |
+| `.github/workflows/deploy.yml` | CI/CD pipeline — builds and deploys to GitHub Pages on push to `main` |
