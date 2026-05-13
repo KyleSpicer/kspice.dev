@@ -2,11 +2,12 @@
 title: Current Server Resources
 listSummary: >-
   Inventory and current specs for the HP ProLiant DL380 Gen9.
-updated: 2026-05-04
+updated: 2026-05-13
 ---
 
 ## Table of Contents
 1. [Current Server Resources](#current-server-resources)
+1. [Uninterruptible Power Supply (UPS)](#uninterruptible-power-supply-ups)
 1. [References](#references)
 
 ## Current Server Resources
@@ -32,13 +33,13 @@ updated: 2026-05-04
     </tr>
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Memory (RAM)</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">32 GB total (2×16 GB DDR4 ECC RDIMM, 2Rx4)</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Two 16 GB DDR4 server RDIMMs (32 GB total) ECC 2Rx4 (dual rank, x4 chips). <br>P/N: 809081-081</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">128 GB DDR4 ECC RDIMM</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">8 x 16 GB DDR4 server RDIMMs ECC 2Rx4 (dual rank, x4 chips). <br>P/N: 809081-081</td>
     </tr>
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Storage</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">1TB Crucial MX500 SSD</td>
-      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">1 x 1TB SATA 2.5-inch SSD used as the current host storage device. <br>Model: Crucial MX500.</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">6 TB SSD</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">6 x 1TB SATA 2.5-inch SSD (Crucial & PNY)</td>
     </tr>
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Power Configuration</td>
@@ -49,6 +50,47 @@ updated: 2026-05-04
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Networking (NIC)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Broadcom NetXtreme BCM5719, 4 x 1GbE (14e4:1657)</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Broadcom BCM5719 quad-port 1GbE NIC; nic1 is the active uplink and is attached to vmbr0, while nic0/nic2/nic3 are currently down.</td>
+    </tr>
+  </tbody>
+</table>
+
+## Uninterruptible Power Supply (UPS)
+
+<table style="border-collapse:collapse;width:100%;margin:0 0 1rem;font-size:1.0625rem">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;text-align:left;background:var(--bg-elevated, #f5f5f5)">Spec</th>
+      <th style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;text-align:left;background:var(--bg-elevated, #f5f5f5)">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Manufacturer</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Tripp-Lite</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Model</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">SMART500RT1U</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Series</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">AG-03AA</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">AC Input</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">120VAC, 60Hz, 10A</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">AC Output</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">120VAC, 60Hz, 4.2A — 500VA / 300W</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Surge-Only Output</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">120VAC, 60Hz, 10A</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Total Output Current</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">10A max</td>
     </tr>
   </tbody>
 </table>
