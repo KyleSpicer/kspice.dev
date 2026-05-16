@@ -36,6 +36,8 @@ By the end of this writeup, I'll have:
   - Docker Engine installed via Docker's official APT repository
   - Arcane running as a Docker container, accessible from a browser, ready to manage additional services
 
+![OLTF](../../tutorials-notes/images/oltf.png)
+
 ## Create Ubuntu Server VM in Proxmox (Docker Services VM)
 
 ### Step 1: Create Proxmox Resource Pool
