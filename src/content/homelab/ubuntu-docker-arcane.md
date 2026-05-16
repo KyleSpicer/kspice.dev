@@ -1,5 +1,5 @@
 ---
-title: "HomeLab Blog: Ubuntu Server 2604 LTS, Docker Engine, and Arcane Docker Manager"
+title: "HomeLab Blog: Ubuntu Server 26.04 LTS, Docker Engine, and Arcane Docker Manager"
 listSummary: >-
   Setting up an environment to run Docker services being managed by Arcane.
 published: 2026-05-16
