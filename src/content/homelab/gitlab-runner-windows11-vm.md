@@ -471,3 +471,4 @@ runner-smoke-test:
 2. [GitLab Runner Windows](https://docs.gitlab.com/runner/install/windows/)
 3. [GitLab Registering Runners](https://docs.gitlab.com/runner/register/)
 4. [GitLab Pipelines How-To](https://docs.gitlab.com/ci/quick_start/)
+5. [Proxmox Windows 11 Install](https://pve.proxmox.com/wiki/Windows_11_guest_best_practices)
