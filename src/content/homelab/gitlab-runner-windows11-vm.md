@@ -2,7 +2,7 @@
 title: "HomeLab Blog: Setting Up a GitLab Runner on a Windows 11 VM"
 listSummary: >-
   Creating a Windows 11 VM in Proxmox and registering it as a self-hosted GitLab Runner.
-published: 2026-05-17
+published: 2026-05-18
 ---
 
 ## Table of Contents
