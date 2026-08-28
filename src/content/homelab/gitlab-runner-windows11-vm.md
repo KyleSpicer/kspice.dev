@@ -35,7 +35,7 @@ published: 2026-05-18
 This writeup documents how I set up a self-hosted **GitLab Runner** on a Windows 11 virtual machine running in Proxmox. The goal is a dedicated Windows build environment that can compile and package Windows projects using **MSBuild** for builds and the **GitLab Package Registry** for releases without relying on shared runners or Docker-based Windows containers.
 <br>
 <br>
-This VM is part of the `Oompa Loompa Task Force (OLTF)` Proxmox Resource Pool (see the Wonka homelab theme described in the [Ubuntu Server + Docker + Arcane](./ubuntu-docker-arcane.md) post). The runner VM is named `oltf-win11-runner`.
+This VM is part of the `Oompa Loompa Task Force (OLTF)` Proxmox Resource Pool (see the Wonka homelab theme described in the [Ubuntu Server + Docker + Arcane](/homelab/ubuntu-docker-arcane) post). The runner VM is named `oltf-win11-runner`.
 <br>
 <br>
 By the end of this writeup, I'll have:

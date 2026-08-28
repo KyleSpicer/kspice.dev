@@ -23,6 +23,13 @@ export const tutorialCards: TutorialCard[] = [
 		published: '2026-04-10',
 	},
 	{
+		slug: 'sensor-watch-casio-f91w-totp',
+		title: 'Sensor Watch Build: Casio F-91W for TOTP',
+		description:
+			'How to build a Sensor Watch firmware for your personal 2FA TOTP Keys.',
+		published: '2026-08-27',
+	},
+	{
 		slug: 'visual-studio-cpp-dynamic-link-library-template',
 		title: 'Visual Studio Template from Configured Dynamic Link Library',
 		description:

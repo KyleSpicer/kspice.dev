@@ -31,3 +31,5 @@ pnpm-debug.log*
 
 # temp HTML used only for resume PDF generation
 public/.resume-print.html
+
+.claude
