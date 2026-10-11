@@ -37,7 +37,7 @@ We recently moved from Georgia to Hawaii, and with the move I wanted to start ev
 
 ## The Setup
 
-<img src="/images/homelab/server-rack.jpg" alt="HP ProLiant DL380 Gen9 and Tripp-Lite UPS in the VEVOR 12U open frame rack" width="480" height="464">
+<img src="/images/homelab/server-rack.jpg" alt="HP ProLiant DL380 Gen9 and Tripp-Lite UPS in the VEVOR 12U open frame rack" width="640" height="619">
 
   - **Server:** HP ProLiant DL380 Gen9
   - **Hypervisor:** Proxmox VE

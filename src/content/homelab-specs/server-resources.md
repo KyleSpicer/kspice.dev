@@ -15,7 +15,7 @@ updated: 2026-10-11
 
 ## Current Server Resources
 
-<img src="/images/homelab/server-rack.jpg" alt="HP ProLiant DL380 Gen9 and Tripp-Lite UPS in the VEVOR 12U open frame rack" width="480" height="464">
+<img src="/images/homelab/server-rack.jpg" alt="HP ProLiant DL380 Gen9 and Tripp-Lite UPS in the VEVOR 12U open frame rack" width="640" height="619">
 
 <table style="border-collapse:collapse;width:100%;margin:0 0 1rem;font-size:1.0625rem">
   <thead>
