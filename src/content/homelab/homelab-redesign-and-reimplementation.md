@@ -5,7 +5,7 @@ listSummary: >-
 published: 2026-10-10
 ---
 
-<img src="/images/homelab/wonderland.png" alt="Wonderland Proxmox node" width="640" height="320" style="image-rendering:pixelated">
+<img src="/images/homelab/wonderland.png" alt="Wonderland Proxmox node" width="960" height="480" style="image-rendering:pixelated">
 
 ## Table of Contents
 
