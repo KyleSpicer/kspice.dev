@@ -2,12 +2,15 @@
 title: Current Server Resources
 listSummary: >-
   Inventory and current specs for the HP ProLiant DL380 Gen9.
-updated: 2026-05-13
+updated: 2026-10-11
 ---
+
+<img src="/images/homelab/wonderland.png" alt="Wonderland Proxmox node" width="640" height="320" style="image-rendering:pixelated">
 
 ## Table of Contents
 1. [Current Server Resources](#current-server-resources)
 1. [Uninterruptible Power Supply (UPS)](#uninterruptible-power-supply-ups)
+1. [Server Rack](#server-rack)
 1. [References](#references)
 
 ## Current Server Resources
@@ -25,6 +28,16 @@ updated: 2026-05-13
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Server</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">HP ProLiant DL380 Gen9</td>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">2U dual-socket Intel Xeon rack server.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Host Node</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center"><code>wonderland</code></td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Proxmox VE host node.</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Naming Theme</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center"><em>Alice in Wonderland</em></td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">All nodes, VMs, and containers are named after <em>Alice in Wonderland</em> characters and places.</td>
     </tr>
     <tr>
       <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">CPUs</td>
@@ -95,7 +108,45 @@ updated: 2026-05-13
   </tbody>
 </table>
 
+## Server Rack
+
+<table style="border-collapse:collapse;width:100%;margin:0 0 1rem;font-size:1.0625rem">
+  <thead>
+    <tr>
+      <th style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;text-align:left;background:var(--bg-elevated, #f5f5f5)">Spec</th>
+      <th style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;text-align:left;background:var(--bg-elevated, #f5f5f5)">Value</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Manufacturer</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">VEVOR</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Model</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">12U Open Frame Server Rack</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Size</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">12U</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Frame</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">4-post open frame</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Depth</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Adjustable, 23–40 in</td>
+    </tr>
+    <tr>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Mounting</td>
+      <td style="border:1px solid var(--border, #ccc);padding:0.45rem 0.65rem;vertical-align:center">Free-standing with casters, or wall mount</td>
+    </tr>
+  </tbody>
+</table>
+
 ## References
 
 - [HPE ProLiant DL380 Gen9 Server User Guide (PDF)](https://www.theserverstore.com/assets/images/HPE_c04436966_ProLiant_DL380_Gen9_Server_User_Guide-TheServerStore.pdf) - hosted copy on TheServerStore (HPE part **c04436966**).
+- [VEVOR 12U Open Frame Server Rack](https://www.amazon.com/dp/B0C64X8J8R) - Amazon product page.
 - [Corsair DIMM Definitions](https://www.corsair.com/us/en/explorer/diy-builder/memory/dimm-vs-udimm-vs-rdimm-vs-sodimm-vs-cudimm-whats-the-difference/?srsltid=AfmBOorzvB0hWiMO86ySe8o0DUmSJQE0JwOK1T36g4ecnsNRU22CaGg3)
