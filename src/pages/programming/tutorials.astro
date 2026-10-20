@@ -40,6 +40,7 @@ const byCategory = (cat: TutorialCategory) =>
 	);
 
 const visualStudioTutorials = byCategory('visual-studio');
+const virtualMachineTutorials = byCategory('virtual-machines');
 ---
 
 <Layout
@@ -62,6 +63,13 @@ const visualStudioTutorials = byCategory('visual-studio');
 					visualStudioTutorials.length > 0 ? (
 						<li>
 							<a href="#visual-studio-heading">Visual Studio</a>
+						</li>
+					) : null
+				}
+				{
+					virtualMachineTutorials.length > 0 ? (
+						<li>
+							<a href="#virtual-machines-heading">Virtual Machines</a>
 						</li>
 					) : null
 				}
@@ -95,6 +103,30 @@ const visualStudioTutorials = byCategory('visual-studio');
 					<h2 id="visual-studio-heading">Visual Studio</h2>
 					<ul class="cards">
 						{visualStudioTutorials.map((t) => (
+							<li>
+								<a class="card" href={sitePath(`/programming/${t.slug}`)}>
+									<h3>{t.title}</h3>
+									<p>{t.description}</p>
+									{t.activityIsoDay ? (
+										<p class="card-meta">
+											<time class="card-meta-muted" datetime={t.activityIsoDay}>
+												Updated {formatListDate(t.activityIsoDay)}
+											</time>
+										</p>
+									) : null}
+								</a>
+							</li>
+						))}
+					</ul>
+				</section>
+			) : null
+		}
+		{
+			virtualMachineTutorials.length > 0 ? (
+				<section class="section" aria-labelledby="virtual-machines-heading">
+					<h2 id="virtual-machines-heading">Virtual Machines</h2>
+					<ul class="cards">
+						{virtualMachineTutorials.map((t) => (
 							<li>
 								<a class="card" href={sitePath(`/programming/${t.slug}`)}>
 									<h3>{t.title}</h3>

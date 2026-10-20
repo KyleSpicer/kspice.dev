@@ -1,6 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import RecentlyPosted from '../components/RecentlyPosted.astro';
+import SocialFooter from '../components/SocialFooter.astro';
 import '../styles/page-main.css';
 import { sitePath } from '../utils/sitePath';
 import { getCollection } from 'astro:content';
@@ -183,12 +184,16 @@ for (const o of orphanProgrammingTutorialPages) {
 	});
 }
 
+/** Every post on the site (HomeLab posts, tutorials, finished woodworking projects); specs pages are reference docs, not posts. */
+const totalPosts = recentPostedRaw.filter((p) => p.badge !== 'HomeLab specs').length;
+
 recentPostedRaw.sort((a, b) => b.at.valueOf() - a.at.valueOf());
 const recentPosted = recentPostedRaw.slice(0, RECENT_POSTED_LIMIT);
 ---
 
 <Layout
 	title="kspice.dev"
+	showContactFooter={false}
 >
 	<main class="main">
 		<h1 class="welcome-stack">
@@ -203,7 +208,8 @@ const recentPosted = recentPostedRaw.slice(0, RECENT_POSTED_LIMIT);
 				decoding="async"
 			/>
 		</h1>
-		<RecentlyPosted items={recentPosted} />
+		<SocialFooter placement="top" />
+		<RecentlyPosted items={recentPosted} totalPosts={totalPosts} />
 		<ul class="cards home-cards">
 			{
 				homeCardsWithMeta.map(({ card, lastUpdatedPill }) => (

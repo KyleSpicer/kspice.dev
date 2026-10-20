@@ -242,8 +242,8 @@ The operation completed successfully.
 1. [Bash Introduction - W3Schools](https://www.w3schools.com/bash/bash_intro.php)
 1. [Bash Aliases - W3Schools](https://www.w3schools.com/bash/bash_alias.php)
 1. [PowerShell Profiles - MSDN](https://learn.microsoft.com/en-us/powershell/module/microsoft.powershell.core/about/about_profiles?view=powershell-7.6)
-1. [Customizing PowerShell Environment - MSDN](#https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/creating-profiles?view=powershell-7.6)
-1. [Doskey Reference - MSDN](#https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/doskey)
+1. [Customizing PowerShell Environment - MSDN](https://learn.microsoft.com/en-us/powershell/scripting/learn/shell/creating-profiles?view=powershell-7.6)
+1. [Doskey Reference - MSDN](https://learn.microsoft.com/en-us/windows-server/administration/windows-commands/doskey)
 
 <!-- Put image files in `public/images/tutorials/aliases/` (served from the site root). Reference them in Markdown like this: -->
 

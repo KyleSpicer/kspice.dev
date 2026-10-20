@@ -6,11 +6,14 @@ import { sitePath } from '../utils/sitePath';
 interface Props {
 	title?: string;
 	description?: string;
+	/** Set false when the page renders `SocialFooter` itself (e.g. the home page, under the hero). */
+	showContactFooter?: boolean;
 }
 
 const {
 	title = 'kspice.dev',
 	description = 'Programming tutorials and more.',
+	showContactFooter = true,
 } = Astro.props;
 
 const pathname = Astro.url.pathname.replace(/\/$/, '') || '/';
@@ -129,7 +132,7 @@ const nav = [
 			</nav>
 		</header>
 		<slot />
-		<SocialFooter />
+		{showContactFooter && <SocialFooter />}
 		<script is:inline>
 			(function () {
 				var themeKey = 'kspice-theme';

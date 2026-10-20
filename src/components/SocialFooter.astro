@@ -1,5 +1,13 @@
 ---
-type Network = 'facebook' | 'linkedin' | 'gitea' | 'instagram' | 'x' | 'email';
+interface Props {
+	/** `top`: rendered inside page content (home page, under the hero) instead of as the site footer. */
+	placement?: 'footer' | 'top';
+}
+
+const { placement = 'footer' } = Astro.props;
+const Tag = placement === 'top' ? 'section' : 'footer';
+
+type Network ='facebook' | 'linkedin' | 'gitea' | 'instagram' | 'x' | 'email';
 
 type SocialEntry =
 	| { type: 'link'; network: Network; href: string; short: string }
@@ -53,10 +61,14 @@ const entries: SocialEntry[] = [
 
 ---
 
-<footer id="contact" class="social-footer">
+<Tag
+	id="contact"
+	class:list={['social-footer', { 'social-footer--top': placement === 'top' }]}
+	aria-labelledby="contact-heading"
+>
 	<div class="social-footer__panel">
 		<div class="social-footer__head">
-			<h2 class="social-footer__heading">Contact</h2>
+			<h2 class="social-footer__heading" id="contact-heading">Contact</h2>
 		</div>
 
 		<ul class="social-footer__grid" aria-label="Contact and profiles">
@@ -70,7 +82,9 @@ const entries: SocialEntry[] = [
 								title={
 									entry.network === 'email'
 										? 'Send email to kyledspicer@gmail.com'
-										: undefined
+										: placement === 'top'
+											? entry.short
+											: undefined
 								}
 								{...(entry.network === 'email'
 									? {}
@@ -168,7 +182,7 @@ const entries: SocialEntry[] = [
 		</ul>
 		<p class="social-footer__status" id="discord-copy-status" role="status" aria-live="polite" aria-atomic="true" />
 	</div>
-</footer>
+</Tag>
 
 <script>
 	function copyText(text: string): Promise<void> {
@@ -241,6 +255,71 @@ const entries: SocialEntry[] = [
 		margin: 0 auto;
 		padding: 2rem 1rem 2.75rem;
 		scroll-margin-top: 1.25rem;
+	}
+
+	/* Inside `.main`, which already provides the side gutters. Icons only, one row, no panel. */
+	.social-footer--top {
+		padding: 0;
+		margin: 0 auto 2.25rem;
+	}
+
+	.social-footer--top .social-footer__panel {
+		padding: 0;
+		border: none;
+		background: none;
+		box-shadow: none;
+		overflow: visible;
+	}
+
+	.social-footer--top .social-footer__panel::before {
+		display: none;
+	}
+
+	/* Heading and labels stay available to screen readers. */
+	.social-footer--top .social-footer__head,
+	.social-footer--top .social-pill__label {
+		position: absolute;
+		width: 1px;
+		height: 1px;
+		margin: -1px;
+		padding: 0;
+		overflow: hidden;
+		clip: rect(0 0 0 0);
+		white-space: nowrap;
+		border: 0;
+	}
+
+	.social-footer--top .social-footer__grid {
+		display: flex;
+		flex-wrap: nowrap;
+		justify-content: center;
+		gap: 0.5rem;
+		padding: 0;
+	}
+
+	/* Shrinks evenly on narrow screens so all icons stay on one row. */
+	.social-footer--top .social-footer__cell {
+		flex: 0 1 2.75rem;
+	}
+
+	.social-footer--top .social-pill {
+		justify-content: center;
+		aspect-ratio: 1;
+		min-height: 0;
+		padding: 0;
+		border: none;
+		border-radius: 50%;
+		background: none;
+	}
+
+	.social-footer--top .social-pill__icon {
+		width: 100%;
+		height: 100%;
+	}
+
+	.social-footer--top .social-pill__svg {
+		width: 45%;
+		height: 45%;
 	}
 
 	.social-footer__panel {

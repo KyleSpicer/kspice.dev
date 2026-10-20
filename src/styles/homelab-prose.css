@@ -97,6 +97,30 @@
 	line-height: 1.45;
 }
 
+.homelab-prose table {
+	display: block;
+	max-width: 100%;
+	overflow-x: auto;
+	margin: 0 0 1rem;
+	border-collapse: collapse;
+	font-size: 0.9875rem;
+	line-height: 1.45;
+	color: var(--muted);
+}
+
+.homelab-prose :where(th, td) {
+	padding: 0.5rem 0.75rem;
+	border: 1px solid var(--border);
+	text-align: left;
+	vertical-align: top;
+}
+
+.homelab-prose th {
+	font-weight: 600;
+	color: var(--teal-dark);
+	background: var(--bg-elevated);
+}
+
 .homelab-prose hr {
 	margin: 1.25rem 0;
 	border: none;

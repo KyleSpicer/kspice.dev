@@ -12,9 +12,11 @@ export interface RecentPostedItem {
 
 interface Props {
 	items: RecentPostedItem[];
+	/** Shown as a pill in the summary bar when set. */
+	totalPosts?: number;
 }
 
-const { items } = Astro.props;
+const { items, totalPosts } = Astro.props;
 ---
 
 {
@@ -23,6 +25,13 @@ const { items } = Astro.props;
 			<details class="recent-posted__details">
 				<summary class="recent-posted__summary">
 					<span class="recent-posted__summary-text">Recently posted</span>
+					{
+						totalPosts ? (
+							<span class="recent-posted__total">
+								{totalPosts} {totalPosts === 1 ? 'post' : 'posts'} total
+							</span>
+						) : null
+					}
 					<span class="recent-posted__chevron" aria-hidden="true">
 						<svg
 							class="recent-posted__chevron-svg"
@@ -128,6 +137,19 @@ const { items } = Astro.props;
 	.recent-posted__summary-text {
 		flex: 1;
 		min-width: 0;
+	}
+
+	.recent-posted__total {
+		flex-shrink: 0;
+		padding: 0.2rem 0.6rem;
+		border-radius: 999px;
+		border: 1px solid var(--border);
+		background: var(--bg);
+		font-size: 0.6875rem;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		color: var(--teal-dark);
+		font-variant-numeric: tabular-nums;
 	}
 
 	.recent-posted__chevron {

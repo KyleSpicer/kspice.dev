@@ -1,4 +1,4 @@
-export type TutorialCategory = 'visual-studio';
+export type TutorialCategory = 'visual-studio' | 'virtual-machines';
 
 export interface TutorialCard {
 	slug: string;
@@ -15,6 +15,29 @@ export interface TutorialCard {
 }
 
 export const tutorialCards: TutorialCard[] = [
+	{
+		slug: 'gitea-runner-windows-ubuntu',
+		title: 'Gitea Runner: Download and Install on Windows and Ubuntu',
+		description:
+			'How to download, register, and run a self-hosted Gitea Actions runner as a service on Windows 11 and Ubuntu Server.',
+		published: '2026-10-19',
+	},
+	{
+		slug: 'proxmox-ubuntu-server-2604-vm-template',
+		title: 'Proxmox VM: Ubuntu Server 26.04 Template and Setup',
+		description:
+			'How to build a reusable Ubuntu Server 26.04 LTS template in Proxmox VE and set up VMs cloned from it.',
+		published: '2026-10-19',
+		categories: ['virtual-machines'],
+	},
+	{
+		slug: 'proxmox-windows-11-pro-vm-template',
+		title: 'Proxmox VM: Windows 11 Pro Template and Setup',
+		description:
+			'How to build a reusable Windows 11 Pro 25H2 template in Proxmox VE and set up VMs cloned from it.',
+		published: '2026-10-19',
+		categories: ['virtual-machines'],
+	},
 	{
 		slug: 'aliases',
 		title: 'Aliases',

@@ -113,6 +113,31 @@ const { frontmatter } = Astro.props;
 		border: 1px solid var(--border);
 	}
 
+	.tutorial-md :global(table) {
+		display: block;
+		max-width: 100%;
+		overflow-x: auto;
+		margin: 0 0 1rem;
+		border-collapse: collapse;
+		font-size: 0.9375rem;
+		line-height: 1.45;
+		color: var(--muted);
+	}
+
+	.tutorial-md :global(th),
+	.tutorial-md :global(td) {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--border);
+		text-align: left;
+		vertical-align: top;
+	}
+
+	.tutorial-md :global(th) {
+		font-weight: 600;
+		color: var(--teal-dark);
+		background: var(--bg-elevated);
+	}
+
 	.tutorial-md :global(hr) {
 		border: none;
 		border-top: 1px solid var(--border);
