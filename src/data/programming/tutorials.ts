@@ -20,14 +20,14 @@ export const tutorialCards: TutorialCard[] = [
 		title: 'Gitea Runner: Download and Install on Windows and Ubuntu',
 		description:
 			'How to download, register, and run a self-hosted Gitea Actions runner as a service on Windows 11 and Ubuntu Server.',
-		published: '2026-10-19',
+		published: '2026-10-24',
 	},
 	{
 		slug: 'proxmox-ubuntu-server-2604-vm-template',
 		title: 'Proxmox VM: Ubuntu Server 26.04 Template and Setup',
 		description:
 			'How to build a reusable Ubuntu Server 26.04 LTS template in Proxmox VE and set up VMs cloned from it.',
-		published: '2026-10-19',
+		published: '2026-10-24',
 		categories: ['virtual-machines'],
 	},
 	{
@@ -35,7 +35,7 @@ export const tutorialCards: TutorialCard[] = [
 		title: 'Proxmox VM: Windows 11 Pro Template and Setup',
 		description:
 			'How to build a reusable Windows 11 Pro 25H2 template in Proxmox VE and set up VMs cloned from it.',
-		published: '2026-10-19',
+		published: '2026-10-24',
 		categories: ['virtual-machines'],
 	},
 	{

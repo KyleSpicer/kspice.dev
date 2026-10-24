@@ -6,7 +6,7 @@ description: How to build a reusable Windows 11 Pro 25H2 template in Proxmox VE 
 
 # Proxmox VM: Windows 11 Pro Template and Setup
 
-Date Created: 10-19-2026
+Date Created: 10-24-2026
 
 How to build a reusable Windows 11 Pro 25H2 template in Proxmox VE, then clone and set up new VMs from it.
 
@@ -40,7 +40,7 @@ Click `Create VM` (top right) and fill in each tab:
 | OS      | Windows 11 ISO, type `Microsoft Windows`, version `11/2022`, tick `Add additional drive for VirtIO drivers` and pick `virtio-win.iso` | Proxmox picks Windows defaults and mounts the drivers as a second CD.                   |
 | System  | Machine `q35`, BIOS `OVMF (UEFI)`, `Add EFI Disk` on `vm-storage`, `Add TPM` (`v2.0`, on `vm-storage`)                               | Windows 11 requires UEFI and a TPM 2.0.                                                 |
 | System  | SCSI controller `VirtIO SCSI single`, `Qemu Agent` on                                                                                  | Fast disk I/O, and Proxmox can see the VM's IP and shut it down cleanly.                |
-| Disks   | Bus `SCSI`, `vm-storage`, `150 GB`, `Discard` and `IO thread` on                                                                       | Room for build tools. Growing a Windows disk later is awkward (see Step 5).             |
+| Disks   | Bus `SCSI`, `vm-storage`, `150 GB`, `Discard` and `IO thread` on                                                                       | Room for build tools. Growing a Windows disk later is awkward, so start big.            |
 | CPU     | `2` cores, type `host`                                                                                                                 | `host` passes through the real CPU's features. Each clone can change the count.         |
 | Memory  | `4096 MiB`                                                                                                                             | Windows 11's minimum. Each clone can change it.                                         |
 | Network | Bridge `vmbr0`, model `VirtIO`                                                                                                         | VirtIO is the fastest virtual network card. Windows needs the VirtIO driver to see it. |
@@ -96,19 +96,10 @@ Once the VM has shut down, don't start it again. Starting it would run the out-o
 ## Step 5: Clone a VM from the Template
 
 1. Right-click the template, choose `Clone`, set `Mode: Full Clone`, and give it a name. A full clone is a standalone copy, so it doesn't depend on the template.
-1. With the clone powered off, set its CPU, RAM, and disk in the `Hardware` tab. The template's sizes are only a starting point. To grow the disk, select it and use `Disk Action > Resize`.
+1. With the clone powered off, set its CPU and RAM in the `Hardware` tab. The template's sizes are only a starting point.
 1. Start the clone and open the `Console`. Windows runs the out-of-box setup: pick the region and keyboard, and create the clone's local account (`Shift+F10` and `start ms-cxh:localonly` work here too).
 
 After the first login, open an admin PowerShell.
-
-**Grow the disk.** If you resized the disk in Proxmox, extend `C:` into the new space:
-
-```powershell
-$size = Get-PartitionSupportedSize -DriveLetter C
-Resize-Partition -DriveLetter C -Size $size.SizeMax
-```
-
-Windows puts its recovery partition right after `C:`, at the end of the disk. Proxmox adds new space after that, so `C:` has nothing to extend into, and `Resize-Partition` fails. That's why the template starts at 150 GB: most clones never need to grow. To check a clone's layout, run `Get-Partition` or open `Disk Management`.
 
 **Remove the setup account.** Sysprep keeps local accounts, so the template's `setup` account is still there. Signed in as the clone's new account, remove it:
 

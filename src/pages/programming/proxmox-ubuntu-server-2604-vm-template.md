@@ -6,7 +6,7 @@ description: How to build a reusable Ubuntu Server 26.04 LTS template in Proxmox
 
 # Proxmox VM: Ubuntu Server 26.04 Template and Setup
 
-Date Created: 10-19-2026
+Date Created: 10-24-2026
 
 How to build a reusable Ubuntu Server 26.04 LTS template in Proxmox VE, then clone and set up new VMs from it.
 
@@ -36,12 +36,12 @@ Click `Create VM` (top right) and fill in each tab:
 | Tab     | Setting                                                           | Why                                                                                           |
 | ------- | ----------------------------------------------------------------- | --------------------------------------------------------------------------------------------- |
 | General | Name `ubuntu-base`, default VM ID, `Start at boot` off            | A template can't be started, so only the clones need `Start at boot`.                         |
-| OS      | Ubuntu ISO, type `Linux`, version `6.x`                           | Lets Proxmox pick sensible defaults for a modern Linux kernel.                                |
+| OS      | Ubuntu ISO, type `Linux`, version `6.x - 2.6 Kernel`              | Lets Proxmox pick sensible defaults for a modern Linux kernel.                                |
 | System  | Machine `q35`, BIOS `OVMF (UEFI)`, `Add EFI Disk` on `vm-storage` | Modern chipset and UEFI boot. The EFI disk stores the boot settings.                          |
 | System  | SCSI controller `VirtIO SCSI single`, `Qemu Agent` on             | Fast disk I/O, and Proxmox can see the VM's IP and shut it down cleanly.                      |
 | Disks   | Bus `SCSI`, `vm-storage`, `60 GB`, `Discard` and `IO thread` on   | Discard returns freed space to the host. IO thread speeds up the disk. Clones can grow later. |
 | CPU     | `2` cores, type `host`                                            | `host` passes through the real CPU's features. Each clone can change the count.               |
-| Memory  | `4096 MB`                                                         | Enough to install. Each clone can change it.                                                  |
+| Memory  | `4096 MiB`                                                        | Enough to install. Each clone can change it.                                                  |
 | Network | Bridge `vmbr0`, model `VirtIO`                                    | VirtIO is the fastest virtual network card.                                                   |
 
 ## Step 2: Run the Ubuntu Installer
@@ -86,6 +86,7 @@ df -h /
 Once that looks good, clear out everything that has to be unique per machine. The VM shuts itself down at the end:
 
 ```bash
+# patch again, in case time has passed since Step 3
 sudo apt update && sudo apt full-upgrade -y
 
 # clones re-run first-boot setup
@@ -156,6 +157,16 @@ sudo systemd-machine-id-setup && sudo reboot
 ssh-keygen -R <ip>        # only if you get a host key warning
 ssh <username>@<ip>
 ```
+
+**Optional: turn off password login.** Once you can SSH in with a key, password logins can be turned off. If you didn't import a key during the install, copy one over from your PC first with `ssh-copy-id <username>@<ip>`. Then, on the clone:
+
+```bash
+echo "PasswordAuthentication no" | sudo tee /etc/ssh/sshd_config.d/00-no-password.conf
+sudo systemctl restart ssh
+sudo sshd -T | grep -i passwordauthentication
+```
+
+It should print `passwordauthentication no`. The file name starts with `00-` because sshd uses the first value it reads, and this one has to come before the `50-cloud-init.conf` file, which can turn passwords back on. Keep your current session open and test a new SSH login before logging out.
 
 Repeat this step for every new Ubuntu VM.
 

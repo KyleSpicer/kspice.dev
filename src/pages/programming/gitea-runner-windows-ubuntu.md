@@ -6,124 +6,71 @@ description: How to download, register, and run a self-hosted Gitea Actions runn
 
 # Gitea Runner: Download and Install on Windows and Ubuntu
 
-Date Created: 10-19-2026
+Date Created: 10-24-2026
 
 How to download, register, and run a self-hosted Gitea Actions runner as a service on Windows 11 and Ubuntu Server 26.04 LTS.
 
 ## Table of Contents
 
 1. [Overview](#overview)
-    1. [Which File to Download](#which-file-to-download)
-    1. [Get a Registration Token](#get-a-registration-token)
-    1. [Labels](#labels)
+1. [Before You Start](#before-you-start)
 1. [Windows](#windows)
-    1. [Install the Runner on Windows](#install-the-runner-on-windows)
-    1. [Register the Runner on Windows](#register-the-runner-on-windows)
-    1. [Test the Runner on Windows](#test-the-runner-on-windows)
-    1. [Run as a Windows Service](#run-as-a-windows-service)
 1. [Ubuntu](#ubuntu)
-    1. [Install the Runner on Ubuntu](#install-the-runner-on-ubuntu)
-    1. [Register the Runner on Ubuntu](#register-the-runner-on-ubuntu)
-    1. [Test the Runner on Ubuntu](#test-the-runner-on-ubuntu)
-    1. [Run as a systemd Service](#run-as-a-systemd-service)
 1. [Updating the Runner](#updating-the-runner)
 1. [References](#references)
 
 ## Overview
 
-A Gitea Actions runner is a small program that polls a Gitea instance for workflow jobs, runs them, and reports the results back. Running your own means jobs run on your hardware, with whatever toolchains you install. The steps here use `https://gitea.com`; swap in your own instance's URL if you self-host Gitea.
+A Gitea Actions runner polls a Gitea instance for workflow jobs, runs them on your machine, and reports the results back. These steps use `https://gitea.com`; swap in your own URL if you self-host Gitea.
 
-The runner is now called `gitea-runner`. It used to be `act_runner`, so older guides use that name. These steps were written against `gitea-runner` 5.1.1.
+The runner is `gitea-runner` (formerly `act_runner`, so older guides use that name). Written against version `5.2.2`. For a newer release, change `VERSION` in the commands below. Releases are listed on the [releases page](https://gitea.com/gitea/runner/releases).
 
-### Which File to Download
+## Before You Start
 
-Download from the [releases page](https://gitea.com/gitea/act_runner/releases). Each release has several files per platform:
+**Get a registration token.** On Gitea, open `User Settings > Actions > Runners > Create new runner` (the runner serves all your repos) or `<repo> > Settings > Actions > Runners` (that repo only), and copy the token. Anyone with it can attach a runner to your account, so don't share it. If it leaks, use `Reset registration token`; runners already registered keep working.
 
-| File                                       | What it is                                   |
-| ------------------------------------------ | -------------------------------------------- |
-| `gitea-runner-<version>-<os>-<arch>`       | The program itself. This is the one you want. |
-| `gitea-runner-<version>-<os>-<arch>.xz`    | The same program, compressed.                 |
-| `...sha256`                                | Checksums for verifying a download.           |
-
-Pick `windows-amd64` (the `.exe`) for Windows or `linux-amd64` for Ubuntu, unless the machine has an ARM CPU (`arm64`).
-
-### Get a Registration Token
-
-On Gitea, open one of:
-
-- `User Settings > Actions > Runners > Create new runner`: the runner can take jobs from all of your repos.
-- `<repo> > Settings > Actions > Runners > Create new runner`: the runner only takes jobs from that repo.
-
-The same token can register more than one runner until it's reset. Anyone with the token can attach a runner to your account, so keep it private.
-
-### Labels
-
-When registering, `--labels` decides which jobs the runner picks up and how it runs them. Each label is `<name>:<how>`:
+**Pick a label.** `--labels` decides which jobs a runner takes and how it runs them:
 
 - `<name>:host`: jobs run directly on the machine, using its installed tools.
-- `<name>:docker://<image>`: each job runs in a throwaway container from that image. Needs Docker installed.
+- `<name>:docker://<image>`: each job runs in a throwaway container. Needs Docker.
 
-A workflow's `runs-on: <name>` then sends its jobs to that runner. Using the machine's own name as the label makes it obvious where a job will land.
+A workflow's `runs-on: <name>` sends jobs to that runner. Using the machine's own name as the label makes it obvious where jobs land.
 
 ## Windows
 
-Run these in an admin PowerShell.
+Run everything in an admin PowerShell. Replace `<name>` with the runner's name.
 
-### Install the Runner on Windows
-
-Move the download into its own folder and drop the version from the name, so the service doesn't have to change when the runner is updated:
+**1. Download and create the config.**
 
 ```powershell
+$VERSION = "5.2.2"
 New-Item -ItemType Directory -Force C:\gitea-runner | Out-Null
-Move-Item "$HOME\Downloads\gitea-runner-<version>-windows-amd64.exe" C:\gitea-runner\gitea-runner.exe
 cd C:\gitea-runner
+Invoke-WebRequest "https://gitea.com/gitea/runner/releases/download/v$VERSION/gitea-runner-$VERSION-windows-amd64.exe" -OutFile gitea-runner.exe
 .\gitea-runner.exe --version
-```
-
-Optionally, check the download against the release's `.exe.sha256` file:
-
-```powershell
-(Get-FileHash .\gitea-runner.exe -Algorithm SHA256).Hash
-```
-
-The printed hash should match the one in that file.
-
-Then create the config file:
-
-```powershell
 .\gitea-runner.exe config init
 ```
 
-`config init` writes the `config.yaml` to edit. `config generate` is different: it prints every option with its default, all commented out, as a reference. Save that under another name if you want it around:
+**2. Register.** Paste the token when asked:
 
 ```powershell
-.\gitea-runner.exe config generate | Out-File -Encoding utf8 config.reference.yaml
+$token = Read-Host "Token"
+.\gitea-runner.exe register --no-interactive --config config.yaml --instance https://gitea.com --token $token --name <name> --labels <name>:host
+Remove-Variable token
 ```
 
-### Register the Runner on Windows
+It should print `Runner registered successfully` and create a `.runner` file holding the runner's credentials. Don't delete it.
 
-```powershell
-.\gitea-runner.exe register --no-interactive --config config.yaml --instance https://gitea.com --token <token> --name <name> --labels <name>:host
-```
-
-Windows jobs usually run with `host`, since they need the tools installed on the machine. Registering creates a `.runner` file in `C:\gitea-runner` that holds the runner's credentials, so don't delete it.
-
-### Test the Runner on Windows
-
-Run it in the foreground first:
+**3. Test.** Run it in the foreground, check that it shows as `Idle` under `Actions > Runners` on Gitea, then press `Ctrl+C`:
 
 ```powershell
 .\gitea-runner.exe daemon --config config.yaml
 ```
 
-The runner should show as `Idle` on the Runners page in Gitea. Press `Ctrl+C` to stop it.
-
-### Run as a Windows Service
-
-`gitea-runner` doesn't install itself as a Windows service, so [NSSM](https://nssm.cc) wraps it:
+**4. Install as a service.** `gitea-runner` can't install itself as a Windows service, so [NSSM](https://nssm.cc) wraps it:
 
 ```powershell
-winget install NSSM.NSSM
+winget install -e --id NSSM.NSSM
 ```
 
 Then, in a new admin PowerShell so `nssm` is on the `PATH`:
@@ -135,62 +82,52 @@ nssm start gitea-runner
 Get-Service gitea-runner
 ```
 
-It should show `Running`, and the runner should still be `Idle` in Gitea after a reboot.
+It should show `Running`, and stay `Idle` on Gitea after a reboot.
 
-The service runs as `LocalSystem`, which has its own `PATH` and profile. If a build works by hand but fails as a job, run the service as your own account instead (`nssm edit gitea-runner`, `Log on` tab) and restart it.
+Two things to know about the service:
 
-The service also only sees the `PATH` it had when it started. After installing a new tool, restart it with `nssm restart gitea-runner` so jobs can find the tool.
+- It runs as `LocalSystem`, which has its own `PATH` and profile. If a build works by hand but fails as a job, set the service to log on as your account (`nssm edit gitea-runner`, `Log on` tab).
+- It only sees the `PATH` from when it started. After installing a new tool, run `nssm restart gitea-runner`.
 
 ## Ubuntu
 
-### Install the Runner on Ubuntu
+Replace `<name>` with the runner's name. For `docker://` labels, install [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) first.
 
-Copy the link to the `linux-amd64` file from the releases page, then download it as `gitea-runner`:
+**1. Download and install.**
 
 ```bash
-wget -O gitea-runner "<link to gitea-runner-<version>-linux-amd64>"
+VERSION=5.2.2
+wget -O gitea-runner "https://gitea.com/gitea/runner/releases/download/v$VERSION/gitea-runner-$VERSION-linux-amd64"
 chmod +x gitea-runner
 sudo mv gitea-runner /usr/local/bin/
 gitea-runner --version
 ```
 
-Create a dedicated `runner` user so jobs don't run as your login or as root. Add it to the `docker` group if you'll use `docker://` labels (that needs [Docker Engine](https://docs.docker.com/engine/install/ubuntu/) installed first):
+**2. Create a `runner` user and its config.** Jobs then don't run as your login or as root. Its home is closed to other users, so commands that need to be in it run as `runner` with `sh -c`:
 
 ```bash
 sudo useradd --system --create-home --home-dir /var/lib/gitea-runner --shell /usr/sbin/nologin runner
 sudo usermod -aG docker runner    # only for docker:// labels
+sudo -u runner sh -c 'cd /var/lib/gitea-runner && gitea-runner config init'
 ```
 
-Then create the config file in the runner's home:
+**3. Register.** Paste the token when asked (it won't show on screen, and stays out of your shell history):
 
 ```bash
-cd /var/lib/gitea-runner
-sudo -u runner gitea-runner config init
+read -rsp "Token: " TOKEN; echo
+sudo -u runner sh -c "cd /var/lib/gitea-runner && gitea-runner register --no-interactive --config config.yaml --instance https://gitea.com --token $TOKEN --name <name> --labels <name>:docker://gitea/runner-images:ubuntu-latest"
+unset TOKEN
 ```
 
-### Register the Runner on Ubuntu
+It should print `Runner registered successfully` and create a `.runner` file holding the runner's credentials. The `WARN Runner in user-mode` line just means it isn't running as root, which is intended. For jobs that need the machine itself, use `<name>:host` instead.
+
+**4. Test.** Run it in the foreground, check that it shows as `Idle` under `Actions > Runners` on Gitea, then press `Ctrl+C`:
 
 ```bash
-cd /var/lib/gitea-runner
-sudo -u runner gitea-runner register --no-interactive --config config.yaml \
-  --instance https://gitea.com --token <token> \
-  --name <name> --labels <name>:docker://gitea/runner-images:ubuntu-latest
+sudo -u runner sh -c 'cd /var/lib/gitea-runner && gitea-runner daemon --config config.yaml'
 ```
 
-That label runs each job in a fresh Ubuntu container, so builds can't leave a mess on the VM. Use `<name>:host` instead for jobs that need the machine itself. Like on Windows, registering creates a `.runner` file with the runner's credentials.
-
-### Test the Runner on Ubuntu
-
-```bash
-cd /var/lib/gitea-runner
-sudo -u runner gitea-runner daemon --config config.yaml
-```
-
-The runner should show as `Idle` in Gitea. Press `Ctrl+C` to stop it.
-
-### Run as a systemd Service
-
-Create the unit file:
+**5. Install as a service.**
 
 ```bash
 sudo tee /etc/systemd/system/gitea-runner.service <<'EOF'
@@ -209,43 +146,41 @@ RestartSec=5
 [Install]
 WantedBy=multi-user.target
 EOF
-```
 
-Then start it and enable it at boot:
-
-```bash
 sudo systemctl daemon-reload
 sudo systemctl enable --now gitea-runner
-systemctl status gitea-runner --no-pager
+systemctl is-active gitea-runner
 ```
 
-It should show `active (running)`. Follow its log with `journalctl -u gitea-runner -f`.
+It should print `active`, and stay `Idle` on Gitea after a reboot. Follow its log with `journalctl -u gitea-runner -f`.
 
 ## Updating the Runner
 
-Stop the service, replace the binary with the new download, and start it again. The config and `.runner` file stay as they are.
+Set `VERSION` to the new release, then replace the binary. The config and `.runner` file stay as they are.
 
-Windows:
+Windows (admin PowerShell):
 
 ```powershell
+$VERSION = "<new version>"
 nssm stop gitea-runner
-Move-Item -Force "$HOME\Downloads\gitea-runner-<version>-windows-amd64.exe" C:\gitea-runner\gitea-runner.exe
+Invoke-WebRequest "https://gitea.com/gitea/runner/releases/download/v$VERSION/gitea-runner-$VERSION-windows-amd64.exe" -OutFile C:\gitea-runner\gitea-runner.exe
 nssm start gitea-runner
 ```
 
 Ubuntu:
 
 ```bash
-sudo systemctl stop gitea-runner
-wget -O gitea-runner "<link to the new linux-amd64 file>"
+VERSION=<new version>
+wget -O gitea-runner "https://gitea.com/gitea/runner/releases/download/v$VERSION/gitea-runner-$VERSION-linux-amd64"
 chmod +x gitea-runner
+sudo systemctl stop gitea-runner
 sudo mv gitea-runner /usr/local/bin/
 sudo systemctl start gitea-runner
 ```
 
 ## References
 
-- [Gitea Docs: Act Runner](https://docs.gitea.com/usage/actions/act-runner)
-- [Gitea Runner releases](https://gitea.com/gitea/act_runner/releases)
+- [Gitea Docs: Runner](https://docs.gitea.com/runner/)
+- [Gitea Runner releases](https://gitea.com/gitea/runner/releases)
 - [NSSM](https://nssm.cc)
 - [Docker Engine on Ubuntu](https://docs.docker.com/engine/install/ubuntu/)
