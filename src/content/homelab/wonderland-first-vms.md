@@ -41,7 +41,7 @@ published: 2026-10-24
 
 - `rabbit`: an always-on Docker host for my self-hosted services
 - `tweedledee`: an Ubuntu Gitea Actions runner for Linux builds and packaging releases
-- `tweedledum`: a Windows 11 Gitea Actions runner for MSVC/MSBuild builds like [SNAILNET](https://gitea.com/Kyle-Spicer/SNAILNET)
+- `tweedledum`: a Windows 11 Gitea Actions runner for MSVC/MSBuild builds like [SNAILNET](https://github.com/KyleSpicer/SNAILNET)
 
 ## Overview
 
@@ -148,7 +148,7 @@ Follow the Ubuntu steps in [Gitea Runner: Download and Install on Windows and Ub
 
 ### Why tweedledum?
 
-`tweedledum` is the twin on the Windows side of the glass. It builds MSVC, MSBuild, and Win32 projects like [SNAILNET](https://gitea.com/Kyle-Spicer/SNAILNET), which Linux can't build natively.
+`tweedledum` is the twin on the Windows side of the glass. It builds MSVC, MSBuild, and Win32 projects like [SNAILNET](https://github.com/KyleSpicer/SNAILNET), which Linux can't build natively.
 
 ### Install the Build Tools on tweedledum
 
@@ -198,7 +198,7 @@ When it's done, both twins show as `Idle` under `User Settings > Actions > Runne
 
 ## First Build: SNAILNET
 
-With `tweedledum` registered, [SNAILNET](https://gitea.com/Kyle-Spicer/SNAILNET) builds on it with every push and pull request to `main` and the `rc*` branches, and on `v*` tags. The core of its workflow:
+With `tweedledum` registered, [SNAILNET](https://github.com/KyleSpicer/SNAILNET) builds on it with every push and pull request to `main` and the `rc*` branches, and on `v*` tags. The core of its workflow:
 
 ```yaml
 jobs:
@@ -209,20 +209,20 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Build SnailNet
-        uses: https://gitea.com/Kyle-Spicer/GitOps/actions/msbuild-release@main
+        uses: KyleSpicer/GitOps/actions/msbuild-release@main
         with:
           project: SnailNet/SnailNet.slnx
           configuration: Release
           platform: x64
 
       - name: Upload SnailNet
-        uses: https://gitea.com/Kyle-Spicer/GitOps/actions/upload-build@main
+        uses: KyleSpicer/GitOps/actions/upload-build@main
         with:
           name: snailnet-windows-x64
           path: SnailNet/Build/x64/Release/SnailNet.exe
 ```
 
-`runs-on: tweedledum` matches the runner's label, so the job runs directly on the VM. The build step is a reusable action from my [GitOps](https://gitea.com/Kyle-Spicer/GitOps) repo, so other MSBuild projects can share it:
+`runs-on: tweedledum` matches the runner's label, so the job runs directly on the VM. The build step is a reusable action from my [GitOps](https://github.com/KyleSpicer/GitOps) repo, so other MSBuild projects can share it:
 
 1. `locate-msbuild` runs the same `vswhere` lookup from [Install the Build Tools on tweedledum](#install-the-build-tools-on-tweedledum), then switches to the 64-bit `amd64\MSBuild.exe` next to it when there is one.
 1. `msbuild-release` runs that MSBuild on the solution with `/m /nologo /restore` and the given configuration and platform, and fails the job if the build fails.
@@ -233,8 +233,8 @@ A good run looks like this, and its log shows `Using MSBuild:` with a path under
 
 ## References
 
-- [SNAILNET](https://gitea.com/Kyle-Spicer/SNAILNET)
-- [GitOps](https://gitea.com/Kyle-Spicer/GitOps)
+- [SNAILNET](https://github.com/KyleSpicer/SNAILNET)
+- [GitOps](https://github.com/KyleSpicer/GitOps)
 - [Proxmox VM: Ubuntu Server 26.04 Template and Setup](/programming/proxmox-ubuntu-server-2604-vm-template)
 - [Proxmox VM: Windows 11 Pro Template and Setup](/programming/proxmox-windows-11-pro-vm-template)
 - [Gitea Runner: Download and Install on Windows and Ubuntu](/programming/gitea-runner-windows-ubuntu)
