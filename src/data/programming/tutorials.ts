@@ -16,6 +16,13 @@ export interface TutorialCard {
 
 export const tutorialCards: TutorialCard[] = [
 	{
+		slug: 'snailnet',
+		title: 'SnailNet: A Windows TCP Proxy for Testing High-Latency Links',
+		description:
+			'Introducing SnailNet v1.0.0, a lightweight Win32 TCP proxy I wrote that injects configurable latency into a connection.',
+		published: '2026-11-24',
+	},
+	{
 		slug: 'gitea-runner-windows-ubuntu',
 		title: 'Gitea Runner: Download and Install on Windows and Ubuntu',
 		description:
