@@ -344,7 +344,8 @@ const entries: SocialEntry[] = [
 		margin: 0;
 		padding: 0.2rem 0.15rem 0.1rem;
 		display: grid;
-		grid-template-columns: repeat(3, minmax(0, 1fr));
+		/* As many ~13rem pills per row as fit: 1 on phones, 2 on large phones/tablets, 3 on desktop. */
+		grid-template-columns: repeat(auto-fill, minmax(min(100%, 13rem), 1fr));
 		gap: 0.45rem 0.4rem;
 		align-items: stretch;
 		justify-items: stretch;
@@ -361,6 +362,8 @@ const entries: SocialEntry[] = [
 		justify-content: flex-start;
 		gap: 0.35rem;
 		width: 100%;
+		/* Lets the pill shrink to its cell instead of overflowing into the next one. */
+		min-width: 0;
 		min-height: 2.35rem;
 		padding: 0.35rem 0.4rem;
 		border-radius: 10px;
