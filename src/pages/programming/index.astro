@@ -4,6 +4,7 @@ import '../../styles/page-main.css';
 import { sitePath } from '../../utils/sitePath';
 import { tutorialCards } from '../../data/programming/tutorials';
 import { referenceCards } from '../../data/programming/references';
+import { toolCards } from '../../data/programming/tools';
 import {
 	getReferencesDataLastUpdatedIsoDay,
 	getTutorialCardListedIsoDay,
@@ -18,6 +19,11 @@ const tutorialsLatestIso = tutorialCards
 		null,
 	);
 
+const toolsLatestIso = toolCards.reduce<string | null>(
+	(latest, t) => (!latest || t.published > latest ? t.published : latest),
+	null,
+);
+
 const referencesLatestIso =
 	getReferencesDataLastUpdatedIsoDay() ??
 	referenceCards.find((c) => c.published)?.published ??
@@ -31,7 +37,7 @@ const referencesLatestIso =
 	<main class="main">
 		<h1>Programming</h1>
 		<p class="lede">
-			Tutorials and reference material I maintain for myself and other developers.
+			Tutorials, tools, and reference material I maintain for myself and other developers.
 		</p>
 		<section class="section" aria-labelledby="sections-heading">
 			<h2 id="sections-heading">Contents</h2>
@@ -44,6 +50,19 @@ const referencesLatestIso =
 							<p class="card-meta">
 								<time class="card-meta-muted" datetime={tutorialsLatestIso}>
 									Last updated {formatListDate(tutorialsLatestIso)}
+								</time>
+							</p>
+						) : null}
+					</a>
+				</li>
+				<li>
+					<a class="card" href={sitePath('/programming/tools')}>
+						<h3>Tools</h3>
+						<p>Tools I've written and released, with usage notes.</p>
+						{toolsLatestIso ? (
+							<p class="card-meta">
+								<time class="card-meta-muted" datetime={toolsLatestIso}>
+									Last updated {formatListDate(toolsLatestIso)}
 								</time>
 							</p>
 						) : null}

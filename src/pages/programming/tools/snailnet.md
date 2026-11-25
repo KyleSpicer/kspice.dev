@@ -1,5 +1,5 @@
 ---
-layout: ../../layouts/MarkdownTutorial.astro
+layout: ../../../layouts/MarkdownTutorial.astro
 title: "SnailNet: A Windows TCP Proxy for Testing High-Latency Links"
 description: Introducing SnailNet v1.0.0, a lightweight Win32 TCP proxy I wrote that injects configurable latency into a connection.
 ---
@@ -10,7 +10,7 @@ Date Created: 11-24-2026
 
 Introducing SnailNet v1.0.0, a lightweight Win32 TCP proxy I wrote that injects configurable latency into a connection. It is open source under the MIT license, and the code is on my [GitHub](https://github.com/KyleSpicer/SNAILNET).
 
-![SnailNet logo](../../tutorials-notes/snailnet/snailnet-logo.png)
+![SnailNet logo](../../../tutorials-notes/snailnet/snailnet-logo.png)
 
 ## Table of Contents
 1. [Overview](#overview)

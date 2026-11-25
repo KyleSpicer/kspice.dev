@@ -7,6 +7,7 @@ import { sitePath } from '../utils/sitePath';
 import { getCollection } from 'astro:content';
 import { tutorialCards } from '../data/programming/tutorials';
 import { referenceCards } from '../data/programming/references';
+import { toolCards } from '../data/programming/tools';
 import { woodworkingProjects } from '../data/woodworking/projects';
 import { homepageUpdates } from '../data/homepage-updates';
 import { formatListDate } from '../utils/formatListDate';
@@ -50,6 +51,7 @@ const referenceFallback =
 	referenceCards.find((c) => c.published)?.published ?? null;
 const programmingActivityCandidates = [
 	...tutorialActivityDays,
+	...toolCards.map((t) => t.published),
 	...(refsDataDay ? [refsDataDay] : []),
 	...(referenceFallback && !refsDataDay ? [referenceFallback] : []),
 ];
@@ -169,6 +171,15 @@ for (const t of tutorialCards) {
 		title: t.title,
 		href: sitePath(`/programming/${t.slug}`),
 		at: new Date(isoDay + 'T12:00:00'),
+		badge: 'Programming',
+	});
+}
+
+for (const t of toolCards) {
+	recentPostedRaw.push({
+		title: t.title,
+		href: sitePath(`/programming/tools/${t.slug}`),
+		at: new Date(t.published + 'T12:00:00'),
 		badge: 'Programming',
 	});
 }

@@ -1,0 +1,41 @@
+---
+import Layout from '../../../layouts/Layout.astro';
+import '../../../styles/page-main.css';
+import { sitePath } from '../../../utils/sitePath';
+import { formatListDate } from '../../../utils/formatListDate';
+import { toolCards } from '../../../data/programming/tools';
+
+const tools = [...toolCards].sort((a, b) => b.published.localeCompare(a.published));
+---
+
+<Layout
+	title="Tools"
+	description="Tools I've written and released, on kspice.dev."
+>
+	<main class="main">
+		<h1>Tools</h1>
+		<p class="lede">
+			Tools I've designed, written, and released, with notes on what they do and how to use them.
+		</p>
+		<section class="section" aria-labelledby="tools-heading">
+			<h2 id="tools-heading">Released tools</h2>
+			<ul class="cards">
+				{
+					tools.map((t) => (
+						<li>
+							<a class="card" href={sitePath(`/programming/tools/${t.slug}`)}>
+								<h3>{t.title}</h3>
+								<p>{t.description}</p>
+								<p class="card-meta">
+									<time class="card-meta-muted" datetime={t.published}>
+										Posted {formatListDate(t.published)}
+									</time>
+								</p>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</main>
+</Layout>
