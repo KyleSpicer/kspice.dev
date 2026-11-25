@@ -6,7 +6,7 @@ import { sitePath } from '../utils/sitePath';
 interface Props {
 	title?: string;
 	description?: string;
-	/** Set false when the page renders `SocialFooter` itself (e.g. the home page, under the hero). */
+	/** Set false to omit the contact footer. Keep it on: the header's Contact link (`#contact`) targets it. */
 	showContactFooter?: boolean;
 }
 
@@ -39,7 +39,8 @@ const nav = [
 	{ href: sitePath('/woodworking'), label: 'Woodworking' },
 	{ href: sitePath('/recommendations'), label: 'Book Recommendations' },
 	{ href: sitePath('/resume'), label: 'Resume' },
-	{ href: `${sitePath('/')}#contact`, label: 'Contact' },
+	/* Every page renders the contact footer, so jump to it in place. */
+	{ href: '#contact', label: 'Contact' },
 ] as const;
 ---
 
@@ -165,8 +166,10 @@ const nav = [
 				function menuOpen() {
 					return header.classList.contains('is-menu-open');
 				}
+				/* Keep in sync with the inline-nav breakpoint in the styles below. */
+				var desktopNav = window.matchMedia('(min-width: 72rem)');
 				function syncAria() {
-					if (menuOpen()) mainNav.removeAttribute('aria-hidden');
+					if (menuOpen() || desktopNav.matches) mainNav.removeAttribute('aria-hidden');
 					else mainNav.setAttribute('aria-hidden', 'true');
 				}
 				function closeMenu(refocus) {
@@ -463,8 +466,62 @@ const nav = [
 	}
 
 	@media (min-width: 52rem) {
+		/* Side padding grows on wide screens so the logo and menu line up with the page content (--site-max). */
 		.site-header {
-			padding: 1rem max(1.5rem, env(safe-area-inset-right)) 1rem max(1.5rem, env(safe-area-inset-left));
+			padding: 1rem max(1.5rem, env(safe-area-inset-right), calc((100% - var(--site-max)) / 2))
+				1rem max(1.5rem, env(safe-area-inset-left), calc((100% - var(--site-max)) / 2));
+		}
+	}
+
+	/* Desktop: show the links inline in the header; the slide-out menu is for smaller screens. */
+	@media (min-width: 72rem) {
+		.site-header {
+			grid-template-columns: auto minmax(0, 1fr) auto;
+		}
+
+		.nav {
+			grid-column: 2;
+			grid-row: 1;
+			justify-self: end;
+			position: static;
+			z-index: auto;
+			width: auto;
+			padding: 0;
+			margin-right: 0.5rem;
+			background: none;
+			border: none;
+			box-shadow: none;
+			overflow: visible;
+			transform: none;
+			visibility: visible;
+			transition: none;
+		}
+
+		.nav ul {
+			flex-direction: row;
+			align-items: center;
+			gap: 0.15rem;
+		}
+
+		.nav-link {
+			padding: 0.45rem 0.7rem;
+			border-color: transparent;
+			background: none;
+			white-space: nowrap;
+		}
+
+		.nav-link:hover {
+			border-color: transparent;
+			background: color-mix(in srgb, var(--teal) 8%, var(--bg-elevated));
+		}
+
+		.header-tools {
+			grid-column: 3;
+		}
+
+		.menu-toggle,
+		.nav-backdrop {
+			display: none;
 		}
 	}
 

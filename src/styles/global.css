@@ -33,6 +33,11 @@ html[data-theme='light'] {
 	--border: color-mix(in srgb, var(--ink) 10%, var(--bg));
 }
 
+:root {
+	/* Content width of listing pages; the header's logo and menu line up with it. */
+	--site-max: 72rem;
+}
+
 html {
 	-webkit-text-size-adjust: 100%;
 	text-size-adjust: 100%;

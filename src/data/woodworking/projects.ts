@@ -389,6 +389,36 @@ export const woodworkingProjects: WoodworkingProject[] = [
 				alt: 'Warrant officer wooden flag',
 				caption: 'Warrant officer flag.',
 			},
+			{
+				src: '/images/woodworking/flags-general/warrant-hand-carved.jpg',
+				alt: 'Close-up of a hand-carved Warrant Officer eagle in the star field of a wooden flag',
+				caption: 'Warrant Officer eagle, hand carved.',
+			},
+			{
+				src: '/images/woodworking/flags-general/flag-eagle-rising.jpg',
+				alt: 'Burnt-wood American flag with a carved Warrant Officer eagle in the star field',
+				caption: 'Eagle rising flag.',
+			},
+			{
+				src: '/images/woodworking/flags-general/flag-marine-union.jpg',
+				alt: 'Wooden American flag with the Marine Corps emblem and the engraving "Fair Winds and Following Seas"',
+				caption: 'Marine Corps retirement flag: Fair Winds and Following Seas.',
+			},
+			{
+				src: '/images/woodworking/flags-general/garner.jpg',
+				alt: 'Layered burnt-wood American flag with a personalized name engraved on the side',
+				caption: 'Layered flag, personalized with a name.',
+			},
+			{
+				src: '/images/woodworking/flags-general/hunting-cabin.jpg',
+				alt: 'Large wooden American flag engraved "Wild West Hunt Club" with a plaque and a shot-glass shelf',
+				caption: 'Hunting club flag with a plaque and shot-glass shelf.',
+			},
+			{
+				src: '/images/woodworking/flags-general/american-flags-hand-dremmelled.jpg',
+				alt: 'Several burnt-wood American flags in progress on sawhorses in the shop',
+				caption: 'Hand-Dremeled American flags in progress.',
+			},
 		],
 	},
 	{

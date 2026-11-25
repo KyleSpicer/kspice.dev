@@ -12,6 +12,35 @@
 	}
 }
 
+/*
+ * Listing pages (home, section indexes) use the full site width so cards can
+ * sit side by side. Articles keep the narrower default above for readable lines.
+ * The header aligns its edges to this same width (see Layout.astro).
+ */
+.main.main--wide {
+	max-width: var(--site-max);
+}
+
+.main.main--wide ul.cards {
+	display: grid;
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 20rem), 1fr));
+	gap: 1rem;
+}
+
+/* Cards with a thumbnail (woodworking) need more room per card, so fewer columns. */
+.main.main--wide ul.cards:has(.wood-project-card--thumb) {
+	grid-template-columns: repeat(auto-fill, minmax(min(100%, 28rem), 1fr));
+}
+
+.main.main--wide ul.cards > li {
+	display: flex;
+}
+
+.main.main--wide ul.cards > li > a.card {
+	width: 100%;
+	box-sizing: border-box;
+}
+
 .main h1 {
 	font-size: 1.75rem;
 	font-weight: 700;
